@@ -1,0 +1,99 @@
+$siteGreen: #36AB9B;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,300&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  color: #1A2024;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.sectionBtn {
+  background-color: $siteGreen;
+  border-radius: 5px;
+  color: white;
+  outline: none;
+  border: none;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sectionBtn:focus {
+  border: 3px solid #096e61;
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  cursor: pointer;
+  padding: 10px 5px;
+  padding-right: 35px;
+  
+  span {
+      color: white;
+      border-radius: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 7px;
+      margin-right: 5px;
+  }
+}
+
+.category.active {
+  background-color: #efefef;
+  border-radius: 2px;
+  width: fit-content;
+}
+
+.allCatsIcon {
+  background-color: rgb(56, 56, 56);
+}
+
+.biologyIcon {
+  background-color: rgb(30, 192, 124);
+}
+
+.technologyIcon {
+  background-color: orange;
+}
+
+.engineeringIcon {
+  background-color: rgb(92, 92, 255);
+}
+
+.fundingGoalWrapper {
+  width: auto;
+
+  input {
+      border: none;
+      outline: none;
+
+  }
+  
+  div { 
+      display: inline-block;
+  }
+}
+
+.inputs {
+  border: 2px solid #c1bfc2;
+  border-radius: 6px;
+  padding: 10px 15px;
+  margin: 10px 0;
+  outline: none;
+}
+
+.inputs:focus-within {
+  border: 2px solid #36AB9B;
+}

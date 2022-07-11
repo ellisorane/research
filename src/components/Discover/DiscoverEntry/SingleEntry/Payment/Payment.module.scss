@@ -1,0 +1,128 @@
+.paymentMobileScreens {
+    transition: all 0.5s;
+    position: fixed;
+    background-color: #fff;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.paymentMobileScreenClosed {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.paymentMobileScreenOpen {
+    transform: translateX(0);
+    opacity: 1;
+    overflow-x: hidden; 
+    overflow-y: auto;
+}
+
+.fundingLgScreens {
+    display: none;
+}
+
+.innerContainer {
+    width: 80%;
+    margin: auto;
+    padding-top: 20px;
+
+    .paymentHeading, p {
+        color: #2b9b8c;
+    }
+
+    p {
+        font-size: 13px;
+        font-weight: bold;
+    }
+}
+
+.paymentHeading {
+    position: relative;
+
+    h3, span {
+        display: inline;
+    }
+
+    span {
+        position: absolute;
+        right: 0;
+    }
+
+}
+
+.closeBtn {
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.paymentForm {
+    text-align: left;
+    margin-top: 30px;
+
+    label, .hiddenLabel {
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+}
+
+.amount, .amount input {
+    font-size: 20px;
+}
+
+.hiddenLabel {
+    margin-top: 5px;
+    transition: opacity 0.4s;
+    color: #36ac9c;
+    font-weight: bold;
+    opacity: 0;
+}
+
+.fields:focus-within {
+    .lineInputs {
+        border-bottom: 2px solid #36AB9B;
+    }
+
+    .hiddenLabel {
+        opacity: 1;
+    }
+}
+
+.lineInputs {
+    width: 100%;
+    margin: 10px 0;
+    border: none;
+    border-bottom: 2px solid #c1bfc2;
+    outline: none;
+}
+
+.cardExpiration {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    // gap: 15px;
+
+    .lineInputs {
+        width: 100px;
+    }
+}
+
+.anon {
+    color: #c1bfc2;
+    margin-bottom: 20px;
+}
+
+.submitPayment {
+    font-size: 17px;
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+}
+
+.paymentNote {
+    text-align: center;
+}

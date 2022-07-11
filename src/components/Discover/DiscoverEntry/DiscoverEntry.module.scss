@@ -1,0 +1,83 @@
+$siteGreen: #36AB9B;
+
+
+.DiscEntryContainer {
+    width: 100%;
+    margin: 20px auto;
+    border-radius: 5px;
+    border: 1px solid rgb(233, 233, 233);
+    cursor: pointer;
+
+    p {
+        font-size: 1rem;
+    }
+}
+
+.entryImg {
+    width: 100%;
+}
+
+.innerContainer {
+    padding: 10px;
+}
+
+.researcherInfo {
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+
+    img {
+        border-radius: 100px;
+        width: 40px;
+        margin-right: 20px;
+    }
+
+    div {
+        p {
+            font-size: 0.9rem;
+        }
+    
+        h5, p {
+            margin: 0;
+            padding: 0;
+        }
+    }
+    
+}
+
+.progressBar {
+    width: 100%;
+    border-radius: 12px;
+    background-color: #DDDDDD;
+    height: 10px;
+    margin: 20px 0;
+}
+
+.progress {
+    height: 100%;
+    width: 45%;
+    border-radius: 12px;
+    background-color: $siteGreen;
+}
+
+.entryFunding {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    
+    p, h4 {
+        margin: 0;
+        padding: 0;
+    }
+
+    div:nth-child(3) {
+        text-align: right;
+    }
+
+}
+
+@media(min-width: 750px) {
+    .DiscEntryContainer {
+        width: 320px; 
+    }
+}

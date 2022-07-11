@@ -1,0 +1,132 @@
+nav a {
+    color: black;
+}
+
+.profileContainer {
+    min-height: 100vh;
+    width: 100%;
+    margin-top: 100px;
+}
+
+.userContainer, .profileInfoContainer {
+    width: 75%;
+    margin: 50px auto;
+}
+
+.userContainer {
+    border: 2px solid #F2F3F4;
+    box-shadow: 1px 1px 14px -12px #222;
+    border-radius: 6px;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.userImg {
+    height: 150px;
+    width: 150px;
+    border-radius: 100px;
+}
+
+.pActionsBtn {
+    display: inline;
+    margin: 10px;
+    padding: 5px 10px;
+    background-color: #5eb0c0;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.pActionsBtn:hover {
+    background-color: #4da1b1;
+}
+
+.more {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.moreDiv, .more {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #9Ba5aa;
+}
+
+.moreDiv p {
+    color: black;
+}
+
+.profileNav {
+    width: fit-content;
+}
+
+.profileLink {
+    cursor: pointer;
+    display: inline;
+    color: #4a5658;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 10px; 
+    display: inline;  
+    padding: 5px 0;
+}
+
+.count {
+    background-color: #ddd;
+    padding: 3px 4px;
+    border-radius: 4px;
+}
+
+.profileLink.active {
+    border-bottom: 3px solid #36ac9c;
+
+    span {
+        background-color: #36ac9c;
+    }
+}
+
+
+@media(min-width: 768px) {
+    .profileContainer {
+        width: 88%;
+        margin: 100px auto;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .userContainer {
+        height: fit-content;
+        width: 320px;
+    }
+
+    .profileInfo {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .profileInfo > div {
+        margin: 15px;
+    }
+
+}
+
+
+@media(min-width: 950px) {
+    .profileInfo {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+@media(min-width: 1400px) {
+    .profileInfo {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+}

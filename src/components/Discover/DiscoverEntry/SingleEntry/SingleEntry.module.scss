@@ -1,0 +1,186 @@
+$siteGreen: #36AB9B;
+
+.singleEntryContainer {
+    min-height: 100vh;
+}
+
+.projectHead {
+    padding-bottom: 60px;
+    padding: 270px 25px 25px;
+    text-align: center;
+}
+
+.tags {
+    display: none;
+}
+
+.heroImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 200px;
+    width: 100%;
+    background-size: cover;
+    background-position: center center;
+}
+
+.progressBar {
+    display: block;
+    z-index: 5;
+    position: absolute;
+    top: 199px;
+    left: 0;
+    width: 100%;
+    background-color: #DDDDDD;
+    height: 10px;
+    // margin: 20px 0;
+}
+
+.progress {
+    height: 100%;
+    width: 45%;
+    border-radius: 0 5px 5px 0;
+    background-color: $siteGreen;
+}
+
+.entryFundingMobile {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+
+    div {
+        margin: 20px 0;
+        line-height: 0.1rem;
+
+        p {
+            color: #a2a1a3;
+        }
+    }
+}
+
+.entryFunding, .pledged {
+    display: none;
+}
+
+.borderedFunded {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 0 10px;
+}
+
+.fundBtn {
+    background-color: $siteGreen;
+    border-radius: 5px;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 17px 14px 15px;
+    font-size: 21px;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.projectInfo {
+    padding: 25px;
+    border-top: 5px solid #f5f5f5;
+
+    div {
+        padding: 100px 0;
+    }
+}
+
+@media(min-width: 985px) { 
+    .projectHead, .projectInfo div {
+        width: 980px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .projectHead {
+        padding-bottom: 60px;
+        padding-top: 150px;
+        text-align: left;
+    }
+
+    .hero {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .heroImage, .progressBar {
+        position: relative;
+    }
+
+    .progressBar {
+        // margin: auto;
+        top: 0;
+    }
+
+    .progressBar, .progress {
+        border-radius: 12px;
+    }
+
+
+    .heroImage {
+        height: 360px;
+        width: 640px;
+        border-radius: 5px;
+    }
+
+    .imgTagContainer {
+        // width: ;
+    }
+
+    .tags {
+        display: block;
+        margin-top: 15px;
+    }
+
+    .tag {
+        color: #FFF;
+        border: none;
+        padding: 8px 15px;
+        margin: 5px;
+        background-color: $siteGreen;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    
+    
+    .entryFunding, .pledged {
+        display: block;
+    }
+
+    .pledged {
+        font-size: 1.5rem;
+        line-height: 1.3rem;
+    }
+    
+    .entryFundingMobile { 
+        display: none;
+    }
+
+    .entryFunding {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        gap: 15px;
+        font-size: 1.3rem;
+
+        div {
+            margin: 20px 0;
+            line-height: 0.1rem;
+        }
+    }
+
+    .fundedRightAlign {
+        text-align: right;
+    }
+}

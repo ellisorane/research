@@ -1,0 +1,162 @@
+$siteGreen: #36AB9B;
+
+
+.heroContainer {
+    height: 500px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    color: white;
+}
+
+.overlay {
+    position: absolute;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.324);
+    height: inherit;
+    width: inherit;
+}
+
+.heroContent {
+    width: 90%; 
+    margin: 150px auto;
+    position: relative;
+}
+
+.heroActions {
+    background-color: #06a0ae90;
+    margin: 0 auto;
+    padding: 25px 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+
+    div {
+        cursor: pointer;
+    }
+
+    div:hover {
+        opacity: 0.8;
+    }
+}
+
+.divider {
+    width: 90%;
+    margin: 20px 0;
+    height: 1px;
+    background-color: white;
+}
+
+.hero {
+    height: inherit;
+    width: inherit;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+
+}
+
+main {
+    margin-bottom: 150px;
+}
+
+.section, .container {
+    width: 90%;
+    margin: auto;
+
+    p {
+        font-size: 1.2rem;
+        color: #7d8285;
+    }
+}
+
+.headerIcon {
+    color: $siteGreen;
+    margin-right: 15px;
+}
+
+.sectionBtn {
+    background-color: $siteGreen;
+    border-radius: 5px;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.latestSection {
+    margin-top: 600px;
+}
+
+.categorySection {
+    margin-top: 100px;
+}
+
+
+
+
+@media(min-width: 750px) { 
+
+    .heroContent, .section {
+        max-width: 968px;
+    }
+    
+    .heroContent {
+        margin-top: 200px;
+    }
+    
+    .heroHeading {
+        width: 70%;
+        font-size: 1.5rem;
+    }
+    
+    .heroActions {
+        flex-direction: row;
+        width: fit-content;
+        margin-left: 0;
+        font-size: 1.3rem;
+        padding: 10px 25px;
+    }
+    
+    .divider {
+        width: 1px;
+        margin: 0 20px;
+        height: 35px;
+        background-color: white;
+    }
+    
+    .sectionHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .sectionBtn {
+        padding: 10px 45px;
+    }
+
+    .entryContanier {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+}
+
+@media(min-width: 950px) {
+    .entryContanier {
+        grid-template-columns: 1fr 1fr 1fr;
+        // gap: 15px;
+    }
+
+}
+

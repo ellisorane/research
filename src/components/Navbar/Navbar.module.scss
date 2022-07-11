@@ -1,0 +1,257 @@
+$siteGreen: #36AB9B;
+
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-left: auto; 
+    margin-right: auto;
+    width: 90%;
+    height: 6vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    z-index: 10;
+}
+
+
+.navHome .sitelogo, .navNotHome .navProject {
+    color: rgb(255, 255, 255);
+}
+
+.navLeft {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    
+
+    .navSearch {
+        display: none;
+    }
+
+}
+
+.navSearch {
+    margin-bottom: 20px;
+    
+    form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #9a9c9d;
+        border-radius: 3px;
+        
+        input {
+            background-color: transparent;
+            border: none;
+            outline: none;
+            padding: 5px;
+            color: #4D5255;
+        }
+
+    }
+}
+
+
+.lgScreenMenu {
+    display: none;
+
+    .navLink {
+        color: white;
+    }
+}
+
+.smScreenMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    display: block;
+    background-color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+
+    .sitelogo {
+        color: $siteGreen;
+        margin-bottom: 25px;
+        margin: auto;
+        margin-bottom: 20px;
+        font-size: 30px;
+    }
+
+    form {
+        padding: 10px;
+    }
+
+    form input {
+        margin-left: 0;
+       font-size: 1.2rem;
+    }
+
+    form input[type=submit] {
+        color: $siteGreen;
+        font-weight: bold;
+    }
+
+    hr {
+        background-color: $siteGreen;
+        padding: 2px;
+        border: none;
+        border-radius: 2px;
+    }
+
+}
+
+.smScreenMenuContainer {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.navLinks {
+    width: 90%;
+
+    .navLink {
+        color: #4D5255;
+    }
+}
+
+.navLink {
+    display: block;
+    margin: 15px 0;
+    cursor: pointer;
+}
+
+.closeMenu {
+    position: absolute;
+    background-color: $siteGreen;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+    border-radius: 100px;
+    bottom: 30px;
+    right: 30px;
+    cursor: pointer;
+    -webkit-box-shadow: 2px 5px 24px -12px #000000; 
+    box-shadow: 2px 5px 24px -12px #000000;
+}
+
+
+.toggleBtn {
+    height: 40px;
+    width: 35px;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    div {
+        width: 50%;
+        height: 2px;
+        background-color: black;
+        border-radius: 2px;
+    }
+
+    div:not(.firstLine) {
+        margin-top: 3px;
+    }
+}
+
+// Larger screens
+@media(min-width: 985px) {
+
+    .navbar {
+        width: 968px;
+        margin: auto;
+    }
+
+    .navNotHome, .navNotHome .navProject {
+        color: #000;
+
+        .navLeft .navSearch form  {
+            border: 2px solid black;
+            color: black;
+
+            input, input::placeholder {
+                color: black;
+            }
+            
+        }
+        
+        .navLeft .navSearch form:hover {
+            border: 2px solid $siteGreen;
+        }
+
+        .navLeft .navSearch form:focus-within {
+            border: 2px solid $siteGreen;
+        }
+
+        .navLink {
+            color: black;
+        }
+
+        .navLink:hover {
+            color: $siteGreen;
+            border-bottom: 3px solid $siteGreen;
+        }
+    }
+
+    .navLeft {
+
+        .navSearch {
+            display: flex;
+            margin-left: 15px;
+            margin-bottom: 0;
+
+            form {
+                border: 1px solid #ffffff;
+                
+                input, ::placeholder {
+                    color: #ffffff;
+                }
+        
+            }
+    
+        }
+    }
+
+    .lgScreenMenu {
+        display: flex;
+    }
+
+    .navLink {
+        margin-right: 25px;
+        opacity: 0.8;
+        transition: all 0.1s;
+        font-weight: bold;
+    }
+
+    .navLink:hover {
+        border-bottom: 3px solid white;
+        opacity: 1;
+    }
+
+    .smScreenMenu {
+        display: none;
+    }
+
+    .toggleBtn {
+        display: none;
+    }
+
+}
+

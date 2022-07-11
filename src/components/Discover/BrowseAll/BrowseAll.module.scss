@@ -1,0 +1,30 @@
+.browseAllContainer {
+    min-height: 100vh;
+    width: 100%;
+    margin-top: 150px;
+    padding-bottom: 50px;
+}
+
+.section {
+    width: 90%; 
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.divider {
+    width: 100%;
+    height: 0;
+    border: none;
+    margin: 35px 0;
+    border-bottom: 3px solid #ddd;
+}
+
+@media(min-width: 750px) { 
+
+    .section {
+        max-width: 968px;
+    }
+
+}
+
+
