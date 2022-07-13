@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AiFillStar } from 'react-icons/ai';
 import { FaDna } from 'react-icons/fa';
@@ -16,24 +16,26 @@ import defUser from '../../../imgs/default.jpg';
 
 
 const BrowseAll = () => {
+    const [category, setCategory] = useState('all');
+
     return (
         <div className={classes.browseAllContainer}>
             
             <div className={`${classes.catSection} ${classes.section}`}>
 
-                <div className='category active'>
+                <div className={`category ${ category === 'all' && 'active'}`} onClick={() => setCategory('all')}>
                     <span className='allCatsIcon'><GiHamburgerMenu /></span>
                     <div className={classes.categoryName}>All Categories</div>
                 </div>
-                <div className='category'>
+                <div className={`category ${ category === 'biology' && 'active'}`} onClick={() => setCategory('biology')}>
                     <span className='biologyIcon'><FaDna /></span>
                     <div className={classes.categoryName}>Biology</div>
                 </div>
-                <div className='category'>
+                <div className={`category ${ category === 'technology' && 'active'}`} onClick={() => setCategory('technology')}>
                     <span className='technologyIcon'><MdOutlineComputer /></span>
                     <div className={classes.categoryName}>Technology</div>
                 </div>
-                <div className='category'>
+                <div className={`category ${ category === 'engineering' && 'active'}`} onClick={() => setCategory('engineering')}>
                     <span className='engineeringIcon'><GiGears /></span>
                     <div className={classes.categoryName}>Engineering</div>
                 </div>

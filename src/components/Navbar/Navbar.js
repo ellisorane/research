@@ -31,22 +31,20 @@ const Navbar = () => {
                 </div>
 
                 {/* For smaller screens. Hidden on bigger screens  */}
-                {/* {
-                    showNav ? */}
-                    <div className={`${classes.smScreenMenu} ${ showNav ? classes.smScreenMenuOpen : classes.smScreenMenuClosed }`}>
-                        <div className={classes.smScreenMenuContainer}>
-                            <div className={classes.sitelogo}><h1>research</h1></div>
-                            <NavSearch />
-                            <hr style={{ width: '100%' }} />
-                            <div className={classes.navLinks}>
-                                <Link to="/" className={classes.navLink} onClick={ () => setShowNav(false) }>Discover</Link>
-                                <Link to="/start-project" className={classes.navLink} onClick={ () => setShowNav(false) }>Start a Project</Link>
-                                <Link to="/profile" className={classes.navLink} onClick={ () => setShowNav(false) }>Profile</Link>
-                            </div>
+                <div className={`${classes.smScreenMenu} ${ showNav ? classes.smScreenMenuOpen : classes.smScreenMenuClosed }`}>
+                    <div className={classes.smScreenMenuContainer}>
+                        <div className={classes.sitelogo}><h1>research</h1></div>
+                        <NavSearch />
+                        <hr style={{ width: '100%' }} />
+                        <div className={classes.navLinks}>
+                            <Link to="/" className={classes.navLink} onClick={ () => setShowNav(false) }>Discover</Link>
+                            <Link to="/start-project" className={classes.navLink} onClick={ () => setShowNav(false) }>Start a Project</Link>
+                            <Link to="/profile" className={classes.navLink} onClick={ () => setShowNav(false) }>Profile</Link>
                         </div>
-                        <div className={classes.closeMenu} onClick={ () => setShowNav(false) }>&#66338;</div>
                     </div>
-                {/* }            */}
+                    <div className={classes.closeMenu} onClick={ () => setShowNav(false) }>&#66338;</div>
+                </div>
+                
             </div>
             
 

@@ -241,13 +241,16 @@ $siteGreen: #36AB9B;
 
     .lgScreenMenu {
         display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .navLink {
         margin-right: 25px;
         opacity: 0.8;
-        transition: all 0.1s;
+        transition: all 0.2s;
         font-weight: bold;
+        border-bottom: 3px solid transparent;
     }
 
     .navLink:hover {

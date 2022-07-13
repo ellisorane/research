@@ -9,6 +9,8 @@ import FundedProjects from './FundedProjects/FundedProfile';
 
 const Profile = () => {
     const [activeTab, setActiveTab] = useState(true);
+    const [showMore, setShowMore] = useState(false);
+
 
     return (
         <div className={classes.profileContainer}>
@@ -22,12 +24,14 @@ const Profile = () => {
                         <div className={classes.pActionsBtn}>Follow</div>
                     </div>
 
-                    <p className={classes.more}>More ▽</p>
-                    <div className={classes.moreDiv}>
-                        <hr className={classes.useDivider}></hr>
-                        <div><strong>Joined</strong></div>
-                        <p>July 2022</p>
-                    </div>
+                    <p className={classes.more} onClick={() => setShowMore(!showMore)}>{!showMore ? 'More ▽' : 'Less △'}</p>
+                    { showMore &&
+                        <div className={classes.moreDiv}>
+                            <hr className={classes.useDivider}></hr>
+                            <div><strong>Joined</strong></div>
+                            <p>July 2022</p>
+                        </div>
+                    }
                 </div>
             </div>
 

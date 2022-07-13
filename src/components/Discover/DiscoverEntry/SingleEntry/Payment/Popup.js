@@ -13,7 +13,7 @@ const Popup = (props) => {
             </div>
             <p>Fill out your payment info to recieve updates & results from this experiment.</p>
             <p>If you have any questions, send us an email at support@research.com.</p>
-            <p>Secure 2038-bit SSL encrypted</p>
+            <p>Secure 2048-bit SSL encrypted</p>
         </div>
     );
 }
