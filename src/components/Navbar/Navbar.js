@@ -31,9 +31,9 @@ const Navbar = () => {
                 </div>
 
                 {/* For smaller screens. Hidden on bigger screens  */}
-                {
-                    showNav ?
-                    <div className={classes.smScreenMenu}>
+                {/* {
+                    showNav ? */}
+                    <div className={`${classes.smScreenMenu} ${ showNav ? classes.smScreenMenuOpen : classes.smScreenMenuClosed }`}>
                         <div className={classes.smScreenMenuContainer}>
                             <div className={classes.sitelogo}><h1>research</h1></div>
                             <NavSearch />
@@ -45,8 +45,8 @@ const Navbar = () => {
                             </div>
                         </div>
                         <div className={classes.closeMenu} onClick={ () => setShowNav(false) }>&#66338;</div>
-                    </div> : null
-                }           
+                    </div>
+                {/* }            */}
             </div>
             
 

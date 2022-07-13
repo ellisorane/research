@@ -1,43 +1,37 @@
-.paymentMobileScreens {
-    transition: all 0.5s;
-    position: fixed;
-    background-color: #fff;
+$siteGreen: #36AB9B;
+
+.payment {
     z-index: 1000;
     top: 0;
     left: 0;
+    transition: all 0.5s;
+    position: fixed;
     min-height: 100vh;
     width: 100%;
+    background-color: #fff;
 }
 
-.paymentMobileScreenClosed {
+.paymentClosed {
     transform: translateX(100%);
     opacity: 0;
 }
 
-.paymentMobileScreenOpen {
+.paymentOpen {
     transform: translateX(0);
     opacity: 1;
-    overflow-x: hidden; 
-    overflow-y: auto;
-}
-
-.fundingLgScreens {
-    display: none;
 }
 
 .innerContainer {
     width: 80%;
     margin: auto;
     padding-top: 20px;
+}
 
-    .paymentHeading, p {
-        color: #2b9b8c;
-    }
-
-    p {
-        font-size: 13px;
-        font-weight: bold;
-    }
+.popup, .paymentNote {
+    color: #2b9b8c;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .paymentHeading {
@@ -104,7 +98,6 @@
 .cardExpiration {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    // gap: 15px;
 
     .lineInputs {
         width: 100px;
@@ -123,6 +116,69 @@
     margin: auto;
 }
 
-.paymentNote {
-    text-align: center;
+
+@media(min-width: 985px) { 
+    .payment {
+        transition: all 0.5s;
+        position: absolute;
+        min-height: fit-content;
+        top: auto;
+        bottom: 0;
+        background-color: transparent;
+    }
+
+    .popup {
+        position: absolute;
+        transition: all 0.5s;
+        background-color: #f1fefa;
+        border: 2px solid $siteGreen;
+        padding: 15px;
+        border-radius: 5px;
+        color: rgb(40, 62, 46);
+        font-weight: normal;
+    }
+
+    // Popup down arrow
+    .popup::after {
+        // layout
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        top: 100%;
+        left: 45%; // offset should move with padding of parent
+        border: .75rem solid transparent;
+        border-bottom: none;
+    
+        // looks
+        border-top-color: #f1fefa;
+        filter: drop-shadow(0 2px 0  $siteGreen);
+    }
+    
+
+    .popupClosed {
+        opacity: 0;
+    }
+
+    .popupOpen {
+        opacity: 1;
+        transform: translateY(-100%);
+    }
+
+    .closeBtn {
+        font-size: 11px;
+        padding-left: 10px;
+        padding-bottom: 10px;
+    }
+
+    .innerContainer {
+        width: 100%;
+        margin: auto;
+        padding: 10px;
+        background-color: #fff;
+    }
+
+    .paymentNote {
+        display: none;
+    }
 }

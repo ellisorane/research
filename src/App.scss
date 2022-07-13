@@ -73,17 +73,15 @@ a {
 }
 
 .fundingGoalWrapper {
+  display: flex;
   width: auto;
+  overflow: hidden;
 
   input {
       border: none;
       outline: none;
-
   }
   
-  div { 
-      display: inline-block;
-  }
 }
 
 .inputs {
@@ -94,6 +92,6 @@ a {
   outline: none;
 }
 
-.inputs:focus-within {
+.inputs:focus, .inputs:focus-within {
   border: 2px solid #36AB9B;
 }

@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
-import MobilePayment from './MobilePayment';
+import Popup from './Popup';
+import PForm from './PForm';
 
 import classes from './Payment.module.scss';
 
 const Funding = ({ showPayment, setShowPayment }) => { 
     return(
         <div>
-            <MobilePayment showPayment={ showPayment } setShowPayment={setShowPayment} />
-            <div className={classes.paymentLgScreens}>
-                Hello lg screens
+            <div className={`${classes.payment} ${showPayment ? classes.paymentOpen : classes.paymentClosed}`}>
+                <div className={classes.innerContainer}>
+                    <Popup setShowPayment={setShowPayment} showPayment={showPayment} />
+                    <PForm />
+                </div>    
             </div>
         </div>
     );

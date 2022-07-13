@@ -39,8 +39,8 @@ const SingleEntry = () => {
 
 
                     <div className={classes.fundingBox}>
-
                         <Payment showPayment={showPayment} setShowPayment={setShowPayment} />
+
 
                         <div className={classes.pledged}>
                             <h1>$1,245</h1>
