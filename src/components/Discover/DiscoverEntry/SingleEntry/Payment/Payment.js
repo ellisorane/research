@@ -5,12 +5,13 @@ import PForm from './PForm';
 
 import classes from './Payment.module.scss';
 
-const Funding = ({ showPayment, setShowPayment }) => { 
+const Payment = ({ showPayment }) => { 
+
     return(
         <div>
             <div className={`${classes.payment} ${showPayment ? classes.paymentOpen : classes.paymentClosed}`}>
                 <div className={classes.innerContainer}>
-                    <Popup setShowPayment={setShowPayment} showPayment={showPayment} />
+                    <Popup showPayment={showPayment} />
                     <PForm />
                 </div>    
             </div>
@@ -18,4 +19,4 @@ const Funding = ({ showPayment, setShowPayment }) => {
     );
 }
 
-export default Funding;
+export default Payment;

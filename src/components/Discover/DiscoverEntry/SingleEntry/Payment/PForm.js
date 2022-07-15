@@ -13,20 +13,20 @@ const PForm = () => {
             <label>PAYMENT INFORMATION</label><br />
             <div className={classes.fields}>
                 <div className={classes.hiddenLabel}>FULL NAME</div>
-                <input className={classes.lineInputs} type="text" name="Name on card" placeholder='Your Full Name' autocomplete="cc-name" />
+                <input className={classes.lineInputs} type="text" name="Name on card" placeholder='Your Full Name' autoComplete="cc-name" />
             </div>
             <div className={classes.fields}>
                 <div className={classes.hiddenLabel}>CARD NUMBER</div>
-                <input className={classes.lineInputs} type="tel" name="Card number" placeholder='Credit Card Number' autocomplete="cc-number" />
+                <input className={classes.lineInputs} type="tel" name="Card number" placeholder='Credit Card Number' autoComplete="cc-number" />
             </div>
             <div className={classes.cardExpiration}>
                 <div className={classes.fields}>
                     <div className={classes.hiddenLabel}>MM/YY</div>
-                    <input className={classes.lineInputs} type="text" name="Expiration" placeholder='MM / YY' autocomplete="cc-exp" />
+                    <input className={classes.lineInputs} type="text" name="Expiration" placeholder='MM / YY' autoComplete="cc-exp" />
                 </div>
                 <div className={classes.fields}>
                     <div className={classes.hiddenLabel}>CVC</div>
-                    <input className={classes.lineInputs} type="tel" name="Cvc" placeholder='CVC' autocomplete="off" />
+                    <input className={classes.lineInputs} type="tel" name="Cvc" placeholder='CVC' autoComplete="off" />
                 </div>
             </div>
             <div className={`${classes.fields} ${classes.anon}`}>

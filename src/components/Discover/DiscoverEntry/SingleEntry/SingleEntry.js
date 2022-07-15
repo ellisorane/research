@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import  { useSelector, useDispatch } from 'react-redux';
 
 import Payment from "./Payment/Payment";
+
+import { openPayment } from "../../../../features/payment/paymentSlice";
 
 import classes from "./SingleEntry.module.scss";
 import parent from "../DiscoverEntry.module.scss";
@@ -9,7 +12,9 @@ import discover from "../../Discover.module.scss";
 import entryImage from '../../../../imgs/fruit research.jpg';
 
 const SingleEntry = () => {
-    const [showPayment, setShowPayment] = useState(false);
+    // const [showPayment, setShowPayment] = useState(false);
+    const showPayment = useSelector(state => state.payment.value);
+    const dispatch = useDispatch();
 
     return(
         <div className={classes.singleEntryContainer}>
@@ -39,8 +44,7 @@ const SingleEntry = () => {
 
 
                     <div className={classes.fundingBox}>
-                        <Payment showPayment={showPayment} setShowPayment={setShowPayment} />
-
+                        <Payment showPayment={showPayment} />
 
                         <div className={classes.pledged}>
                             <h1>$1,245</h1>
@@ -81,7 +85,7 @@ const SingleEntry = () => {
                             </div>
                         </div>
 
-                        <div className={classes.fundBtn} onClick={ () => setShowPayment(true) }>Back this Project</div>
+                        <div className={classes.fundBtn} onClick={ () => dispatch(openPayment()) }>Back this Project</div>
 
                     </div>
 

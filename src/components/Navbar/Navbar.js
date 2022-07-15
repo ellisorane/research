@@ -9,7 +9,6 @@ const Navbar = () => {
     const path = useLocation().pathname; 
     const [showNav, setShowNav] = useState(false);
 
-    // useEffect(() => {setShowNav(false)}, [path]);
 
     return (
         // Use white font on homepage and black font for all other pages
@@ -28,6 +27,7 @@ const Navbar = () => {
                     <Link to="/" className={classes.navLink}>Discover</Link>
                     <Link to="/start-project" className={classes.navLink}>Start a Project</Link>
                     <Link to="/profile" className={classes.navLink}>Profile</Link>
+                    <Link to="/counter" className={classes.navLink}>Counter</Link>
                 </div>
 
                 {/* For smaller screens. Hidden on bigger screens  */}
