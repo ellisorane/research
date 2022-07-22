@@ -18,6 +18,13 @@ const Counter = () => {
                 <input type='number' value={incrementAmount} onChange={(e) => setIncrementAmount(e.target.value)} />
                 <button onClick={() => dispatch(incrementByAmount(incrementAmount))}>← Add by Amount</button>
             </div>
+
+            <form style={{marginTop: '150px'}}>
+                <input type={'text'} name='node-post' />
+                <input type={'submit'} name='node-submit' />
+            </form>
+            <h3>Info from form</h3>
+
         </div>
     );
 }
