@@ -6,7 +6,7 @@ const ProjectSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
-    name: {
+    title: {
         type: String,
         required: true,
         unique: true
@@ -27,12 +27,12 @@ const ProjectSchema = new mongoose.Schema({
         type: Number,
         default: 30
     },
+    amountFunded: {
+        type: Number
+    },
     category: {
         type: String,
         required: true
-    },
-    tags: {
-        type: [String]
     },
     image: {
         type: String,

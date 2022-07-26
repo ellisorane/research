@@ -11,8 +11,9 @@ connectDB();
 // Allows for req.body use
 app.use(express.json({ extended: false }));
 
-// Below are needed to access the static files 
+// Below are needed to access the uploaded avatar files 
 app.use('/static', express.static('public'));
+app.use('/uploads', express.static('public/uploads'));
 
 app.get('/', (req, res) => {
     console.log('hi')
