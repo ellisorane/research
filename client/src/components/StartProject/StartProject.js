@@ -37,8 +37,18 @@ const StartProject = () => {
 
         try {
             const res = await axios.post('/projects/addProject', data, config);
-            // console.log(res);
+            console.log(res);
+
+            setFormData({
+                title: '',
+                description: '',
+                researchers: '',
+                fundingGoal: '',
+                daysToFund: 30,
+                category: ''
+            });
             setFormSubmitted(true);
+            
         } catch(err) {
             console.error(err);
         }
@@ -48,7 +58,7 @@ const StartProject = () => {
     return (
        <div className={classes.container}>
         <div className={classes.border}></div>
-            {!formSubmitted ? <Form formData={formData} setFormData={setFormData} setImage={setImage} createProject={createProject}  /> : <Success />}
+            {!formSubmitted ? <Form formData={formData} setFormData={setFormData} setImage={setImage} createProject={createProject}  /> : <Success setFormSubmitted={setFormSubmitted} />}
        </div>
     );
 }

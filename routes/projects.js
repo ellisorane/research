@@ -55,12 +55,13 @@ router.post('/addProject', [upload.single('image')], async(req, res) => {
             image: image
         });
         await project.save();
-        
-        console.log('Project Created');
-        // console.log(req.body.formText);
-        // console.log(req.body.formText);
+
+        // console.log('Project Created');
         // console.log("Image: " + image);
         // console.log(title, description, researchers, fundingGoal, daysToFund, category);
+
+        res.json(project);
+        
     } catch(err) {
         console.error(err.message);
         res.status(500).send('Server Error');
