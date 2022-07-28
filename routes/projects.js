@@ -10,7 +10,8 @@ const multerStorage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const ext = file.mimetype.split('/')[1];
-        cb(null, `user-${req.user.id}-${Date.now()}.${ext}`)
+        // cb(null, `user-${req.user.id}-${Date.now()}.${ext}`)
+        cb(null, `user-test-${Date.now()}.${ext}`)
     }
 });
 const multerFilter = (req, file, cb) => {
@@ -38,9 +39,11 @@ router.get('/', async(req, res) => {
 // @route   POST /projects/addProject
 // @desc    Create project
 // @access  Public
-router.post('/addProject', async(req, res) => {
+router.post('/addProject', [upload.single('image')], async(req, res) => {
+// router.post('/addProject', async(req, res) => {
 
-    const { title, description, researchers, fundingGoal, daysToFund, category, image } = req.body.formData;
+    const { title, description, researchers, fundingGoal, daysToFund, category } = JSON.parse(req.body.formText);
+    const image = req.file.filename;
     try {
         const project = await new Project({ 
             title: title, 
@@ -49,12 +52,15 @@ router.post('/addProject', async(req, res) => {
             fundingGoal: fundingGoal, 
             daysToFund: daysToFund, 
             category: category,
-            image: image 
+            image: image
         });
         await project.save();
-        // res.send('Project created: ' + name);
-        console.log('Test Created');
-        // console.log(title, description, researchers, fundingGoal, daysToFund, category, image);
+        
+        console.log('Project Created');
+        // console.log(req.body.formText);
+        // console.log(req.body.formText);
+        // console.log("Image: " + image);
+        // console.log(title, description, researchers, fundingGoal, daysToFund, category);
     } catch(err) {
         console.error(err.message);
         res.status(500).send('Server Error');

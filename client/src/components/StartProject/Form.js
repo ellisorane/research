@@ -7,9 +7,10 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 
 import classes from './StartProject.module.scss';
 
-const Form = ({ formData, setFormData,  createProject }) => {
+const Form = ({ formData, setFormData, setImage, createProject }) => {
     const onChangeFormData = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-    const setImgFile = (e) => setFormData({ ...formData, image: e.target.files[0].name });
+    const setImgFile = (e) => setImage(e.target.files[0]);
+    
     return(
         <form className={classes.startProjForm} onSubmit={(e) => createProject(e)}>
             <h2 className={classes.formHeader}>Start a Project</h2>

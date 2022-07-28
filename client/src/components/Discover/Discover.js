@@ -14,6 +14,10 @@ import heroImg from '../../imgs/hero.jpg';
 
 
 const Discover = () => {
+
+    const getLatestProjects = () => {
+        
+    }
     return (
         <main>
             <div className={classes.heroContainer}>
@@ -43,8 +47,9 @@ const Discover = () => {
                 </div>
 
                 <div className={classes.entryContanier}>
-                    <Link to="/entry"><DiscoverEntry /></Link>
+                    {/* <Link to="/entry"><DiscoverEntry /></Link>
                     <DiscoverEntry />
+                    <DiscoverEntry /> */}
                     <DiscoverEntry />
                 </div>
             </div>

@@ -11,11 +11,14 @@ const StartProject = () => {
         title: '',
         description: '',
         researchers: '',
-        fundingGoal: 0,
+        fundingGoal: '',
         daysToFund: 30,
-        category: '',
-        image: ''
+        category: ''
     })
+
+    const { title, description, researchers, fundingGoal, daysToFund, category } = formData;
+
+    const [image, setImage] = useState();
 
     const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -23,28 +26,29 @@ const StartProject = () => {
         e.preventDefault();
         const config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data'
             }
         }
 
-        const body = JSON.stringify({ formData });
+        const formText = JSON.stringify( { title, description, researchers, fundingGoal, daysToFund, category } );
+        let data = new FormData();
+        data.append('formText', formText);
+        data.append('image', image);
 
         try {
-            // const res = await axios.post('/projects/addProject', body, config);
+            const res = await axios.post('/projects/addProject', data, config);
             // console.log(res);
-            console.log('Success');
             setFormSubmitted(true);
         } catch(err) {
             console.error(err);
         }
 
-        
     }
 
     return (
        <div className={classes.container}>
         <div className={classes.border}></div>
-            {!formSubmitted ? <Form formData={formData} setFormData={setFormData}  createProject={createProject}  /> : <Success />}
+            {!formSubmitted ? <Form formData={formData} setFormData={setFormData} setImage={setImage} createProject={createProject}  /> : <Success />}
        </div>
     );
 }
