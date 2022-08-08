@@ -2,11 +2,14 @@ $siteGreen: #36AB9B;
 
 
 .DiscEntryContainer {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     margin: 20px auto;
     border-radius: 5px;
     border: 1px solid rgb(233, 233, 233);
     cursor: pointer;
+
 
     p {
         font-size: 1rem;
@@ -15,10 +18,22 @@ $siteGreen: #36AB9B;
 
 .entryImg {
     width: 100%;
+    height: 250px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position:center;
 }
 
 .innerContainer {
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.description {
+    height: 100%;
 }
 
 .researcherInfo {

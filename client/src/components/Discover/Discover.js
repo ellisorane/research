@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+
 import { Link } from 'react-router-dom';
 import { AiFillStar } from 'react-icons/ai';
 import { FaDna } from 'react-icons/fa';
@@ -6,18 +6,18 @@ import { MdOutlineComputer } from 'react-icons/md';
 import { GiGears } from 'react-icons/gi';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
+import { setProjects } from '../../features/projects/projectsSlice';
+
 import DiscoverEntry from './DiscoverEntry/DiscoverEntry';
+import Spinner from '../Spinner/Spinner';
 
 import classes from './Discover.module.scss';
 
 import heroImg from '../../imgs/hero.jpg';
 
 
-const Discover = () => {
-
-    const getLatestProjects = () => {
-        
-    }
+const Discover = ({ projects, loading }) => {
+    
     return (
         <main>
             <div className={classes.heroContainer}>
@@ -47,10 +47,22 @@ const Discover = () => {
                 </div>
 
                 <div className={classes.entryContanier}>
-                    {/* <Link to="/entry"><DiscoverEntry /></Link>
-                    <DiscoverEntry />
-                    <DiscoverEntry /> */}
-                    <DiscoverEntry />
+
+                    { !loading ? projects.map((item, index) => 
+                            <DiscoverEntry 
+                            key={item._id} 
+                            title={item.title} 
+                            description={item.description} 
+                            researchers={item.researchers} 
+                            fundingGoal={item.fundingGoal} 
+                            daysToFund={item.daysToFund} 
+                            image={item.image}
+                            category={item.daysToFund}
+                            date={item.daysToFund} 
+                            amountFunded={item.daysToFund} />
+                        ) : 
+                        <Spinner /> }
+
                 </div>
             </div>
 

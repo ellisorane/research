@@ -7,7 +7,7 @@ import user from '../../imgs/default.jpg';
 import ProjectsStarted from './ProjectsStarted/ProfileStarted';
 import FundedProjects from './FundedProjects/FundedProfile';
 
-const Profile = () => {
+const Profile = ({ projects, loading }) => {
     const [activeTab, setActiveTab] = useState(true);
     const [showMore, setShowMore] = useState(false);
 
@@ -42,7 +42,7 @@ const Profile = () => {
                 </div>
 
                 {
-                    activeTab ? <ProjectsStarted /> : <FundedProjects />
+                    activeTab ? <ProjectsStarted projects={projects} loading={loading} /> : <FundedProjects projects={projects} loading={loading} />
                 }
 
             </div>

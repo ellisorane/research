@@ -29,7 +29,7 @@ const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
 // @access  Public
 router.get('/', async(req, res) => {
     try {
-        const projects = await Projects.find();
+        const projects = await Project.find();
         res.json(projects);
     } catch(err) {
         console.error(err.message);
@@ -40,7 +40,6 @@ router.get('/', async(req, res) => {
 // @desc    Create project
 // @access  Public
 router.post('/addProject', [upload.single('image')], async(req, res) => {
-// router.post('/addProject', async(req, res) => {
 
     const { title, description, researchers, fundingGoal, daysToFund, category } = JSON.parse(req.body.formText);
     const image = req.file.filename;
@@ -50,15 +49,12 @@ router.post('/addProject', [upload.single('image')], async(req, res) => {
             description: description, 
             researchers: researchers, 
             fundingGoal: fundingGoal, 
-            daysToFund: daysToFund, 
+            daysToFund: daysToFund,
+            amountFunded: 0, 
             category: category,
             image: image
         });
         await project.save();
-
-        // console.log('Project Created');
-        // console.log("Image: " + image);
-        // console.log(title, description, researchers, fundingGoal, daysToFund, category);
 
         res.json(project);
         

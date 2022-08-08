@@ -38,6 +38,9 @@ const ProjectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    funders: {
+        type: [String]
+    },
     date: {
         type: Date,
         default: () => Date.now(),

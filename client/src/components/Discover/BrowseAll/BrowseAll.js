@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { AiFillStar } from 'react-icons/ai';
 import { FaDna } from 'react-icons/fa';
@@ -6,7 +8,10 @@ import { MdOutlineComputer } from 'react-icons/md';
 import { GiGears } from 'react-icons/gi';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
+import { setProjects } from '../../../features/projects/projectsSlice';
+
 import DiscoverEntry from '../DiscoverEntry/DiscoverEntry';
+import Spinner from '../../Spinner/Spinner';
 
 import parent from '../Discover.module.scss';
 import classes from './BrowseAll.module.scss';
@@ -15,8 +20,39 @@ import img from '../../../imgs/fruit research.jpg';
 import defUser from '../../../imgs/default.jpg';
 
 
-const BrowseAll = () => {
+const BrowseAll = ({ projects, loading }) => {
+    
     const [category, setCategory] = useState('all');
+
+    const catsegorySelect = (project) => {
+        if(category === 'all') {
+            return <DiscoverEntry 
+            key={project._id} 
+            title={project.title} 
+            description={project.description} 
+            researchers={project.researchers} 
+            fundingGoal={project.fundingGoal} 
+            daysToFund={project.daysToFund} 
+            image={project.image}
+            category={project.daysToFund}
+            date={project.daysToFund} 
+            amountFunded={project.daysToFund} />
+        } else {
+            if(project.category === category) {
+                return <DiscoverEntry 
+                key={project._id} 
+                title={project.title} 
+                description={project.description} 
+                researchers={project.researchers} 
+                fundingGoal={project.fundingGoal} 
+                daysToFund={project.daysToFund} 
+                image={project.image}
+                category={project.daysToFund}
+                date={project.daysToFund} 
+                amountFunded={project.daysToFund} />
+            } 
+        }
+    }
 
     return (
         <div className={classes.browseAllContainer}>
@@ -43,18 +79,9 @@ const BrowseAll = () => {
             </div>
 
             <hr className={classes.divider} />
-
+            <h1 style={{ width: 'fit-content', margin: 'auto', textDecoration: 'underline' }}>{category} projects</h1>
             <div className={`${parent.entryContanier} ${classes.section}`}>
-                <Link to="/entry"><DiscoverEntry /></Link>
-                <DiscoverEntry />
-                <DiscoverEntry />
-                <DiscoverEntry />
-                <DiscoverEntry />
-                <DiscoverEntry />
-                <DiscoverEntry />
-                <DiscoverEntry />
-                <DiscoverEntry />
-                <DiscoverEntry />
+                { !loading ? projects.map((item) => catsegorySelect(item)) : <Spinner /> }
             </div>
 
         </div>
