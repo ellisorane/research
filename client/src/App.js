@@ -21,6 +21,8 @@ const App = () => {
   const projects = useSelector(state => state.projects.data[0]);
     const loading = useSelector(state => state.projects.loading);
     const dispatch = useDispatch();
+    const [category, setCategory] = useState('all');
+
 
     const getLatestProjects = async() => {
         try {
@@ -39,9 +41,9 @@ const App = () => {
     <div className="App">
       <Navbar />
       <Routes>
-        <Route path="/" element={ <Discover projects={projects} loading={loading} /> } />
-        <Route path="/browse-all" element={ <BrowseAll projects={projects} loading={loading} /> } />
-        <Route path="/entry" element={ <SingleEntry /> } />
+        <Route path="/" element={ <Discover projects={projects} loading={loading} category={category} setCategory={setCategory} />  } />
+        <Route path="/browse-all" element={ <BrowseAll projects={projects} loading={loading} category={category} setCategory={setCategory} /> } />
+        <Route path="/entry/:id" element={ <SingleEntry /> } />
         <Route path="/start-project" element={ <StartProject /> } />
         <Route path="/profile" element={ <Profile projects={projects} loading={loading} /> } />
         <Route path="/counter" element={ <Counter /> } />

@@ -19,6 +19,10 @@ const ProjectSchema = new mongoose.Schema({
         type: String,
         // required: true
     },
+    institution: {
+        type: String,
+        default: 'Betterment Research Institute'
+    },
     fundingGoal: {
         type: Number,
         // required: true

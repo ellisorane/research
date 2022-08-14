@@ -14,10 +14,16 @@ import Spinner from '../Spinner/Spinner';
 import classes from './Discover.module.scss';
 
 import heroImg from '../../imgs/hero.jpg';
+import { useEffect } from 'react';
 
 
-const Discover = ({ projects, loading }) => {
+const Discover = ({ projects, loading, category, setCategory }) => {
     
+    useEffect(() => {
+        // Reset category to all when the page renders
+        setCategory('all');
+    }, []);
+
     return (
         <main>
             <div className={classes.heroContainer}>
@@ -51,6 +57,7 @@ const Discover = ({ projects, loading }) => {
                     { !loading ? projects.map((item, index) => 
                             <DiscoverEntry 
                             key={item._id} 
+                            entryId={item._id}
                             title={item.title} 
                             description={item.description} 
                             researchers={item.researchers} 
@@ -59,7 +66,7 @@ const Discover = ({ projects, loading }) => {
                             image={item.image}
                             category={item.daysToFund}
                             date={item.daysToFund} 
-                            amountFunded={item.daysToFund} />
+                            amountFunded={item.amountFunded} />
                         ) : 
                         <Spinner /> }
 
@@ -72,18 +79,18 @@ const Discover = ({ projects, loading }) => {
                     <h2><span className={classes.headerIcon}><GiHamburgerMenu /></span>Browse by Category</h2>
                 </div>
 
-                <div className='category'>
+                <Link to="browse-all" className='category' onClick={() => setCategory('biology')}>
                     <span className='biologyIcon'><FaDna /></span>
                     <div className={classes.categoryName}>Biology</div>
-                </div>
-                <div className='category'>
+                </Link>
+                <Link to="browse-all" className='category' onClick={() => setCategory('technology')}>
                     <span className='technologyIcon'><MdOutlineComputer /></span>
                     <div className={classes.categoryName}>Technology</div>
-                </div>
-                <div className='category'>
+                </Link>
+                <Link to="browse-all" className='category' onClick={() => setCategory('engineering')}>
                     <span className='engineeringIcon'><GiGears /></span>
                     <div className={classes.categoryName}>Engineering</div>
-                </div>
+                </Link>
                 
             </div>
         </main>

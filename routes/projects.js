@@ -64,4 +64,17 @@ router.post('/addProject', [upload.single('image')], async(req, res) => {
     }
 });
 
+// @route   GET /projects
+// @desc    Get project by ID
+// @access  Public
+router.get('/:id', async(req, res) => {
+    try {
+        const project = await Project.findById(req.params.id);
+        if(!project) res.status(404).json({ msg: "Project not found"});
+        res.json(project);
+    } catch(err) {
+        console.error(err.message);
+    }
+});
+
 module.exports = router;

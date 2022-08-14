@@ -23,7 +23,7 @@ const FundedProjects = ({ projects, loading }) => {
                 image={item.image}
                 category={item.daysToFund}
                 date={item.daysToFund} 
-                amountFunded={item.daysToFund} />
+                amountFunded={item.amountFunded} />
             ) : 
             <Spinner /> }
             

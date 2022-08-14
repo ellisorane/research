@@ -20,10 +20,8 @@ import img from '../../../imgs/fruit research.jpg';
 import defUser from '../../../imgs/default.jpg';
 
 
-const BrowseAll = ({ projects, loading }) => {
+const BrowseAll = ({ projects, loading, category, setCategory }) => {
     
-    const [category, setCategory] = useState('all');
-
     const catsegorySelect = (project) => {
         if(category === 'all') {
             return <DiscoverEntry 

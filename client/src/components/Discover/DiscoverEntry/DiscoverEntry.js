@@ -1,4 +1,7 @@
 import React from 'react';
+import NumberFormat from 'react-number-format';
+import { Link } from 'react-router-dom';
+
 
 import classes from './DiscoverEntry.module.scss';
 
@@ -6,9 +9,9 @@ import img from '../../../imgs/fruit research.jpg';
 import defUser from '../../../imgs/default.jpg';
 
 
-const DiscoverEntry = ({ title, description, researchers, fundingGoal, daysToFund, category, image, date, amountFunded }) => {
+const DiscoverEntry = ({ entryId, title, description, researchers, fundingGoal, daysToFund, category, image, date, amountFunded }) => {
     return (
-        <div className={classes.DiscEntryContainer}>
+        <Link to={`/entry/${entryId}`} className={classes.DiscEntryContainer}>
             {/* image  */}
             <div style={{ backgroundImage: `url("/uploads/${image}")` }}  className={classes.entryImg}></div>
 
@@ -31,16 +34,16 @@ const DiscoverEntry = ({ title, description, researchers, fundingGoal, daysToFun
 
                     {/* progress bar for amount funded */}
                     <div className={classes.progressBar}>
-                        <div className={classes.progress}></div>
+                        <div className={classes.progress} style={{ width: `${amountFunded/fundingGoal * 100}%` }}></div>
                     </div>
                     {/* funded percentage | funded goal | days left to get funded  */}
                     <div className={classes.entryFunding}>
                         <div>
-                            <h4>{amountFunded}</h4>
+                            <h4><NumberFormat value={amountFunded} displayType={'text'} thousandSeparator={true} prefix={'$'} /></h4>
                             <p>funded</p>
                         </div>
                         <div>
-                            <h4>${fundingGoal}</h4>
+                            <h4><NumberFormat value={fundingGoal} displayType={'text'} thousandSeparator={true} prefix={'$'} /></h4>
                             <p>goal</p>
                         </div>
                         <div>
@@ -51,7 +54,7 @@ const DiscoverEntry = ({ title, description, researchers, fundingGoal, daysToFun
                 </div>
 
             </div>
-        </div>
+        </Link>
     );
 }
 
