@@ -15,6 +15,7 @@ const ProjectsStarted = ({ getDaysLeft, projects, loading }) => {
             { !loading ? projects.map((item, index) => 
                 <DiscoverEntry 
                 key={item._id} 
+                entryId={item._id}
                 title={item.title} 
                 description={item.description} 
                 researchers={item.researchers} 

@@ -26,6 +26,7 @@ const BrowseAll = ({ projects, loading, category, setCategory, getDaysLeft }) =>
         if(category === 'all') {
             return <DiscoverEntry 
             key={project._id} 
+            entryId={project._id}
             title={project.title} 
             description={project.description} 
             researchers={project.researchers} 
@@ -40,6 +41,7 @@ const BrowseAll = ({ projects, loading, category, setCategory, getDaysLeft }) =>
             if(project.category === category) {
                 return <DiscoverEntry 
                 key={project._id} 
+                entryId={project._id}
                 title={project.title} 
                 description={project.description} 
                 researchers={project.researchers} 
