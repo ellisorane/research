@@ -4,10 +4,10 @@ import { Routes, Route, NavLink } from 'react-router-dom';
 import classes from './Profile.module.scss';
 import user from '../../imgs/default.jpg';
 
-import ProjectsStarted from './ProjectsStarted/ProfileStarted';
+import ProjectsStarted from './ProjectsStarted/ProjectsStarted';
 import FundedProjects from './FundedProjects/FundedProfile';
 
-const Profile = ({ projects, loading }) => {
+const Profile = ({ projects, loading, getDaysLeft }) => {
     const [activeTab, setActiveTab] = useState(true);
     const [showMore, setShowMore] = useState(false);
 
@@ -42,7 +42,7 @@ const Profile = ({ projects, loading }) => {
                 </div>
 
                 {
-                    activeTab ? <ProjectsStarted projects={projects} loading={loading} /> : <FundedProjects projects={projects} loading={loading} />
+                    activeTab ? <ProjectsStarted getDaysLeft={getDaysLeft} projects={projects} loading={loading} /> : <FundedProjects getDaysLeft={getDaysLeft} projects={projects} loading={loading} />
                 }
 
             </div>

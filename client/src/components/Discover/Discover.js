@@ -17,7 +17,7 @@ import heroImg from '../../imgs/hero.jpg';
 import { useEffect } from 'react';
 
 
-const Discover = ({ projects, loading, category, setCategory }) => {
+const Discover = ({ getDaysLeft, projects, loading, category, setCategory }) => {
     
     useEffect(() => {
         // Reset category to all when the page renders
@@ -65,8 +65,9 @@ const Discover = ({ projects, loading, category, setCategory }) => {
                             daysToFund={item.daysToFund} 
                             image={item.image}
                             category={item.daysToFund}
-                            date={item.daysToFund} 
-                            amountFunded={item.amountFunded} />
+                            date={item.date} 
+                            amountFunded={item.amountFunded}
+                            getDaysLeft={getDaysLeft} />
                         ) : 
                         <Spinner /> }
 

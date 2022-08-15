@@ -20,7 +20,7 @@ import img from '../../../imgs/fruit research.jpg';
 import defUser from '../../../imgs/default.jpg';
 
 
-const BrowseAll = ({ projects, loading, category, setCategory }) => {
+const BrowseAll = ({ projects, loading, category, setCategory, getDaysLeft }) => {
     
     const catsegorySelect = (project) => {
         if(category === 'all') {
@@ -33,8 +33,9 @@ const BrowseAll = ({ projects, loading, category, setCategory }) => {
             daysToFund={project.daysToFund} 
             image={project.image}
             category={project.daysToFund}
-            date={project.daysToFund} 
-            amountFunded={project.daysToFund} />
+            date={project.date} 
+            amountFunded={project.daysToFund}
+            getDaysLeft={getDaysLeft} />
         } else {
             if(project.category === category) {
                 return <DiscoverEntry 
@@ -46,8 +47,9 @@ const BrowseAll = ({ projects, loading, category, setCategory }) => {
                 daysToFund={project.daysToFund} 
                 image={project.image}
                 category={project.daysToFund}
-                date={project.daysToFund} 
-                amountFunded={project.daysToFund} />
+                date={project.date} 
+                amountFunded={project.daysToFund}
+                getDaysLeft={getDaysLeft} />
             } 
         }
     }

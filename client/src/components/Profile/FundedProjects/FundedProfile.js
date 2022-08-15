@@ -9,7 +9,7 @@ import Spinner from '../../Spinner/Spinner';
 
 
 
-const FundedProjects = ({ projects, loading }) => {
+const FundedProjects = ({ projects, loading, getDaysLeft }) => {
     return (
         <div className={classes.profileInfo}>
             { !loading ? projects.map((item, index) => 
@@ -22,8 +22,9 @@ const FundedProjects = ({ projects, loading }) => {
                 daysToFund={item.daysToFund} 
                 image={item.image}
                 category={item.daysToFund}
-                date={item.daysToFund} 
-                amountFunded={item.amountFunded} />
+                date={item.date} 
+                amountFunded={item.amountFunded}
+                getDaysLeft={getDaysLeft} />
             ) : 
             <Spinner /> }
             

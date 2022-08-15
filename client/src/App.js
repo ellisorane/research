@@ -33,6 +33,16 @@ const App = () => {
         }
     }
 
+    const getDaysLeft = (createdOn, daysToFund) => {
+      const projectCreatedOn = new Date(createdOn).getTime();
+      const today = new Date().getTime();
+      const daysSinceCreation = (today - projectCreatedOn)/(1000 * 60 * 60 *24);
+      const daysLeft = daysToFund - daysSinceCreation.toFixed(0);
+      return daysLeft;
+      
+
+  }
+
     useEffect(() => {
         getLatestProjects();
     }, []);
@@ -41,11 +51,11 @@ const App = () => {
     <div className="App">
       <Navbar />
       <Routes>
-        <Route path="/" element={ <Discover projects={projects} loading={loading} category={category} setCategory={setCategory} />  } />
-        <Route path="/browse-all" element={ <BrowseAll projects={projects} loading={loading} category={category} setCategory={setCategory} /> } />
-        <Route path="/entry/:id" element={ <SingleEntry /> } />
+        <Route path="/" element={ <Discover getDaysLeft={getDaysLeft} projects={projects} loading={loading} category={category} setCategory={setCategory} />  } />
+        <Route path="/browse-all" element={ <BrowseAll getDaysLeft={getDaysLeft} projects={projects} loading={loading} category={category} setCategory={setCategory} /> } />
+        <Route path="/entry/:id" element={ <SingleEntry getDaysLeft={getDaysLeft} /> } />
         <Route path="/start-project" element={ <StartProject /> } />
-        <Route path="/profile" element={ <Profile projects={projects} loading={loading} /> } />
+        <Route path="/profile" element={ <Profile getDaysLeft={getDaysLeft} projects={projects} loading={loading} /> } />
         <Route path="/counter" element={ <Counter /> } />
       </Routes>
       <Footer />

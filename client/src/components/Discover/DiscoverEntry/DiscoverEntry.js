@@ -9,7 +9,7 @@ import img from '../../../imgs/fruit research.jpg';
 import defUser from '../../../imgs/default.jpg';
 
 
-const DiscoverEntry = ({ entryId, title, description, researchers, fundingGoal, daysToFund, category, image, date, amountFunded }) => {
+const DiscoverEntry = ({ entryId, title, description, researchers, fundingGoal, daysToFund, category, image, date, amountFunded, getDaysLeft }) => {
     return (
         <Link to={`/entry/${entryId}`} className={classes.DiscEntryContainer}>
             {/* image  */}
@@ -47,7 +47,7 @@ const DiscoverEntry = ({ entryId, title, description, researchers, fundingGoal, 
                             <p>goal</p>
                         </div>
                         <div>
-                            <h4>{daysToFund}</h4>
+                            <h4>{getDaysLeft(date, daysToFund)}</h4>
                             <p>days left</p>
                         </div>
                     </div>
