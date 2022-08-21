@@ -9,18 +9,15 @@ import Spinner from '../../Spinner/Spinner';
 
 
 
-const ProjectsStarted = ({ projects, loading }) => {
+const ExpiredProjects = ({ projects, loading }) => {
     return (
         <div className={classes.profileInfo}>
             { !loading ? projects.map((item, index) => 
-                <DiscoverEntry 
-                key={item._id} 
-                project={item}
-                 />
+                item.daysLeft < 0 && <DiscoverEntry key={item._id} project={item} />
             ) : 
             <Spinner /> }
         </div>
     );
 }
 
-export default ProjectsStarted;
+export default ExpiredProjects;

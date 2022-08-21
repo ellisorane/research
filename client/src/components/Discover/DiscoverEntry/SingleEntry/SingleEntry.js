@@ -89,7 +89,7 @@ const SingleEntry = () => {
                                 <p>Goal</p>
                             </div>
                             <div>
-                                <h4 className={classes.fundedRightAlign}>{project.daysLeft}</h4>
+                                <h4 className={classes.fundedRightAlign}>{project.daysLeft < 0 ? 'Exp' : project.daysLeft}</h4>
                                 <p>Days left</p>
                             </div>
                         </div>
@@ -104,7 +104,7 @@ const SingleEntry = () => {
                                 <p>funded</p>
                             </div>
                             <div>
-                                <h4>{project.daysLeft}</h4>
+                                <h4>{project.daysLeft < 0 ? 'Exp' : project.daysLeft}</h4>
                                 <p>days left</p>
                             </div>
                         </div>

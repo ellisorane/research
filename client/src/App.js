@@ -36,11 +36,10 @@ const App = () => {
         }
       }
       const body = JSON.stringify({ daysLeft });
-
+      
       try {
-          const res = await axios.post(`/projects/daysLeft/${id}`, body, config);
-          console.log(res);
-          console.log('Worked');
+        await axios.post(`/projects/daysLeft/${id}`, body, config);
+        // console.log('Worked');
       } catch(err) {
         console.log(err);
       }
@@ -51,18 +50,23 @@ const App = () => {
         try {
             const res = await axios.get('/projects');
             dispatch(setProjects(res.data));
-            projects && projects.forEach(proj => getDaysLeft(proj.date, proj.daysToFund, proj._id));
             return projects;
-        } catch(err) {
+          } catch(err) {
             console.error(err);
-        }
+          }
+    }
+
+    const loadData = () => {
+      getLatestProjects();
+      !loading && projects.forEach(proj => getDaysLeft(proj.date, proj.daysToFund, proj._id));
+      getLatestProjects();
     }
 
     
 
     useEffect(() => {
-        getLatestProjects();
-    }, []);
+      loadData();
+    }, [loading]);
   
   return (
     <div className="App">

@@ -86,8 +86,6 @@ router.post('/daysLeft/:id', async(req, res) => {
     try {
         // Update user
         const project = await Project.updateOne( { _id: req.params.id }, { $set: { daysLeft: req.body.daysLeft } } );
-        console.log("ID: ", req.params.id);
-        console.log("Body(daysleft: )", req.body.daysLeft);
         res.json(project);
     } catch(err) {
         console.error(err.message);

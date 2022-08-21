@@ -47,7 +47,7 @@ const DiscoverEntry = ({ project }) => {
                             <p>goal</p>
                         </div>
                         <div>
-                            <h4>{project.daysLeft}</h4>
+                            <h4>{project.daysLeft < 0 ? 'Exp' : project.daysLeft}</h4>
                             <p>days left</p>
                         </div>
                     </div>

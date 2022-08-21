@@ -4,7 +4,7 @@ import { Routes, Route, NavLink } from 'react-router-dom';
 import classes from './Profile.module.scss';
 import user from '../../imgs/default.jpg';
 
-import ProjectsStarted from './ProjectsStarted/ProjectsStarted';
+import ProjectsStarted from './ExpiredProjects/ExpiredProjects';
 import FundedProjects from './FundedProjects/FundedProfile';
 
 const Profile = ({ projects, loading }) => {
@@ -37,7 +37,7 @@ const Profile = ({ projects, loading }) => {
 
             <div className={classes.profileInfoContainer}>
                 <div className={classes.profileNav}>
-                    <div className={`${classes.profileLink} ${activeTab && classes.active}`} onClick={ () => setActiveTab(true) }>Projects Started <span className={classes.count}>0</span></div>
+                    <div className={`${classes.profileLink} ${activeTab && classes.active}`} onClick={ () => setActiveTab(true) }>Expired Projects <span className={classes.count}>0</span></div>
                     <div className={`${classes.profileLink} ${!activeTab && classes.active}`} onClick={ () => setActiveTab(false) }>Backed Projects <span className={classes.count}>0</span></div>
                 </div>
 
