@@ -11,12 +11,13 @@ const StartProject = () => {
         title: '',
         description: '',
         researchers: '',
+        institution: '',
         fundingGoal: '',
         daysToFund: 30,
         category: ''
     })
 
-    const { title, description, researchers, fundingGoal, daysToFund, category } = formData;
+    const { title, description, researchers, institution, fundingGoal, daysToFund, category } = formData;
 
     const [image, setImage] = useState();
 
@@ -30,7 +31,7 @@ const StartProject = () => {
             }
         }
 
-        const formText = JSON.stringify( { title, description, researchers, fundingGoal, daysToFund, category } );
+        const formText = JSON.stringify( { title, description, researchers, institution, fundingGoal, daysToFund, category } );
         let data = new FormData();
         data.append('formText', formText);
         data.append('image', image);
@@ -43,6 +44,7 @@ const StartProject = () => {
                 title: '',
                 description: '',
                 researchers: '',
+                institution: '',
                 fundingGoal: '',
                 daysToFund: 30,
                 category: ''

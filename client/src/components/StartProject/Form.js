@@ -25,20 +25,26 @@ const Form = ({ formData, setFormData, setImage, createProject }) => {
             </div>
 
             <div className={classes.fields}>
+                <label className={classes.labels} htmlFor="institution">Institution</label><br />
+                <input type='text' className="inputs" name="institution" value={formData.institution} onChange={ (e) => onChangeFormData(e) } /><br />
+            </div>
+
+            <div className={classes.fields}>
                 <label className={classes.labels} htmlFor="category">Category</label><br />
                 <div className={`${classes.section} ${classes.categorySection}`}>
 
-                    <div className={`category ${ formData.category === 'biology' && 'active'}`}>
+                    {/* <div className={`category ${ formData.category === 'biology' && 'active'}`} data-name="category" data-value="biology" onClick={(e) => setFormData({...formData, [e.target.dataset.name]: e.target.dataset.value})}> */}
+                    <div className={`category ${ formData.category === 'biology' && 'active'}`} onClick={() => setFormData({...formData, category: 'biology'})}>
                         <span className='biologyIcon'><FaDna /></span>
-                        <div className='categoryName' data-name="category" data-value="biology" onClick={(e) => setFormData({...formData, [e.target.dataset.name]: e.target.dataset.value})}>Biology</div>
+                        <div className='categoryName'>Biology</div>
                     </div>
-                    <div className={`category ${ formData.category === 'technology' && 'active'}`}>
+                    <div className={`category ${ formData.category === 'technology' && 'active'}`} onClick={(e) => setFormData({...formData, category: 'technology'})}>
                         <span className='technologyIcon'><MdOutlineComputer /></span>
-                        <div className='categoryName' data-name="category" data-value="technology" onClick={(e) => setFormData({...formData, [e.target.dataset.name]: e.target.dataset.value})}>Technology</div>
+                        <div className='categoryName'>Technology</div>
                     </div>
-                    <div className={`category ${ formData.category === 'engineering' && 'active'}`}>
+                    <div className={`category ${ formData.category === 'engineering' && 'active'}`} onClick={(e) => setFormData({...formData, category: 'engineering'})}>
                         <span className='engineeringIcon'><GiGears /></span>
-                        <div className='categoryName' data-name="category" data-value="engineering" onClick={(e) => setFormData({...formData, [e.target.dataset.name]: e.target.dataset.value})}>Engineering</div>
+                        <div className='categoryName'>Engineering</div>
                     </div>
                     
                 </div>

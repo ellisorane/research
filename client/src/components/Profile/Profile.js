@@ -7,7 +7,7 @@ import user from '../../imgs/default.jpg';
 import ProjectsStarted from './ProjectsStarted/ProjectsStarted';
 import FundedProjects from './FundedProjects/FundedProfile';
 
-const Profile = ({ projects, loading, getDaysLeft }) => {
+const Profile = ({ projects, loading }) => {
     const [activeTab, setActiveTab] = useState(true);
     const [showMore, setShowMore] = useState(false);
 
@@ -42,7 +42,7 @@ const Profile = ({ projects, loading, getDaysLeft }) => {
                 </div>
 
                 {
-                    activeTab ? <ProjectsStarted getDaysLeft={getDaysLeft} projects={projects} loading={loading} /> : <FundedProjects getDaysLeft={getDaysLeft} projects={projects} loading={loading} />
+                    activeTab ? <ProjectsStarted projects={projects} loading={loading} /> : <FundedProjects projects={projects} loading={loading} />
                 }
 
             </div>

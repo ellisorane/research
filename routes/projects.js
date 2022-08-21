@@ -41,15 +41,17 @@ router.get('/', async(req, res) => {
 // @access  Public
 router.post('/addProject', [upload.single('image')], async(req, res) => {
 
-    const { title, description, researchers, fundingGoal, daysToFund, category } = JSON.parse(req.body.formText);
+    const { title, description, researchers, institution, fundingGoal, daysToFund, category } = JSON.parse(req.body.formText);
     const image = req.file.filename;
     try {
         const project = await new Project({ 
             title: title, 
             description: description, 
             researchers: researchers, 
+            institution: institution,
             fundingGoal: fundingGoal, 
             daysToFund: daysToFund,
+            daysLeft: daysToFund,
             amountFunded: 0, 
             category: category,
             image: image
@@ -71,6 +73,21 @@ router.get('/:id', async(req, res) => {
     try {
         const project = await Project.findById(req.params.id);
         if(!project) res.status(404).json({ msg: "Project not found"});
+        res.json(project);
+    } catch(err) {
+        console.error(err.message);
+    }
+});
+
+// @route   POST /projects/daysLeft/:id
+// @desc    Update daysLeft on a project
+// @access  Public
+router.post('/daysLeft/:id', async(req, res) => {
+    try {
+        // Update user
+        const project = await Project.updateOne( { _id: req.params.id }, { $set: { daysLeft: req.body.daysLeft } } );
+        console.log("ID: ", req.params.id);
+        console.log("Body(daysleft: )", req.body.daysLeft);
         res.json(project);
     } catch(err) {
         console.error(err.message);

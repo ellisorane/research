@@ -31,6 +31,9 @@ const ProjectSchema = new mongoose.Schema({
         type: Number,
         default: 30
     },
+    daysLeft: {
+        type: Number
+    },
     amountFunded: {
         type: Number
     },

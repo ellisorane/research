@@ -15,23 +15,13 @@ import discover from "../../Discover.module.scss";
 
 import entryImage from '../../../../imgs/fruit research.jpg';
 
-const SingleEntry = ({ getDaysLeft }) => {
+const SingleEntry = () => {
     // const projects = useSelector(state => state.projects.data[0]);
     const showPayment = useSelector(state => state.payment.value);
     const dispatch = useDispatch();
     const { id } = useParams();
     const [project, setProject] = useState();
     const [loading, setLoading] = useState(true);
-
-    // const getDaysLeft = (project) => {
-    //     const projectCreatedOn = new Date(project.date).getTime();
-    //     const today = new Date().getTime();
-    //     const daysSinceCreation = (today - projectCreatedOn)/(1000 * 60 * 60 *24);
-    //     const daysLeft = project.daysToFund - daysSinceCreation.toFixed(0);
-    //     return daysLeft;
-        
-
-    // }
 
     const getThisProject = async() => {
         try {
@@ -63,7 +53,7 @@ const SingleEntry = ({ getDaysLeft }) => {
                 </div>
                 <div className={classes.institution}>
                     <p><strong>Institution:</strong></p>
-                    <p><u>Giorgio University</u></p>
+                    <p><u>{project.institution}</u></p>
                 </div>
 
                 <div className={classes.hero}>
@@ -99,7 +89,7 @@ const SingleEntry = ({ getDaysLeft }) => {
                                 <p>Goal</p>
                             </div>
                             <div>
-                                <h4 className={classes.fundedRightAlign}>{getDaysLeft(project.date, project.daysToFund)}</h4>
+                                <h4 className={classes.fundedRightAlign}>{project.daysLeft}</h4>
                                 <p>Days left</p>
                             </div>
                         </div>
@@ -114,7 +104,7 @@ const SingleEntry = ({ getDaysLeft }) => {
                                 <p>funded</p>
                             </div>
                             <div>
-                                <h4>{getDaysLeft(project.date, project.daysToFund)}</h4>
+                                <h4>{project.daysLeft}</h4>
                                 <p>days left</p>
                             </div>
                         </div>

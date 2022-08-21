@@ -26,32 +26,12 @@ const BrowseAll = ({ projects, loading, category, setCategory, getDaysLeft }) =>
         if(category === 'all') {
             return <DiscoverEntry 
             key={project._id} 
-            entryId={project._id}
-            title={project.title} 
-            description={project.description} 
-            researchers={project.researchers} 
-            fundingGoal={project.fundingGoal} 
-            daysToFund={project.daysToFund} 
-            image={project.image}
-            category={project.daysToFund}
-            date={project.date} 
-            amountFunded={project.daysToFund}
-            getDaysLeft={getDaysLeft} />
+            project={project} />
         } else {
             if(project.category === category) {
                 return <DiscoverEntry 
                 key={project._id} 
-                entryId={project._id}
-                title={project.title} 
-                description={project.description} 
-                researchers={project.researchers} 
-                fundingGoal={project.fundingGoal} 
-                daysToFund={project.daysToFund} 
-                image={project.image}
-                category={project.daysToFund}
-                date={project.date} 
-                amountFunded={project.daysToFund}
-                getDaysLeft={getDaysLeft} />
+                project={project} />
             } 
         }
     }
