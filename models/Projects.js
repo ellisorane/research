@@ -45,8 +45,8 @@ const ProjectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    funders: {
-        type: [String]
+    fundedByUser: {
+        type: Boolean
     },
     date: {
         type: Date,

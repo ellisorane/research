@@ -13,9 +13,7 @@ const FundedProjects = ({ projects, loading }) => {
     return (
         <div className={classes.profileInfo}>
             { !loading ? projects.map((item, index) => 
-                <DiscoverEntry 
-                key={item._id} 
-                project={item}
+                item.fundedByUser && <DiscoverEntry key={item._id} project={item}
                 />
             ) : 
             <Spinner /> }

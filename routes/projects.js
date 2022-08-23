@@ -92,4 +92,21 @@ router.post('/daysLeft/:id', async(req, res) => {
     }
 });
 
+// @route   POST /projects/payment/:id
+// @desc    Fund a project
+// @access  Public
+router.post('/payment/:id', async(req, res) => {
+    try {
+        // Update user
+        const project = await Project.updateOne( { _id: req.params.id }, { $set: { amountFunded: parseInt(req.body.amountFunded) + parseInt(req.body.amount) }, fundedByUser: true } );
+        res.json(project);
+        console.log(req.params.id);
+        console.log('payment: ', req.body.amount);
+    } catch(err) {
+        console.error(err.message);
+    }
+});
+
+
+
 module.exports = router;

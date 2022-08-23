@@ -106,11 +106,15 @@ nav a {
 
     .profileInfo {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        // display: flex;
+        // justify-content:flex-start;
+        // flex-wrap: wrap;
+        
     }
 
-    .profileInfo > div {
-        margin: 15px;
+    .profileInfo a {
+        margin-left: 10px;
     }
 
 }
@@ -118,15 +122,6 @@ nav a {
 
 @media(min-width: 950px) {
     .profileInfo {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
     }
-}
-
-
-@media(min-width: 1400px) {
-    .profileInfo {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
 }

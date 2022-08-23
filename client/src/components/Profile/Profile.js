@@ -37,8 +37,8 @@ const Profile = ({ projects, loading }) => {
 
             <div className={classes.profileInfoContainer}>
                 <div className={classes.profileNav}>
-                    <div className={`${classes.profileLink} ${activeTab && classes.active}`} onClick={ () => setActiveTab(true) }>Expired Projects <span className={classes.count}>0</span></div>
-                    <div className={`${classes.profileLink} ${!activeTab && classes.active}`} onClick={ () => setActiveTab(false) }>Backed Projects <span className={classes.count}>0</span></div>
+                    <div className={`${classes.profileLink} ${activeTab && classes.active}`} onClick={ () => setActiveTab(true) }>Expired Projects <span className={classes.count}>{ projects.filter((el) => (el.daysLeft < 0)).length }</span></div>
+                    <div className={`${classes.profileLink} ${!activeTab && classes.active}`} onClick={ () => setActiveTab(false) }>Backed Projects <span className={classes.count}>{ projects.filter((el) => (el.fundedByUser)).length }</span></div>
                 </div>
 
                 {

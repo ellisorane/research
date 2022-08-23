@@ -16,7 +16,6 @@ import discover from "../../Discover.module.scss";
 import entryImage from '../../../../imgs/fruit research.jpg';
 
 const SingleEntry = () => {
-    // const projects = useSelector(state => state.projects.data[0]);
     const showPayment = useSelector(state => state.payment.value);
     const dispatch = useDispatch();
     const { id } = useParams();
@@ -28,7 +27,7 @@ const SingleEntry = () => {
             const res = await axios.get(`/projects/${id}`);
             await setProject(res.data);
             setLoading(false);
-            // console.log(returnDate(project))
+            // console.log('works');
             // return project;
         } catch(err) {
             console.error(err);
@@ -37,11 +36,11 @@ const SingleEntry = () => {
 
     useEffect(() => {
         getThisProject();
-    }, []);
+    }, [showPayment]);
 
 
     return(
-        loading ? <Spinner /> : 
+        loading ? <div style={{marginTop: '200px'}}><Spinner /></div> : 
         <div className={classes.singleEntryContainer}>
 
             <div className={classes.projectHead}>
@@ -68,7 +67,7 @@ const SingleEntry = () => {
 
 
                     <div className={classes.fundingBox}>
-                        <Payment showPayment={showPayment} />
+                        <Payment project={project} showPayment={showPayment} />
 
                         <div className={classes.pledged}>
                             <h1><NumberFormat value={project.amountFunded} displayType={'text'} thousandSeparator={true} prefix={'$'} /></h1>
@@ -76,7 +75,7 @@ const SingleEntry = () => {
                         </div>
 
                         <div className={classes.progressBar}>
-                        <div className={classes.progress} style={{ width: `${project.amountFunded/project.fundingGoal * 100}%` }}></div>
+                        <div className={classes.progress} style={{ width: `${project.amountFunded/project.fundingGoal * 100}%`, maxWidth: '100%' }}></div>
                         </div>
 
                         <div className={classes.entryFunding}>

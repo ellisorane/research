@@ -34,7 +34,7 @@ const DiscoverEntry = ({ project }) => {
 
                     {/* progress bar for amount funded */}
                     <div className={classes.progressBar}>
-                        <div className={classes.progress} style={{ width: `${project.amountFunded/project.fundingGoal * 100}%` }}></div>
+                        <div className={classes.progress} style={{ width: `${project.amountFunded/project.fundingGoal * 100}%`, maxWidth: '100%' }}></div>
                     </div>
                     {/* funded percentage | funded goal | days left to get funded  */}
                     <div className={classes.entryFunding}>

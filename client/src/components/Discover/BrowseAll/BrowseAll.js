@@ -23,16 +23,18 @@ import defUser from '../../../imgs/default.jpg';
 const BrowseAll = ({ projects, loading, category, setCategory, getDaysLeft }) => {
     
     const catsegorySelect = (project) => {
-        if(category === 'all') {
-            return <DiscoverEntry 
-            key={project._id} 
-            project={project} />
-        } else {
-            if(project.category === category) {
+        if(project.daysLeft >= 0) {
+            if(category === 'all') {
                 return <DiscoverEntry 
                 key={project._id} 
                 project={project} />
-            } 
+            } else {
+                if(project.category === category) {
+                    return <DiscoverEntry 
+                    key={project._id} 
+                    project={project} />
+                } 
+            }
         }
     }
 

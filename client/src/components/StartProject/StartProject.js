@@ -38,7 +38,7 @@ const StartProject = () => {
 
         try {
             const res = await axios.post('/projects/addProject', data, config);
-            console.log(res);
+            // console.log(res);
 
             setFormData({
                 title: '',
