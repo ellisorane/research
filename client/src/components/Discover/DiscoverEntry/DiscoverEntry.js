@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NumberFormat from 'react-number-format';
 import { Link } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ import defUser from '../../../imgs/default.jpg';
 
 
 const DiscoverEntry = ({ project }) => {
+    
     return (
         <Link to={`/entry/${project._id}`} className={classes.DiscEntryContainer}>
             {/* image  */}

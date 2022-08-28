@@ -7,6 +7,7 @@ import axios from "axios";
 import Payment from "./Payment/Payment";
 
 import { openPayment } from "../../../../features/payment/paymentSlice";
+import { setCurrentProject } from "../../../../features/projects/projectsSlice";
 import Spinner from "../../../Spinner/Spinner";
 
 import classes from "./SingleEntry.module.scss";
@@ -17,26 +18,28 @@ import entryImage from '../../../../imgs/fruit research.jpg';
 
 const SingleEntry = () => {
     const showPayment = useSelector(state => state.payment.value);
+    const project = useSelector(state => state.projects.currentProject);
+    const searchBarSuggested = useSelector(state => state.searchBar.suggested);
     const dispatch = useDispatch();
     const { id } = useParams();
-    const [project, setProject] = useState();
+    // const [project, setProject] = useState();
     const [loading, setLoading] = useState(true);
 
-    const getThisProject = async() => {
+    const loadThisProject = async() => {
         try {
             const res = await axios.get(`/projects/${id}`);
-            await setProject(res.data);
+            await dispatch(setCurrentProject(res.data));
             setLoading(false);
             // console.log('works');
-            // return project;
         } catch(err) {
             console.error(err);
         }
     }
 
     useEffect(() => {
-        getThisProject();
-    }, [showPayment]);
+        loadThisProject();
+    }, [showPayment, searchBarSuggested]);
+
 
 
     return(

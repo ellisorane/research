@@ -4,18 +4,20 @@ export const projectsSlice = createSlice({
     name: 'projects',
     initialState: {
         data: [],
-        loading: true
+        loading: true,
+        currentProject: {}
     },
     reducers: {
         setProjects: (state, action) => {
             state.data = [action.payload];
             state.loading = false;
         },
-        closePayment: state => {
-            state.value = false;
-        },
+        setCurrentProject: (state, action) => {
+            state.currentProject = action.payload
+    
+        }
     }
 })
 
-export const { setProjects } = projectsSlice.actions;
+export const { setProjects, setCurrentProject } = projectsSlice.actions;
 export default projectsSlice.reducer;

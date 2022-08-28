@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import classes from './Navbar.module.scss';
 
-import NavSearch from './NavSearch';
+import NavSearch from './NavSearch/NavSearch';
 
 const Navbar = () => {
     const path = useLocation().pathname; 
@@ -17,7 +17,7 @@ const Navbar = () => {
                 <Link to="/" className={ path.includes('/entry') ? `${ classes.sitelogo } ${ classes.navProject }` : `${ classes.sitelogo }` }><h1>research</h1></Link>
 
                 {/* For Bigger screens. Hidden on smaller screens */}
-                <NavSearch />
+                <NavSearch projects />
 
             </div>
 
