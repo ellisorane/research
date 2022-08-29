@@ -1,0 +1,33 @@
+.searchResults {
+    width: 90%;
+    min-height: 100vh;
+    margin: 150px auto;
+    padding: 15px;
+}
+
+.resContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+@media(min-width: 750px) { 
+    .resContainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        
+    }
+}
+
+@media(min-width: 950px) {
+    .searchResults {
+        width: 968px;
+        padding: 0;
+    }
+
+    .resContainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+}

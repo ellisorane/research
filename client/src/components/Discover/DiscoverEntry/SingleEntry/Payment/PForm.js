@@ -31,8 +31,7 @@ const PForm = ({ project }) => {
 
         try {
             const res = await axios.post(`/projects/payment/${project._id}`, body, config);
-            console.log(res);
-
+            // console.log(res);
             setPayment({
                 name: 'Project Funder',
                 cardNumber: '0055 5500 4545 5656',

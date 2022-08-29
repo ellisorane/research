@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from 'react-router-dom';
 
 import Result from "./Result";
+import DiscoverEntry from "../../Discover/DiscoverEntry/DiscoverEntry";
 import { setSuggested, setSearchInput, setTimer } from "../../../features/searchBar/searchBarSlice";
 
 import classes from '../Navbar.module.scss';
@@ -12,9 +14,7 @@ const NavSearch = () => {
     const searchInput = useSelector(state => state.searchBar.searchInput);
     const timer = useSelector(state => state.searchBar.timer);
     const dispatch = useDispatch();
-    // const [suggested, setSuggested] = useState([]);
-    // const [searchInput, setSearchInput] = useState('');
-    // const [timer, setTimer] = useState(null);
+    const navigate = useNavigate();
 
     const searchLogic = (e) => {
         
@@ -55,12 +55,17 @@ const NavSearch = () => {
         
     }
 
+    const submitHandler = (e) => {
+        e.preventDefault();
+        navigate(`/results/search=${searchInput}`);
+    }
+
     return (
         <div>
             <div className={classes.navSearch}>
-                <form action="">
+                <form action="" onSubmit={(e) => submitHandler(e)}>
                     <input type='input' value={ searchInput } placeholder="Search projects" onChange={(e) => searchLogic(e)} />
-                    <input type="submit" value="Go" />
+                    <input type='submit' value="🔍" /> 
                 </form>
             </div>
 

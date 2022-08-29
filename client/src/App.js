@@ -11,6 +11,7 @@ import BrowseAll from './components/Discover/BrowseAll/BrowseAll';
 import SingleEntry from './components/Discover/DiscoverEntry/SingleEntry/SingleEntry';
 import StartProject from './components/StartProject/StartProject';
 import Profile from './components/Profile/Profile';
+import SearchResults from './components/SearchResults/SearchResults';
 import Footer from './components/Footer/Footer';
 import Counter from './components/Counter/Counter';
 
@@ -19,11 +20,11 @@ import { setProjects } from './features/projects/projectsSlice';
 
 const App = () => {
   const projects = useSelector(state => state.projects.data[0]);
-    const loading = useSelector(state => state.projects.loading);
-    const dispatch = useDispatch();
-    const [category, setCategory] = useState('all');
+  const loading = useSelector(state => state.projects.loading);
+  const dispatch = useDispatch();
+  const [category, setCategory] = useState('all');
 
-    const getDaysLeft = async(createdOn, daysToFund, id) => {
+  const getDaysLeft = async(createdOn, daysToFund, id) => {
       
       const projectCreatedOn = new Date(createdOn).getTime();
       const today = new Date().getTime();
@@ -77,6 +78,7 @@ const App = () => {
         <Route path="/entry/:id" element={ <SingleEntry /> } />
         <Route path="/start-project" element={ <StartProject /> } />
         <Route path="/profile" element={ <Profile projects={projects} loading={loading} /> } />
+        <Route path="/results/search=:searchTerm" element={ <SearchResults projects={projects} loading={loading} /> } />
         <Route path="/counter" element={ <Counter /> } />
       </Routes>
       <Footer />
