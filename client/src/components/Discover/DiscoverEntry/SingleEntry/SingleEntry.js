@@ -20,6 +20,7 @@ const SingleEntry = () => {
     const showPayment = useSelector(state => state.payment.value);
     const project = useSelector(state => state.projects.currentProject);
     const searchBarSuggested = useSelector(state => state.searchBar.suggested);
+    const notificationTimer = useSelector(state => state.payment.notificationTimer);
     const dispatch = useDispatch();
     const { id } = useParams();
     // const [project, setProject] = useState();
@@ -111,7 +112,8 @@ const SingleEntry = () => {
                             </div>
                         </div>
 
-                        <div className={classes.fundBtn} onClick={ () => dispatch(openPayment()) }>Back this Project</div>
+                        { !notificationTimer ? <div className={classes.fundBtn} onClick={ () => dispatch(openPayment()) }>Back this Project</div>
+                        : <div className={classes.fundedNotification}>Funds Recieved</div> }
 
                     </div>
 

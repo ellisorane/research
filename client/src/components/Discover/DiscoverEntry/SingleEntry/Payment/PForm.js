@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import { closePayment } from '../../../../../features/payment/paymentSlice';
+import { closePayment, setNotificationTimer } from '../../../../../features/payment/paymentSlice';
 
 import classes from './Payment.module.scss';
 
@@ -40,6 +40,9 @@ const PForm = ({ project }) => {
                 amount: ''
             });
             dispatch(closePayment());
+
+            dispatch(setNotificationTimer(true));
+            setTimeout(() => dispatch(setNotificationTimer(false)), 3500); 
 
         } catch(err) {
             console.error(err);

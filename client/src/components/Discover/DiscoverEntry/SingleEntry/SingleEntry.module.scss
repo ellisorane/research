@@ -73,7 +73,7 @@ $siteGreen: #36AB9B;
     padding: 0 10px;
 }
 
-.fundBtn {
+.fundBtn, .fundedNotification {
     background-color: $siteGreen;
     border-radius: 5px;
     color: white;
@@ -85,6 +85,12 @@ $siteGreen: #36AB9B;
     justify-content: center;
     font-weight: bold;
     cursor: pointer;
+}
+
+
+
+.fundedNotification {
+    background-color: rgb(10, 221, 126);
 }
 
 .projectInfo {

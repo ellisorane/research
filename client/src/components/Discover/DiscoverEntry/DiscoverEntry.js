@@ -21,7 +21,7 @@ const DiscoverEntry = ({ project }) => {
                 {/* title */}
                 <h3>{project.title}</h3>
                 {/* description  */}
-                <p className={classes.description}>{project.description.substring(0, 125)}</p>
+                <p className={classes.description}>{project.description.substring(0, 100)}</p>
 
                 <div className={classes.bottomInfo}>
                     {/* researcher's image | name and institution */}
