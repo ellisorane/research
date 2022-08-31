@@ -14,6 +14,7 @@ import Profile from './components/Profile/Profile';
 import SearchResults from './components/SearchResults/SearchResults';
 import Footer from './components/Footer/Footer';
 import Counter from './components/Counter/Counter';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
 import { setProjects } from './features/projects/projectsSlice';
 
@@ -61,6 +62,7 @@ const App = () => {
       getLatestProjects();
       !loading && projects.forEach(proj => getDaysLeft(proj.date, proj.daysToFund, proj._id));
       getLatestProjects();
+      console.log('works')
     }
 
     
@@ -71,17 +73,20 @@ const App = () => {
   
   return (
     <div className="App">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={ <Discover projects={projects} loading={loading} category={category} setCategory={setCategory} />  } />
-        <Route path="/browse-all" element={ <BrowseAll projects={projects} loading={loading} category={category} setCategory={setCategory} /> } />
-        <Route path="/entry/:id" element={ <SingleEntry /> } />
-        <Route path="/start-project" element={ <StartProject /> } />
-        <Route path="/profile" element={ <Profile projects={projects} loading={loading} /> } />
-        <Route path="/results/search=:searchTerm" element={ <SearchResults projects={projects} loading={loading} /> } />
-        <Route path="/counter" element={ <Counter /> } />
-      </Routes>
-      <Footer />
+      <ScrollToTop>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={ <Discover projects={projects} loading={loading} category={category} setCategory={setCategory} />  } />
+          <Route path="/browse-all" element={ <BrowseAll projects={projects} loading={loading} category={category} setCategory={setCategory} /> } />
+          <Route path="/entry/:id" element={ <SingleEntry /> } />
+          <Route path="/start-project" element={ <StartProject /> } />
+          <Route path="/profile" element={ <Profile projects={projects} loading={loading} /> } />
+          <Route path="/results/search=:searchTerm" element={ <SearchResults projects={projects} loading={loading} /> } />
+          <Route path="/counter" element={ <Counter /> } />
+        </Routes>
+        <Footer />
+      </ScrollToTop>
+
     </div>
   );
 }
