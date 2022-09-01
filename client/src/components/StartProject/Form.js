@@ -4,7 +4,6 @@ import { MdOutlineComputer } from 'react-icons/md';
 import { GiGears } from 'react-icons/gi';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
-
 import classes from './StartProject.module.scss';
 
 const Form = ({ formData, setFormData, setImage, createProject }) => {

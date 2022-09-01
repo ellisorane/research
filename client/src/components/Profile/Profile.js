@@ -4,8 +4,10 @@ import { Routes, Route, NavLink } from 'react-router-dom';
 import classes from './Profile.module.scss';
 import user from '../../imgs/default.jpg';
 
-import ProjectsStarted from './ExpiredProjects/ExpiredProjects';
-import FundedProjects from './FundedProjects/FundedProfile';
+// import ProjectsStarted from './ExpiredProjects/ExpiredProjects';
+// import FundedProjects from './FundedProjects/FundedProfile';
+const ProjectsStarted = React.lazy(() => import('./ExpiredProjects/ExpiredProjects'));
+const FundedProjects = React.lazy(() => import('./FundedProjects/FundedProfile'));
 
 const Profile = ({ projects, loading }) => {
     const [activeTab, setActiveTab] = useState(true);

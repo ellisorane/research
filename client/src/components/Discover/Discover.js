@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { AiFillStar } from 'react-icons/ai';
 import { FaDna } from 'react-icons/fa';
@@ -7,13 +8,16 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 
 import { setProjects } from '../../features/projects/projectsSlice';
 
-import DiscoverEntry from './DiscoverEntry/DiscoverEntry';
-import Spinner from '../Spinner/Spinner';
+// import DiscoverEntry from './DiscoverEntry/DiscoverEntry';
+// import Spinner from '../Spinner/Spinner';
 
 import classes from './Discover.module.scss';
 
 import heroImg from '../../imgs/hero.jpg';
 import { useEffect } from 'react';
+
+const DiscoverEntry = React.lazy(() => import('./DiscoverEntry/DiscoverEntry'));
+const Spinner = React.lazy(() => import('../Spinner/Spinner'));
 
 
 const Discover = ({ getDaysLeft, projects, loading, category, setCategory }) => {

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import NumberFormat from 'react-number-format';
 import { Link } from 'react-router-dom';
 
-
 import classes from './DiscoverEntry.module.scss';
 
 import img from '../../../imgs/fruit research.jpg';

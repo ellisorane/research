@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-
-
 import classes from './StartProject.module.scss';
 
 const Success = ({ setFormSubmitted }) => {

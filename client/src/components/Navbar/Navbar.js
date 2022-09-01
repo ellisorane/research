@@ -3,7 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 import classes from './Navbar.module.scss';
 
-import NavSearch from './NavSearch/NavSearch';
+// import NavSearch from './NavSearch/NavSearch';
+const NavSearch = React.lazy(() => import('./NavSearch/NavSearch'));
 
 const Navbar = () => {
     const path = useLocation().pathname; 

@@ -3,9 +3,11 @@ import  { useDispatch } from 'react-redux';
 
 import { closePayment } from '../../../../../features/payment/paymentSlice';
 
-import PForm from './PForm';
+// import PForm from './PForm';
 
 import classes from './Payment.module.scss';
+
+const PForm = React.lazy(() => import('./PForm'));
 
 const Popup = ({ showPayment }) => {
     const dispatch = useDispatch();

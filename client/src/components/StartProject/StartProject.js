@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import Form from './Form';
-import Success from './Success';
+// import Form from './Form';
+// import Success from './Success';
 
 import classes from './StartProject.module.scss';
 
-const StartProject = () => {
+const Form = React.lazy(() => import('./Form'));
+const Success = React.lazy(() => import('./Success'));
+
+const StartProject = ({ getLatestProjects }) => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -50,6 +53,7 @@ const StartProject = () => {
                 category: ''
             });
             setFormSubmitted(true);
+            getLatestProjects();
             
         } catch(err) {
             console.error(err);

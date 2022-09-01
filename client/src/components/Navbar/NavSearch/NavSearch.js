@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 
-import Result from "./Result";
-import DiscoverEntry from "../../Discover/DiscoverEntry/DiscoverEntry";
+// import Result from "./Result";
+// import DiscoverEntry from "../../Discover/DiscoverEntry/DiscoverEntry";
 import { setSuggested, setSearchInput, setTimer } from "../../../features/searchBar/searchBarSlice";
 
 import classes from '../Navbar.module.scss';
+
+const Result = React.lazy(() => import('./Result'));
+const DiscoverEntry = React.lazy(() => import("../../Discover/DiscoverEntry/DiscoverEntry"));
 
 const NavSearch = () => {
     const projects = useSelector(state => state.projects.data[0]);

@@ -4,11 +4,11 @@ import NumberFormat from 'react-number-format';
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 
-import Payment from "./Payment/Payment";
+// import Payment from "./Payment/Payment";
+// import Spinner from "../../../Spinner/Spinner";
 
 import { openPayment } from "../../../../features/payment/paymentSlice";
 import { setCurrentProject } from "../../../../features/projects/projectsSlice";
-import Spinner from "../../../Spinner/Spinner";
 
 import classes from "./SingleEntry.module.scss";
 import parent from "../DiscoverEntry.module.scss";
@@ -16,7 +16,10 @@ import discover from "../../Discover.module.scss";
 
 import entryImage from '../../../../imgs/fruit research.jpg';
 
-const SingleEntry = () => {
+const Payment = React.lazy(() => import("./Payment/Payment"));
+const Spinner = React.lazy(() => import("../../../Spinner/Spinner"));
+
+const SingleEntry = ({ getLatestProjects }) => {
     const showPayment = useSelector(state => state.payment.value);
     const project = useSelector(state => state.projects.currentProject);
     const searchBarSuggested = useSelector(state => state.searchBar.suggested);
@@ -71,7 +74,7 @@ const SingleEntry = () => {
 
 
                     <div className={classes.fundingBox}>
-                        <Payment project={project} showPayment={showPayment} />
+                        <Payment project={project} getLatestProjects={getLatestProjects} showPayment={showPayment} />
 
                         <div className={classes.pledged}>
                             <h1><NumberFormat value={project.amountFunded} displayType={'text'} thousandSeparator={true} prefix={'$'} /></h1>

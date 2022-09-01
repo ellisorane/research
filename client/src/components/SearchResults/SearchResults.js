@@ -1,14 +1,17 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 
-import Spinner from '../Spinner/Spinner';
 import { setSearchInput, setSuggested } from '../../features/searchBar/searchBarSlice';
-import DiscoverEntry from '../Discover/DiscoverEntry/DiscoverEntry';
+// import Spinner from '../Spinner/Spinner';
+// import DiscoverEntry from '../Discover/DiscoverEntry/DiscoverEntry';
 
 import classes from './SearchResults.module.scss';
 
+const Spinner = React.lazy(() => import('../Spinner/Spinner'));
+const DiscoverEntry = React.lazy(() => import('../Discover/DiscoverEntry/DiscoverEntry'));
 
 const SearchResults = () => {
         const dispatch = useDispatch();
