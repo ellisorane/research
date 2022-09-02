@@ -18,7 +18,7 @@ const Navbar = () => {
                 <Link to="/" className={ path.includes('/entry') ? `${ classes.sitelogo } ${ classes.navProject }` : `${ classes.sitelogo }` }><h1>research</h1></Link>
 
                 {/* For Bigger screens. Hidden on smaller screens */}
-                <NavSearch projects />
+                <NavSearch setShowNav={setShowNav} />
 
             </div>
 
