@@ -5,6 +5,7 @@ import classes from '../Navbar.module.scss';
 // import testImg from '../../../imgs/fruit research.jpg';
 
 const Result = ({project, dispatch, setSearchInput, setSuggested}) => {
+
     const resetSearch = () => {
         dispatch(setSearchInput(''));
         dispatch(setSuggested([]));

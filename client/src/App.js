@@ -27,7 +27,7 @@ const StartProject = React.lazy(() => import('./components/StartProject/StartPro
 const Profile = React.lazy(() => import('./components/Profile/Profile'));
 const SearchResults = React.lazy(() => import('./components/SearchResults/SearchResults'));
 const Footer = React.lazy(() => import('./components/Footer/Footer'));
-const Counter = React.lazy(() => import('./components/Counter/Counter'));
+// const Counter = React.lazy(() => import('./components/Counter/Counter'));
 const ScrollToTop = React.lazy(() => import('./components/ScrollToTop/ScrollToTop'));
 const Spinner = React.lazy(() => import('./components/Spinner/Spinner'));
 
@@ -95,7 +95,6 @@ const App = () => {
             <Route path="/start-project" element={ <StartProject getLatestProjects={getLatestProjects} /> } />
             <Route path="/profile" element={ <Profile projects={projects} loading={loading} /> } />
             <Route path="/results/search=:searchTerm" element={ <SearchResults projects={projects} loading={loading} /> } />
-            <Route path="/counter" element={ <Counter /> } />
           </Routes>
         </React.Suspense>
 

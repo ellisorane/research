@@ -32,8 +32,8 @@ const SearchResults = () => {
             dispatch(setSuggested([]));
             setResults(tempArr);
             setLoading(false);
-            console.log('works');
-            console.log(results);
+            // console.log('works');
+            // console.log(results);
         }
 
         useEffect(() => {

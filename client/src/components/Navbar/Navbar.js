@@ -28,14 +28,13 @@ const Navbar = () => {
                     <Link to="/" className={classes.navLink}>Discover</Link>
                     <Link to="/start-project" className={classes.navLink}>Start a Project</Link>
                     <Link to="/profile" className={classes.navLink}>Profile</Link>
-                    <Link to="/counter" className={classes.navLink}>Counter</Link>
                 </div>
 
                 {/* For smaller screens. Hidden on bigger screens  */}
                 <div className={`${classes.smScreenMenu} ${ showNav ? classes.smScreenMenuOpen : classes.smScreenMenuClosed }`}>
                     <div className={classes.smScreenMenuContainer}>
                         <div className={classes.sitelogo}><h1>research</h1></div>
-                        <NavSearch />
+                        <NavSearch setShowNav={setShowNav} />
                         <hr style={{ width: '100%' }} />
                         <div className={classes.navLinks}>
                             <Link to="/" className={classes.navLink} onClick={ () => setShowNav(false) }>Discover</Link>

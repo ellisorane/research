@@ -11,7 +11,7 @@ import classes from '../Navbar.module.scss';
 const Result = React.lazy(() => import('./Result'));
 const DiscoverEntry = React.lazy(() => import("../../Discover/DiscoverEntry/DiscoverEntry"));
 
-const NavSearch = () => {
+const NavSearch = ({ setShowNav }) => {
     const projects = useSelector(state => state.projects.data[0]);
     const suggested = useSelector(state => state.searchBar.suggested);
     const searchInput = useSelector(state => state.searchBar.searchInput);
@@ -60,6 +60,7 @@ const NavSearch = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        setShowNav(false);
         navigate(`/results/search=${searchInput}`);
     }
 

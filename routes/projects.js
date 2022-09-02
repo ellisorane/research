@@ -100,8 +100,8 @@ router.post('/payment/:id', async(req, res) => {
         // Update user
         const project = await Project.updateOne( { _id: req.params.id }, { $set: { amountFunded: parseInt(req.body.amountFunded) + parseInt(req.body.amount) }, fundedByUser: true } );
         res.json(project);
-        console.log(req.params.id);
-        console.log('payment: ', req.body.amount);
+        // console.log(req.params.id);
+        // console.log('payment: ', req.body.amount);
     } catch(err) {
         console.error(err.message);
     }
