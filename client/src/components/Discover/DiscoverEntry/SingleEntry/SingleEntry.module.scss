@@ -151,6 +151,7 @@ $siteGreen: #36AB9B;
     }
 
     .tag {
+        display: inline;
         color: #FFF;
         border: none;
         padding: 8px 15px;
@@ -162,6 +163,11 @@ $siteGreen: #36AB9B;
         font-weight: 600;
         letter-spacing: 1px;
         width: fit-content;
+    }
+
+    .delete {
+        background-color: rgb(212, 66, 66);
+        cursor: pointer;
     }
 
     

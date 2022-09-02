@@ -4,6 +4,7 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 
 const multer = require('multer');
+const { text } = require('express');
 const multerStorage = multer.diskStorage({ 
     destination: (req, file, cb) => {
         cb(null, 'public/uploads');
@@ -66,7 +67,7 @@ router.post('/addProject', [upload.single('image')], async(req, res) => {
     }
 });
 
-// @route   GET /projects
+// @route   GET /projects/:id
 // @desc    Get project by ID
 // @access  Public
 router.get('/:id', async(req, res) => {
@@ -74,6 +75,22 @@ router.get('/:id', async(req, res) => {
         const project = await Project.findById(req.params.id);
         if(!project) res.status(404).json({ msg: "Project not found"});
         res.json(project);
+    } catch(err) {
+        console.error(err.message);
+    }
+});
+
+// @route   DELETE /projects/:id
+// @desc    Delete project by ID
+// @access  Public
+router.delete('/:id', async(req, res) => {
+    try {
+
+        const project = await Project.findById(req.params.id);
+        if(!project) res.status(404).json({ msg: "Project not found"});
+        await project.remove();
+        res.json({msg: "Project removed"});
+
     } catch(err) {
         console.error(err.message);
     }

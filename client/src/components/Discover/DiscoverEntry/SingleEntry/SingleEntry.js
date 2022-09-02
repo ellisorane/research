@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import  { useSelector, useDispatch } from 'react-redux';
 import NumberFormat from 'react-number-format';
 import { useParams } from 'react-router-dom';
@@ -28,6 +29,7 @@ const SingleEntry = ({ getLatestProjects }) => {
     const { id } = useParams();
     // const [project, setProject] = useState();
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     const loadThisProject = async() => {
         try {
@@ -40,12 +42,21 @@ const SingleEntry = ({ getLatestProjects }) => {
         }
     }
 
+    const deleteProject = async() => {
+        try {
+            await axios.delete(`/projects/${id}`);
+            navigate(-1);
+            getLatestProjects();
+        } catch(err) {
+            console.error(err);
+        }
+    }
+
     useEffect(() => {
         loadThisProject();
     }, [showPayment, searchBarSuggested]);
 
-
-
+    
     return(
         loading ? <div style={{marginTop: '200px'}}><Spinner /></div> : 
         <div className={classes.singleEntryContainer}>
@@ -68,6 +79,7 @@ const SingleEntry = ({ getLatestProjects }) => {
                         <div style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url("/uploads/${project.image}")` }} className={classes.heroImage}></div>
                         <div className={classes.tags}>
                             <div className={classes.tag}>{project.category}</div>
+                            <div className={`${classes.tag} ${classes.delete}`} onClick={() => deleteProject()}>Delete</div>
                         </div>
                     </div>
                     
