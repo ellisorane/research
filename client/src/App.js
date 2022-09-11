@@ -5,18 +5,6 @@ import { Routes, Route } from "react-router-dom";
 
 import './App.scss';
 
-// import Navbar from './components/Navbar/Navbar';
-// import Discover from './components/Discover/Discover';
-// import BrowseAll from './components/Discover/BrowseAll/BrowseAll';
-// import SingleEntry from './components/Discover/DiscoverEntry/SingleEntry/SingleEntry';
-// import StartProject from './components/StartProject/StartProject';
-// import Profile from './components/Profile/Profile';
-// import SearchResults from './components/SearchResults/SearchResults';
-// import Footer from './components/Footer/Footer';
-// import Counter from './components/Counter/Counter';
-// import ScrollToTop from './components/ScrollToTop/ScrollToTop';
-// import Spinner from './components/Spinner/Spinner';
-
 import { setProjects } from './features/projects/projectsSlice';
 
 const Navbar = React.lazy(() => import('./components/Navbar/Navbar'));
@@ -27,7 +15,6 @@ const StartProject = React.lazy(() => import('./components/StartProject/StartPro
 const Profile = React.lazy(() => import('./components/Profile/Profile'));
 const SearchResults = React.lazy(() => import('./components/SearchResults/SearchResults'));
 const Footer = React.lazy(() => import('./components/Footer/Footer'));
-// const Counter = React.lazy(() => import('./components/Counter/Counter'));
 const Load = React.lazy(() => import('./components/Load/Load'));
 const Spinner = React.lazy(() => import('./components/Spinner/Spinner'));
 
