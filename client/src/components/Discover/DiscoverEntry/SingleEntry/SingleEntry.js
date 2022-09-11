@@ -20,7 +20,7 @@ import entryImage from '../../../../imgs/fruit research.jpg';
 const Payment = React.lazy(() => import("./Payment/Payment"));
 const Spinner = React.lazy(() => import("../../../Spinner/Spinner"));
 
-const SingleEntry = ({ getLatestProjects }) => {
+const SingleEntry = () => {
     const showPayment = useSelector(state => state.payment.value);
     const project = useSelector(state => state.projects.currentProject);
     const searchBarSuggested = useSelector(state => state.searchBar.suggested);
@@ -46,7 +46,6 @@ const SingleEntry = ({ getLatestProjects }) => {
         try {
             await axios.delete(`/projects/${id}`);
             navigate(-1);
-            getLatestProjects();
         } catch(err) {
             console.error(err);
         }
@@ -76,7 +75,7 @@ const SingleEntry = ({ getLatestProjects }) => {
                 <div className={classes.hero}>
                     
                     <div className={classes.imgTagContainer}>
-                        <div style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url("/uploads/${project.image}")` }} className={classes.heroImage}></div>
+                        <div style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url("${project.imageURL}")` }} className={classes.heroImage}></div>
                         <div className={classes.tags}>
                             <div className={classes.tag}>{project.category}</div>
                             <div className={`${classes.tag} ${classes.delete}`} onClick={() => deleteProject()}>Delete</div>
@@ -86,7 +85,7 @@ const SingleEntry = ({ getLatestProjects }) => {
 
 
                     <div className={classes.fundingBox}>
-                        <Payment project={project} getLatestProjects={getLatestProjects} showPayment={showPayment} />
+                        <Payment project={project} showPayment={showPayment} />
 
                         <div className={classes.pledged}>
                             <h1><NumberFormat value={project.amountFunded} displayType={'text'} thousandSeparator={true} prefix={'$'} /></h1>

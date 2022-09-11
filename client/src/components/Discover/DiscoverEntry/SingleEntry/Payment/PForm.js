@@ -6,7 +6,7 @@ import { closePayment, setNotificationTimer } from '../../../../../features/paym
 
 import classes from './Payment.module.scss';
 
-const PForm = ({ project, getLatestProjects }) => {
+const PForm = ({ project }) => {
     const dispatch = useDispatch(); 
     const [payment, setPayment] = useState({
         name: 'Project Funder',
@@ -43,7 +43,6 @@ const PForm = ({ project, getLatestProjects }) => {
 
             dispatch(setNotificationTimer(true));
             setTimeout(() => dispatch(setNotificationTimer(false)), 3500); 
-            getLatestProjects();
 
         } catch(err) {
             console.error(err);

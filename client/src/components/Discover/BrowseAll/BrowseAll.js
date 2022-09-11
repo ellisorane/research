@@ -20,7 +20,7 @@ import img from '../../../imgs/fruit research.jpg';
 import defUser from '../../../imgs/default.jpg';
 
 
-const BrowseAll = ({ projects, loading, category, setCategory, getDaysLeft }) => {
+const BrowseAll = ({ projects, loading, category, setCategory }) => {
     
     const catsegorySelect = (project) => {
         if(project.daysLeft >= 0) {
@@ -63,7 +63,7 @@ const BrowseAll = ({ projects, loading, category, setCategory, getDaysLeft }) =>
             </div>
 
             <hr className={classes.divider} />
-            <h1 style={{ width: 'fit-content', margin: 'auto', textDecoration: 'underline' }}>{category} projects</h1>
+            <h1 style={{ width: 'fit-content', margin: 'auto', textDecoration: 'underline' }}>{category.charAt(0).toUpperCase() + category.slice(1)} projects</h1>
             <div className={`${parent.entryContanier} ${classes.section}`}>
                 { !loading ? projects.map((item) => catsegorySelect(item)) : <Spinner /> }
             </div>

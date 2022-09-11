@@ -1,28 +1,38 @@
+require('dotenv').config();
 const express = require('express');
 const Project = require('../models/Projects');
 const router = express.Router();
-const { body, validationResult } = require('express-validator');
+
+///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+// S3 setup /////////////////////////////////////////////////////////////////////////
+const { v4: uuidv4 } = require('uuid');
+const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
+
+const region = "us-east-1";
+const bucketName = "research.com";
+const accessKeyId = process.env.aws_access_key_id;
+const secretAccessKey = process.env.aws_secret_access_key;
+
+const s3 = new S3Client({
+    credentials: {
+        accessKeyId,
+        secretAccessKey
+    },
+    region
+});
 
 const multer = require('multer');
-const { text } = require('express');
-const multerStorage = multer.diskStorage({ 
-    destination: (req, file, cb) => {
-        cb(null, 'public/uploads');
-    },
-    filename: (req, file, cb) => {
-        const ext = file.mimetype.split('/')[1];
-        // cb(null, `user-${req.user.id}-${Date.now()}.${ext}`)
-        cb(null, `user-test-${Date.now()}.${ext}`)
-    }
-});
-const multerFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith("image")) {
-        cb(null, true);
-    } else {
-        return cb(new Error('Only images allowed!', 400), false);
-    }
-}
-const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
+const User = require('../models/User');
+
+// Save image to memory instead of to disk
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 
 // @route   GET /projects
@@ -31,7 +41,20 @@ const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
 router.get('/', async(req, res) => {
     try {
         const projects = await Project.find();
-        res.json(projects);
+
+        for(const project of projects) {
+            const getObjectParams = {
+                Bucket: bucketName,
+                Key: project.image,
+            }
+
+            const command = new GetObjectCommand(getObjectParams);
+            const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+
+            const proj = await Project.updateOne({ _id: project._id}, { $set: { imageURL: url } } );
+        }
+
+        res.send(projects);
     } catch(err) {
         console.error(err.message);
     }
@@ -40,10 +63,18 @@ router.get('/', async(req, res) => {
 // @route   POST /projects/addProject
 // @desc    Create project
 // @access  Public
-router.post('/addProject', [upload.single('image')], async(req, res) => {
+router.post('/addProject', upload.single('image'), async(req, res) => {
 
     const { title, description, researchers, institution, fundingGoal, daysToFund, category } = JSON.parse(req.body.formText);
-    const image = req.file.filename;
+    const image = uuidv4() + "-" + req.file.originalname;
+    const s3Params = {
+        Bucket: bucketName,
+        Key: image,
+        Body: req.file.buffer,
+        ContentType: req.file.mimetype
+    }
+
+    // console.log(imageName, accessKeyId, secretAccessKey);
     try {
         const project = await new Project({ 
             title: title, 
@@ -57,12 +88,16 @@ router.post('/addProject', [upload.single('image')], async(req, res) => {
             category: category,
             image: image
         });
+        
+        const command = await new PutObjectCommand(s3Params);
+
+        await s3.send(command);
         await project.save();
 
-        res.json(project);
+        res.send(project);
         
     } catch(err) {
-        console.error(err.message);
+        console.error("Error: ", err.message);
         res.status(500).send('Server Error');
     }
 });
@@ -85,10 +120,21 @@ router.get('/:id', async(req, res) => {
 // @access  Public
 router.delete('/:id', async(req, res) => {
     try {
-
         const project = await Project.findById(req.params.id);
+
+        const s3Params = {
+            Bucket: bucketName,
+            Key: project.image
+        }
+        const command = new DeleteObjectCommand(s3Params);
+
         if(!project) res.status(404).json({ msg: "Project not found"});
+
+        // Delete project image in s3
+        await s3.send(command);
+        // Delete project in mongoDB
         await project.remove();
+
         res.json({msg: "Project removed"});
 
     } catch(err) {

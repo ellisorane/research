@@ -13,7 +13,7 @@ const DiscoverEntry = ({ project }) => {
     return (
         <Link to={`/entry/${project._id}`} className={classes.DiscEntryContainer}>
             {/* image  */}
-            <div style={{ backgroundImage: `url("/uploads/${project.image}")` }}  className={classes.entryImg}></div>
+            <div style={{ backgroundImage: `url("${project.imageURL}")` }}  className={classes.entryImg}></div>
 
             <div className={classes.innerContainer}>
 

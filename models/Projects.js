@@ -45,6 +45,9 @@ const ProjectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    imageURL: {
+        type: String
+    },
     fundedByUser: {
         type: Boolean
     },

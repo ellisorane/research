@@ -20,9 +20,10 @@ const DiscoverEntry = React.lazy(() => import('./DiscoverEntry/DiscoverEntry'));
 const Spinner = React.lazy(() => import('../Spinner/Spinner'));
 
 
-const Discover = ({ getDaysLeft, projects, loading, category, setCategory }) => {
+const Discover = ({ getDaysLeft, projects, loading, category, setCategory, getLatestProjects }) => {
     
     useEffect(() => {
+        // getLatestProjects();
         // Reset category to all when the page renders
         setCategory('all');
     }, []);
