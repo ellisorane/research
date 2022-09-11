@@ -36,5 +36,8 @@
     "nodemon": "^2.0.19",
     "react-number-format": "^4.9.3",
     "uuid": "^9.0.0"
+  },
+  "engines": {
+    "node": "16.14.0"
   }
 }
