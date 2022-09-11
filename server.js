@@ -15,10 +15,6 @@ app.use(express.json({ extended: false }));
 app.use('/static', express.static('public'));
 app.use('/uploads', express.static('public/uploads'));
 
-app.get('/', (req, res) => {
-    console.log('hi')
-    res.send('hi');
-})
 
 // Routes 
 app.use('/user', require('./routes/user'));
