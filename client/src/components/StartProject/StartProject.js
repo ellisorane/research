@@ -9,7 +9,7 @@ import classes from './StartProject.module.scss';
 const Form = React.lazy(() => import('./Form'));
 const Success = React.lazy(() => import('./Success'));
 
-const StartProject = ({ getLatestProjects }) => {
+const StartProject = () => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -41,7 +41,7 @@ const StartProject = ({ getLatestProjects }) => {
 
         try {
             const res = await axios.post('/projects/addProject', data, config);
-            // console.log(res);
+            console.log(res);
 
             setFormData({
                 title: '',
@@ -53,7 +53,7 @@ const StartProject = ({ getLatestProjects }) => {
                 category: ''
             });
             setFormSubmitted(true);
-            getLatestProjects();
+            window.scrollTo(0, 0);
             
         } catch(err) {
             console.error(err);

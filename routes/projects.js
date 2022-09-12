@@ -41,7 +41,7 @@ const upload = multer({ storage: storage });
 router.get('/', async(req, res) => {
     try {
         const projects = await Project.find();
-
+        
         for(const project of projects) {
             const getObjectParams = {
                 Bucket: bucketName,
@@ -74,7 +74,6 @@ router.post('/addProject', upload.single('image'), async(req, res) => {
         ContentType: req.file.mimetype
     }
 
-    // console.log(imageName, accessKeyId, secretAccessKey);
     try {
         const project = await new Project({ 
             title: title, 
@@ -94,7 +93,7 @@ router.post('/addProject', upload.single('image'), async(req, res) => {
         await s3.send(command);
         await project.save();
 
-        res.send(project);
+        res.json(project);
         
     } catch(err) {
         console.error("Error: ", err.message);
@@ -163,8 +162,6 @@ router.post('/payment/:id', async(req, res) => {
         // Update user
         const project = await Project.updateOne( { _id: req.params.id }, { $set: { amountFunded: parseInt(req.body.amountFunded) + parseInt(req.body.amount) }, fundedByUser: true } );
         res.json(project);
-        // console.log(req.params.id);
-        // console.log('payment: ', req.body.amount);
     } catch(err) {
         console.error(err.message);
     }

@@ -189,6 +189,8 @@ $siteGreen: #36AB9B;
 @media(min-width: 985px) {
         .results {
             display: block;
+            background-color: white;
+            position: absolute;
             margin-top: 5px;
             margin-left: 15px;
             min-width: 600px;

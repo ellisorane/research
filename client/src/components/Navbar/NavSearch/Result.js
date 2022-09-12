@@ -13,7 +13,7 @@ const Result = ({project, dispatch, setSearchInput, setSuggested}) => {
 
     return(
         <Link to={`/entry/${project._id}`} className={classes.result} onClick={() => resetSearch()}>
-            <div style={{ backgroundImage: `url("/uploads/${project.image}")` }}  className={classes.resultThumb}></div>
+            <div style={{ backgroundImage: `url("${project.imageURL}")` }}  className={classes.resultThumb}></div>
             <div className={classes.resultText}>
                 <h4>{project.title}</h4>
                 <p>{project.researchers}</p>

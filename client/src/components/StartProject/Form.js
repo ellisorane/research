@@ -15,12 +15,12 @@ const Form = ({ formData, setFormData, setImage, createProject }) => {
             <h2 className={classes.formHeader}>Start a Project</h2>
             <div className={classes.fields}>
                 <label className={classes.labels} htmlFor="title">Title</label><br />
-                <input type='text' className="inputs" name="title" value={formData.title} onChange={ (e) => onChangeFormData(e) } /><br />
+                <input type='text' className="inputs" name="title" value={formData.title} onChange={ (e) => onChangeFormData(e) } required /><br />
             </div>
 
             <div className={classes.fields}>
                 <label className={classes.labels} htmlFor="researchers">Researchers</label><br />
-                <input type='text' className="inputs" name="researchers" value={formData.researchers} onChange={ (e) => onChangeFormData(e) } /><br />
+                <input type='text' className="inputs" name="researchers" value={formData.researchers} onChange={ (e) => onChangeFormData(e) } required /><br />
             </div>
 
             <div className={classes.fields}>
@@ -64,18 +64,18 @@ const Form = ({ formData, setFormData, setImage, createProject }) => {
                 <label className={classes.labels} htmlFor="funding goal">Funding Goal</label><br />
                 <div className="fundingGoalWrapper inputs" style={{width: 'fit-content'}}>
                     <div>$</div>
-                    <input type='number' name="fundingGoal" value={formData.fundingGoal} min={1} onChange={ (e) => onChangeFormData(e) } /><br />
+                    <input type='number' name="fundingGoal" value={formData.fundingGoal} min={1} onChange={ (e) => onChangeFormData(e) } required /><br />
                 </div>
             </div>
 
             <div className={classes.fields}>
                 <label className={classes.labels} htmlFor="image">Project Image</label><br />
-                <input type='file' className="inputs" name="image" onChange={ (e) => setImgFile(e) } accept="images/*" /><br />
+                <input type='file' className="inputs" name="image" onChange={ (e) => setImgFile(e) } accept="images/*" required /><br />
             </div>
 
             <div className={classes.fields}>
                 <label className={classes.labels} htmlFor="description">About this Project</label><br />
-                <textarea className={`inputs ${classes.about}`} rows={10} name="description" value={formData.description} onChange={ (e) => onChangeFormData(e) }></textarea><br />
+                <textarea className={`inputs ${classes.about}`} rows={10} name="description" value={formData.description} onChange={ (e) => onChangeFormData(e) } required></textarea><br />
             </div>
             
             

@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 
 import './App.scss';
 
-import { setProjects } from './features/projects/projectsSlice';
+import { setProjects, setLoading } from './features/projects/projectsSlice';
 
 const Navbar = React.lazy(() => import('./components/Navbar/Navbar'));
 const Discover = React.lazy(() => import('./components/Discover/Discover'));
@@ -71,13 +71,13 @@ const App = () => {
   
   return (
     <div className="App">
-      <Load getLatestProjects={getLatestProjects}>
+      <Load loadData={loadData}>
         <React.Suspense fallback={<Spinner />}>
           <Navbar />
           <Routes>
             <Route path="/" element={ <Discover projects={projects} loading={loading} category={category} setCategory={setCategory} />  } />
             <Route path="/browse-all" element={ <BrowseAll projects={projects} loading={loading} category={category} setCategory={setCategory} /> } />
-            <Route path="/entry/:id" element={ <SingleEntry  getLatestProjects={getLatestProjects} /> } />
+            <Route path="/entry/:id" element={ <SingleEntry /> } />
             <Route path="/start-project" element={ <StartProject /> } />
             <Route path="/profile" element={ <Profile projects={projects} loading={loading} /> } />
             <Route path="/results/search=:searchTerm" element={ <SearchResults projects={projects} loading={loading} /> } />

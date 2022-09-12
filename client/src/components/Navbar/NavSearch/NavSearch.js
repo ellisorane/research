@@ -38,12 +38,9 @@ const NavSearch = ({ setShowNav }) => {
 
                 // Loop through projects state and see if input matches any of them 
                 projects.forEach(proj => {
-                    // console.log(proj);
-                    // console.log(input);
-                    // console.log(proj.title);
+                    
                     if(proj.title.toLowerCase().includes(input.toLowerCase())) {
                         tempSearchArr.push(proj);
-                        // console.log(proj);
                     } 
                 });
 

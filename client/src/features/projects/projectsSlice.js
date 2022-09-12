@@ -14,7 +14,6 @@ export const projectsSlice = createSlice({
         },
         setCurrentProject: (state, action) => {
             state.currentProject = action.payload
-    
         }
     }
 })
