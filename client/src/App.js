@@ -41,7 +41,6 @@ const App = () => {
       
       try {
         await axios.post(`/projects/daysLeft/${id}`, body, config);
-        // console.log('Worked');
       } catch(err) {
         console.log(err);
       }

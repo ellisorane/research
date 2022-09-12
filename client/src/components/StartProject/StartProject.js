@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-// import Form from './Form';
-// import Success from './Success';
-
 import classes from './StartProject.module.scss';
 
 const Form = React.lazy(() => import('./Form'));
@@ -41,7 +38,6 @@ const StartProject = () => {
 
         try {
             const res = await axios.post('/projects/addProject', data, config);
-            console.log(res);
 
             setFormData({
                 title: '',
