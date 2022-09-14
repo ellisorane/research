@@ -5,7 +5,7 @@ $siteGreen: #36AB9B;
     display: flex;
     flex-direction: column;
     margin: 20px auto;
-    height: 520px;
+    height: 620px;
     border-radius: 5px;
     border: 1px solid rgb(233, 233, 233);
     cursor: pointer;
@@ -18,8 +18,9 @@ $siteGreen: #36AB9B;
 
 .entryImg {
     width: 100%;
-    height: 200px;
-    background-size: cover;
+    min-height: 200px;
+    max-height: 200px;
+    background-size: 100%;
     background-repeat: no-repeat;
     background-position:center;
 }
@@ -34,7 +35,7 @@ $siteGreen: #36AB9B;
 
 .description {
     height: 100%;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 }
 
 .researcherInfo {

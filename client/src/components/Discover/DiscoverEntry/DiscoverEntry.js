@@ -18,7 +18,7 @@ const DiscoverEntry = ({ project }) => {
             <div className={classes.innerContainer}>
 
                 {/* title */}
-                <h3>{project.title}</h3>
+                <h4>{project.title}</h4>
                 {/* description  */}
                 <p className={classes.description}>{project.description.substring(0, 100)}</p>
 
