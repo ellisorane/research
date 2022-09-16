@@ -58,7 +58,7 @@ const NavSearch = ({ setShowNav }) => {
     const submitHandler = (e) => {
         e.preventDefault();
         setShowNav(false);
-        navigate(`/results/search=${searchInput}`);
+        searchInput.length > 0 && navigate(`/results/search=${searchInput}`);
     }
 
     return (

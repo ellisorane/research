@@ -32,8 +32,7 @@ const SearchResults = () => {
             dispatch(setSuggested([]));
             setResults(tempArr);
             setLoading(false);
-            // console.log('works');
-            // console.log(results);
+            
         }
 
         useEffect(() => {
@@ -42,10 +41,11 @@ const SearchResults = () => {
 
         return(
             <div className={classes.searchResults}>
-                <h2 className={classes.heading}>Results for: {searchTerm}</h2>
+                <h2 className={classes.heading}><u>Results for: {searchTerm}</u></h2>
                 { !loading ? <div className={classes.resContainer}>
                 { results.map(project => <DiscoverEntry key={project._id} project={project} />) }
                 </div> : <Spinner />}
+                {results.length === 0 && <h2>No Results</h2>}
             </div>
         );
 }
