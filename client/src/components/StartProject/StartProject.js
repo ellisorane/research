@@ -25,7 +25,6 @@ const StartProject = () => {
 
     const createProject = async(e) => {
         e.preventDefault();
-        console.log('working');
 
         const config = {
             headers: {
