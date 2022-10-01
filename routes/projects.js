@@ -11,7 +11,7 @@ const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = re
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 
 const region = "us-east-1";
-const bucketName = "research.com";
+const bucketName = "research.com-bucket";
 const accessKeyId = process.env.aws_access_key_id;
 const secretAccessKey = process.env.aws_secret_access_key;
 
