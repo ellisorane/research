@@ -8,6 +8,8 @@ import './App.scss';
 import { setProjects, setLoading } from './features/projects/projectsSlice';
 
 const Navbar = React.lazy(() => import('./components/Navbar/Navbar'));
+const Signup = React.lazy(() => import('./components/Auth/Signup'));
+const Login = React.lazy(() => import('./components/Auth/Login'));
 const Discover = React.lazy(() => import('./components/Discover/Discover'));
 const BrowseAll = React.lazy(() => import('./components/Discover/BrowseAll/BrowseAll'));
 const SingleEntry = React.lazy(() => import('./components/Discover/DiscoverEntry/SingleEntry/SingleEntry'));
@@ -75,6 +77,8 @@ const App = () => {
           <Navbar />
           <Routes>
             <Route path="/" element={ <Discover projects={projects} loading={loading} category={category} setCategory={setCategory} />  } />
+            <Route path="/login" element={ <Login /> } />
+            <Route path="/signup" element={ <Signup /> } />
             <Route path="/browse-all" element={ <BrowseAll projects={projects} loading={loading} category={category} setCategory={setCategory} /> } />
             <Route path="/entry/:id" element={ <SingleEntry /> } />
             <Route path="/start-project" element={ <StartProject /> } />

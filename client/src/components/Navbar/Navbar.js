@@ -28,6 +28,8 @@ const Navbar = () => {
                     <Link to="/" className={classes.navLink}>Discover</Link>
                     <Link to="/start-project" className={classes.navLink}>Start a Project</Link>
                     <Link to="/profile" className={classes.navLink}>Profile</Link>
+                    <Link to="/signup" className={classes.navLink}>Signup</Link>
+                    <Link to="/login" className={classes.navLink}>Login</Link>
                 </div>
 
                 {/* For smaller screens. Hidden on bigger screens  */}
