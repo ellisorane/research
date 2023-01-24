@@ -26,6 +26,9 @@ const UserSchema = new mongoose.Schema({
     institution: {
         type: 'string'
     },
+    avatar: {
+        type: 'string'
+    },
     createdAt: {
         type: Date,
         default: () => Date.now(),

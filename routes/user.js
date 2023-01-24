@@ -9,6 +9,37 @@ const { body, validationResult } = require('express-validator');
 
 const router = express.Router();
 
+///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+// S3 setup /////////////////////////////////////////////////////////////////////////
+const { v4: uuidv4 } = require('uuid');
+const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
+
+const region = "us-east-1";
+const bucketName = "research.com-bucket";
+const accessKeyId = process.env.aws_access_key_id;
+const secretAccessKey = process.env.aws_secret_access_key;
+
+const s3 = new S3Client({
+    credentials: {
+        accessKeyId,
+        secretAccessKey
+    },
+    region
+});
+
+const multer = require('multer');
+
+// Save image to memory instead of to disk
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+
+
 
 // @route   GET /user/
 // @desc    Get User
@@ -151,6 +182,35 @@ router.put('/password/:id', authenticate, async ( req, res ) => {
     }
 })
 
+// @route   PUT /user/avatar/:id
+// @desc    Update User avatar
+// @access  Private
+router.put('/avatar/:id', [ upload.single( 'avatar' ), authenticate ], async ( req, res ) => {
+    const avatar = uuidv4() + "-" + req.file.originalname;
+
+    const s3Params = {
+        Bucket: bucketName,
+        Key: avatar,
+        Body: req.file.buffer,
+        ContentType: req.file.mimetype
+    }
+
+    try {
+        const user = await User.findByIdAndUpdate( id, { avatar }, { new: true } )
+        
+        const command = await new PutObjectCommand(s3Params);
+
+        await s3.send(command);
+        await user.save();
+
+        res.json(project);
+        
+    } catch(err) {
+        console.error("Error: ", err.message);
+        res.status(500).send('Server Error');
+    }
+})
+
 
 // @route   DELETE /user/delete/:id
 // @desc    Delete User
@@ -158,7 +218,20 @@ router.put('/password/:id', authenticate, async ( req, res ) => {
 router.delete('/delete/:id', authenticate, async(req, res) => {
     const id = req.params.id
     try {
+        // Delete User in mongodb
         const user = await User.findByIdAndDelete( id )
+
+        // Delete user avatar in s3
+        const s3Params = {
+            Bucket: bucketName,
+            Key: user.avatar
+        }
+        const command = new DeleteObjectCommand(s3Params);
+
+        if(!project) res.status(404).json({ msg: "Project not found"});
+
+        await s3.send(command);
+
         res.send( 'User deleted successfully.' ) 
     } catch (error) {
         res.send( error )

@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-// import  { loadUser, login, logout } from '../../../feature/Auth/authSlice'
+import  { loadUser, login, logout } from '../../features/auth/authSlice'
 
 // import logo from '../../../assets/images/logo.png'
 
@@ -74,9 +74,9 @@ function Signup({ getCurrentUser }) {
           });
 
           // Logout any existing user
-        //   dispatch( logout() )
+          dispatch( logout() )
           // Save user and token data in the redux authSlice
-        //   dispatch( login(res.data) )
+          dispatch( login(res.data) )
           // Load user
           getCurrentUser()
           // Redirect user to Journal page
@@ -112,7 +112,7 @@ function Signup({ getCurrentUser }) {
 
             <input type="submit" name="signUp" value="Sign Up" /><br />
 
-            <Link to="/login" style={{ textDecoration: 'underline' }}>Already have an account? Log In here.</Link>
+            <Link to="/login" style={{ textDecoration: 'underline', color: '#36AB9B' }}>Already have an account? Log In here.</Link>
         </form>
     </div>
   )

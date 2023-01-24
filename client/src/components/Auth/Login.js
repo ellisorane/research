@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-// import  { loadUser, login, logout } from '../../../feature/Auth/authSlice'
+import  { loadUser, login, logout } from '../../features/auth/authSlice'
 
 import classes from './Auth.module.scss';
 
@@ -13,7 +13,7 @@ function Login({ getCurrentUser }) {
   const navigate = useNavigate()
 
   const [ formData, setFormData ] = React.useState({ 
-    usernameOrEmail: '',
+    email: '',
     password: ''
   })
 
@@ -89,7 +89,7 @@ function Login({ getCurrentUser }) {
 
             <input type="submit" name="login" value="Log in" /><br />
 
-            <Link to="/signup" style={{ textDecoration: 'underline' }}>Don't have an account? Signup here.</Link>
+            <Link to="/signup" style={{ textDecoration: 'underline', color: '#36AB9B' }}>Don't have an account? Signup here.</Link>
         </form>
     </div>
   )

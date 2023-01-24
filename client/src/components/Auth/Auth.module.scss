@@ -1,4 +1,6 @@
 $accent: #60a0f9;
+$siteGreen: #36AB9B;
+
 
 .auth {
     display: flex;
@@ -18,7 +20,7 @@ $accent: #60a0f9;
     input {
         border: none;
         outline: none;
-        border-bottom: 2px solid $accent;
+        border-bottom: 2px solid $siteGreen;
         font-size: 1.1rem;
     }
     
@@ -27,10 +29,10 @@ $accent: #60a0f9;
         border: none;
         border-radius: 5px;
         color: white;
-        background-color: $accent;
+        background-color: $siteGreen;
     }
     
     input:focus, textarea:focus {
-        background-color: #deecff;
+        background-color: #d1f9f4;
     }
 }
