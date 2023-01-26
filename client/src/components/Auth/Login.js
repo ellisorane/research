@@ -32,12 +32,10 @@ function Login({ getCurrentUser }) {
         }
     }
 
-    const form = JSON.stringify( { email, password } );
-    let data = new FormData()
-    data.append( 'formData', form )
+    const body = JSON.stringify( { email, password } );
 
     try {
-        const res = await axios.post( '/user/login', data, config );
+        const res = await axios.post( '/user/login', body, config );
         // const res = await axios.get( '/user/test' );
         
         // Check for form error messages from mongoose validation, if no errors then register and log user in

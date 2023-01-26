@@ -70,29 +70,26 @@ router.get('/', authenticate, async(req, res) => {
 // @access  Public
 router.post('/signup', async(req, res) => {
 
-    console.log('Coming from react frontend: ', req.body)
     try {    
-        // const { email, name, institution, password } = JSON.parse( req.body.form )
-        // // const { name, institution, email, password } = req.body;
-        // console.log( req.body )
-        // // Create new user in the database
-        // const user = await User.create({
-        //     email,
-        //     name,
-        //     institution,
-        //     password 
-        // })
+        const { email, name, institution, password } = req.body
+        // const { name, institution, email, password } = req.body;
+        // console.log( email, name, institution, password )
+        // Create new user in the database
+        const user = await User.create({
+            email,
+            name,
+            institution,
+            password 
+        })
 
-        // // // Create JWT token 
-        // const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '1d' })
+        // // Create JWT token 
+        const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
-        // // Send token and user to client and set to current user
-        // res.json({
-        //     token: token,
-        //     user: user
-        // })
-
-        console.log( req.body )
+        // Send token and user to client and set to current user
+        res.json({
+            token: token,
+            user: user
+        })
 
     } catch ( error ) {
 
@@ -108,9 +105,8 @@ router.post('/signup', async(req, res) => {
 // @desc    Login User
 // @access  Public
 router.post('/login', async ( req, res ) => {
-    const { email, password } = JSON.parse( req.body.form );
-    // const { email, password } = req.body;
-    console.log(email, password);
+    const { email, password } = req.body;
+    
     try {
         // Find user in database with email
         let user = await User.findOne({ email })

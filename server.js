@@ -1,5 +1,4 @@
 const path = require('path');
-const cors = require('cors')
 const express = require("express");
 const connectDB = require('./config/db'); 
 const bodyParser = require('body-parser');
@@ -11,7 +10,6 @@ const app = express();
 connectDB();
 
 // Allows for req.body use
-app.use(cors())
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
