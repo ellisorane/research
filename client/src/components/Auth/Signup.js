@@ -18,7 +18,8 @@ function Signup({ getCurrentUser }) {
 
   const [ formData, setFormData ] = React.useState({ 
     email: '',
-    username: '',
+    name: '',
+    institution: '',
     password: ''
   })
 
@@ -28,12 +29,12 @@ function Signup({ getCurrentUser }) {
 
   const errorHandler = ( errors ) => {
     for( let key in errors ) { 
-      // console.log(errors[ key ].message)
+      console.log(errors[ key ].message)
       setErrorMsg(prevMsg => [ ...prevMsg, errors[key].message ])
     }
   }
 
-  const { email, username, password } = formData
+  const { email, name, institution, password } = formData
 
   const onSubmitHandler = async( e ) => {
     e.preventDefault();
@@ -48,12 +49,14 @@ function Signup({ getCurrentUser }) {
     }
     
 
-    const form = JSON.stringify( { email, username, password } );
+    const form = JSON.stringify( { email, name, institution, password } )
     let data = new FormData()
     data.append( 'form', form )
+    console.log(form)
 
     try {
-        const res = await axios.post( '/user/register', data, config );
+        const res = await axios.post( '/user/signup', data, config )
+        
         
         // Check for form error messages from mongoose validation, if no errors then register and log user in
         const errors = res.data.errors
@@ -64,23 +67,24 @@ function Signup({ getCurrentUser }) {
 
         } else {
 
-          // console.log( res.data )
+          console.log( res.data )
 
           // Reset form
-          setFormData({
-            email: '',
-            username: '',
-            password: ''
-          });
+        //   setFormData({
+        //     email: '',
+        //     name: '',
+        //     institution: '',
+        //     password: ''
+        //   });
 
           // Logout any existing user
-          dispatch( logout() )
+          // dispatch( logout() )
           // Save user and token data in the redux authSlice
           dispatch( login(res.data) )
           // Load user
-          getCurrentUser()
+        //   getCurrentUser()
           // Redirect user to Journal page
-          navigate( '/' )
+        //   navigate( '/' )
 
         }
 
@@ -89,6 +93,8 @@ function Signup({ getCurrentUser }) {
         
     } catch( err ) {
         console.error( err )
+        console.log('form api call failed')
+
     }
   }
 
@@ -104,8 +110,11 @@ function Signup({ getCurrentUser }) {
             <label htmlFor='email'>Email:</label><br />
             <input type="email" name="email" placeholder="Enter your email" value={ email }onChange={ (e) => onChangeFormData(e) } /><br />
 
-            <label htmlFor='username'>Username:</label><br />
-            <input type="text" name="username" placeholder="Enter your username" value={ username }onChange={ (e) => onChangeFormData(e) } /><br />
+            <label htmlFor='name'>Name:</label><br />
+            <input type="text" name="name" placeholder="Enter your name" value={ name }onChange={ (e) => onChangeFormData(e) } /><br />
+
+            <label htmlFor='institution'>Institution (Leave blank if you're a donor):</label><br />
+            <input type="text" name="institution" placeholder="Enter your institution" value={ institution }onChange={ (e) => onChangeFormData(e) } /><br />
 
             <label htmlFor='password'>Password:</label><br />
             <input type="password" name="password" placeholder="Enter your password" value={ password }onChange={ (e) => onChangeFormData(e) } /><br />

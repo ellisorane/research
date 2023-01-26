@@ -24,7 +24,6 @@ const s3 = new S3Client({
 });
 
 const multer = require('multer');
-const User = require('../models/User');
 
 // Save image to memory instead of to disk
 const storage = multer.memoryStorage();

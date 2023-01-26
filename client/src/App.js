@@ -2,10 +2,13 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Routes, Route } from "react-router-dom";
+import setAuthToken from './utils/setAuthToken'
+
 
 import './App.scss';
 
 import { setProjects, setLoading } from './features/projects/projectsSlice';
+import  { loadUser, login, logout } from './features/auth/authSlice'
 
 const Navbar = React.lazy(() => import('./components/Navbar/Navbar'));
 const Signup = React.lazy(() => import('./components/Auth/Signup'));
@@ -24,6 +27,8 @@ const Spinner = React.lazy(() => import('./components/Spinner/Spinner'));
 const App = () => {
   const projects = useSelector(state => state.projects.data[0]);
   const loading = useSelector(state => state.projects.loading);
+  const tokenState = useSelector( state => state.auth.token )
+  // const user = useSelector( state => state.auth.user )
   const dispatch = useDispatch();
   const [category, setCategory] = useState('all');
 
@@ -49,6 +54,22 @@ const App = () => {
 
     }
 
+    const getCurrentUser = async() => {
+      // Set token in the header
+      if (localStorage.token) {
+        setAuthToken(localStorage.token);
+      }
+  
+      try {
+        const res = await axios.get('/user/current')
+        // console.log(res.data.user)
+        dispatch( loadUser( res.data.user ) )
+      } catch ( err ) {
+        console.log( err )
+        // dispatch( logout() )
+      }
+    }
+
     const getLatestProjects = async() => {
         try {
             const res = await axios.get('/projects');
@@ -68,6 +89,8 @@ const App = () => {
 
     useEffect(() => {
       loadData();
+      // Only load user if token is detected
+      tokenState && getCurrentUser()
     }, [loading]);
   
   return (
@@ -77,8 +100,8 @@ const App = () => {
           <Navbar />
           <Routes>
             <Route path="/" element={ <Discover projects={projects} loading={loading} category={category} setCategory={setCategory} />  } />
-            <Route path="/login" element={ <Login /> } />
-            <Route path="/signup" element={ <Signup /> } />
+            <Route path="/login" element={ <Login getCurrentUser={ getCurrentUser } /> } />
+            <Route path="/signup" element={ <Signup getCurrentUser={ getCurrentUser } /> } />
             <Route path="/browse-all" element={ <BrowseAll projects={projects} loading={loading} category={category} setCategory={setCategory} /> } />
             <Route path="/entry/:id" element={ <SingleEntry /> } />
             <Route path="/start-project" element={ <StartProject /> } />

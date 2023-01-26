@@ -21,7 +21,7 @@ function Login({ getCurrentUser }) {
 
   const onChangeFormData = ( e ) => setFormData({ ...formData, [ e.target.name ]: e.target.value });
 
-  const { usernameOrEmail, password } = formData
+  const { email, password } = formData
 
   const onSubmitHandler = async( e ) => {
     e.preventDefault();
@@ -31,12 +31,14 @@ function Login({ getCurrentUser }) {
             'Content-Type': 'application/json'
         }
     }
-    const form = JSON.stringify( { usernameOrEmail, password } );
+
+    const form = JSON.stringify( { email, password } );
     let data = new FormData()
-    data.append( 'form', form )
+    data.append( 'formData', form )
 
     try {
         const res = await axios.post( '/user/login', data, config );
+        // const res = await axios.get( '/user/test' );
         
         // Check for form error messages from mongoose validation, if no errors then register and log user in
         if( res.data.error ) {
@@ -45,22 +47,23 @@ function Login({ getCurrentUser }) {
           
         } else {
 
+          console.log( res )
           // console.log( res.data )
 
           // Reset form
           setFormData({
-            usernameOrEmail: '',
-            confirm: ''
+            email: '',
+            password: ''
           });
 
           // Logout any existing user
         //   dispatch( logout() )
           // Save user and token data in the redux authSlice
-        //   dispatch( login( res.data ) )
+          dispatch( login( res.data ) )
           // Load user
-          getCurrentUser()
+          // getCurrentUser()
           // Redirect user to Journal page
-          navigate( '/' )
+          // navigate( '/' )
 
 
         }
@@ -81,8 +84,8 @@ function Login({ getCurrentUser }) {
             {/* Error */}
             { errorMsg && <p style={{ color: 'red' }}>{  errorMsg }</p> }
 
-            <label htmlFor='usernameOrEmail'>Username/email:</label><br />
-            <input type="text" name="usernameOrEmail" placeholder="Enter your username or email" onChange={ (e) => onChangeFormData(e) } required /><br />
+            <label htmlFor='email'>Username/email:</label><br />
+            <input type="text" name="email" placeholder="Enter your email" onChange={ (e) => onChangeFormData(e) } required /><br />
 
             <label htmlFor='password'>Password:</label><br />
             <input type="password" name="password" placeholder="Enter your password" onChange={ (e) => onChangeFormData(e) } required /><br />

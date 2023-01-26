@@ -2,10 +2,9 @@ require('dotenv').config()
 const bcrypt = require('bcrypt')
 const express = require('express');
 const jwt = require('jsonwebtoken')
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
 const User = require('../models/User');
 const { authenticate } = require('../middleware')
-const { body, validationResult } = require('express-validator');
 
 const router = express.Router();
 
@@ -41,6 +40,19 @@ const upload = multer({ storage: storage });
 
 
 
+// @route   GET /user/test
+// @desc    Testing the user/ route
+// @access  Public
+router.get('/test', async(req, res) => {
+    try {
+        res.json( 'User test route is working' )
+    } catch ( error ) {
+        console.error( error )
+        res.json( error )
+    }
+})
+
+
 // @route   GET /user/
 // @desc    Get User
 // @access  Private
@@ -58,26 +70,29 @@ router.get('/', authenticate, async(req, res) => {
 // @access  Public
 router.post('/signup', async(req, res) => {
 
+    console.log('Coming from react frontend: ', req.body)
     try {    
-        // const { name, email, password } = JSON.parse( req.body.form );
-        const { name, institution, email, password } = req.body;
+        // const { email, name, institution, password } = JSON.parse( req.body.form )
+        // // const { name, institution, email, password } = req.body;
+        // console.log( req.body )
+        // // Create new user in the database
+        // const user = await User.create({
+        //     email,
+        //     name,
+        //     institution,
+        //     password 
+        // })
 
-        // Create new user in the database
-        const user = await User.create({
-            name,
-            institution,
-            email,
-            password 
-        })
+        // // // Create JWT token 
+        // const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
-        // // Create JWT token 
-        const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '1d' })
+        // // Send token and user to client and set to current user
+        // res.json({
+        //     token: token,
+        //     user: user
+        // })
 
-        // Send token and user to client and set to current user
-        res.json({
-            token: token,
-            user: user
-        })
+        console.log( req.body )
 
     } catch ( error ) {
 
@@ -93,8 +108,8 @@ router.post('/signup', async(req, res) => {
 // @desc    Login User
 // @access  Public
 router.post('/login', async ( req, res ) => {
-    // const { email, password } = JSON.parse( req.body.form );
-    const { email, password } = req.body;
+    const { email, password } = JSON.parse( req.body.form );
+    // const { email, password } = req.body;
     console.log(email, password);
     try {
         // Find user in database with email
