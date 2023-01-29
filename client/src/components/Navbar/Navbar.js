@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
+import { logout } from '../../features/auth/authSlice';
 
 import classes from './Navbar.module.scss';
 
@@ -9,7 +11,7 @@ const NavSearch = React.lazy(() => import('./NavSearch/NavSearch'));
 const Navbar = () => {
     const path = useLocation().pathname; 
     const [showNav, setShowNav] = useState(false);
-
+    const dispatch = useDispatch()
 
     return (
         // Use white font on homepage and black font for all other pages
@@ -30,6 +32,7 @@ const Navbar = () => {
                     <Link to="/profile" className={classes.navLink}>Profile</Link>
                     <Link to="/signup" className={classes.navLink}>Signup</Link>
                     <Link to="/login" className={classes.navLink}>Login</Link>
+                    <div className={ classes.navLink } onClick={ () => dispatch( logout() ) }>Logout</div>
                 </div>
 
                 {/* For smaller screens. Hidden on bigger screens  */}

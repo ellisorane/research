@@ -197,24 +197,36 @@ router.put('/password/:id', authenticate, async ( req, res ) => {
 // @desc    Update User avatar
 // @access  Private
 router.put('/avatar/:id', [ upload.single( 'avatar' ), authenticate ], async ( req, res ) => {
-    const avatar = uuidv4() + "-" + req.file.originalname;
-
-    const s3Params = {
-        Bucket: bucketName,
-        Key: avatar,
-        Body: req.file.buffer,
-        ContentType: req.file.mimetype
-    }
-
+    
     try {
-        const user = await User.findByIdAndUpdate( id, { avatar }, { new: true } )
+        console.log(req.file)
+        const avatar = uuidv4() + "-" + req.file.originalname;
+        console.log(avatar)
+        // console.log( req.params.id )
+    
+        // const s3Params = {
+        //     Bucket: bucketName,
+        //     Key: avatar,
+        //     Body: req.file.buffer,
+        //     ContentType: req.file.mimetype
+        // }
         
-        const command = await new PutObjectCommand(s3Params);
+    //     const command = await new PutObjectCommand(s3Params);
+    //     // Set avatarUrl
+    //     const getObjectParams = {
+    //         Bucket: bucketName,
+    //         Key: avatar,
+    //     }
+        
+    //     const command2 = await new GetObjectCommand(getObjectParams);
+    //     const avatarUrl = await getSignedUrl(s3, command2)
+        
+    //     const user = await User.findByIdAndUpdate( req.params.id, { avatar, avatarUrl }, { new: true } )
 
-        await s3.send(command);
-        await user.save();
+    //     s3.send(command);
+    //     user.save();
 
-        res.json(project);
+    //     res.json(user);
         
     } catch(err) {
         console.error("Error: ", err.message);

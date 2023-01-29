@@ -1,8 +1,8 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Routes, Route } from "react-router-dom";
-import setAuthToken from './utils/setAuthToken'
+import { setAuthToken } from './utils/utils';
 
 
 import './App.scss';
@@ -31,6 +31,7 @@ const App = () => {
   // const user = useSelector( state => state.auth.user )
   const dispatch = useDispatch();
   const [category, setCategory] = useState('all');
+
 
   const getDaysLeft = async(createdOn, daysToFund, id) => {
       
@@ -61,7 +62,7 @@ const App = () => {
       }
   
       try {
-        const res = await axios.get('/user/current')
+        const res = await axios.get('/user/')
         // console.log(res.data.user)
         dispatch( loadUser( res.data.user ) )
       } catch ( err ) {

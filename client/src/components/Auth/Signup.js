@@ -75,11 +75,11 @@ function Signup({ getCurrentUser }) {
         //   });
 
           // Logout any existing user
-          // dispatch( logout() )
+          dispatch( logout() )
           // Save user and token data in the redux authSlice
           dispatch( login(res.data) )
           // Load user
-        //   getCurrentUser()
+          getCurrentUser()
           // Redirect user to Journal page
         //   navigate( '/' )
 
