@@ -51,6 +51,8 @@ const StartProject = () => {
             });
             setFormSubmitted(true);
             window.scrollTo(0, 0);
+
+            data = null
             
         } catch(err) {
             console.error(err);

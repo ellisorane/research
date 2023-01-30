@@ -1,15 +1,18 @@
-const express = require("express");
 const path = require('path');
+const express = require("express");
 const connectDB = require('./config/db'); 
+const bodyParser = require('body-parser');
+
 
 const app = express();
-app.use(express.json({ extended: false }));
 
 // Connect DB
 connectDB();
 
 // Allows for req.body use
-app.use(express.json({ extended: false }));
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // Below are needed to access the uploaded avatar files 
 app.use('/static', express.static('public'));
