@@ -47,7 +47,7 @@ router.get('/', async(req, res) => {
                 Key: project.image,
             }
 
-            const command = new GetObjectCommand(getObjectParams);
+            const command = await new GetObjectCommand(getObjectParams);
             const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
 
             const proj = await Project.updateOne({ _id: project._id}, { $set: { imageURL: url } } );

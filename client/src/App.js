@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { setAuthToken } from './utils/utils';
 
 
 import './App.scss';
 
 import { setProjects, setLoading } from './features/projects/projectsSlice';
-import  { loadUser, login, logout } from './features/auth/authSlice'
+import  { loadUser, loginRefresh, logout } from './features/auth/authSlice'
 
 const Navbar = React.lazy(() => import('./components/Navbar/Navbar'));
 const Signup = React.lazy(() => import('./components/Auth/Signup'));
@@ -28,7 +28,8 @@ const App = () => {
   const projects = useSelector(state => state.projects.data[0]);
   const loading = useSelector(state => state.projects.loading);
   const tokenState = useSelector( state => state.auth.token )
-  // const user = useSelector( state => state.auth.user )
+  const user = useSelector( state => state.auth.user )
+  const loggedIn = useSelector( state => state.auth.loggedIn )
   const dispatch = useDispatch();
   const [category, setCategory] = useState('all');
 
@@ -82,9 +83,11 @@ const App = () => {
     }
 
     const loadData = () => {
-      getLatestProjects();
+      // getLatestProjects();
       !loading && projects.forEach(proj => getDaysLeft(proj.date, proj.daysToFund, proj._id));
       getLatestProjects();
+      // Only load user if token is detected
+      tokenState && getCurrentUser()
     }
     
 
@@ -100,14 +103,16 @@ const App = () => {
         <React.Suspense fallback={<Spinner />}>
           <Navbar />
           <Routes>
+            {/* Public Routes  */}
             <Route path="/" element={ <Discover projects={projects} loading={loading} category={category} setCategory={setCategory} />  } />
-            <Route path="/login" element={ <Login getCurrentUser={ getCurrentUser } /> } />
-            <Route path="/signup" element={ <Signup getCurrentUser={ getCurrentUser } /> } />
+            <Route path="/login" element={ loggedIn ? <Navigate to="/" /> : <Login getCurrentUser={ getCurrentUser } /> } />
+            <Route path="/signup" element={ loggedIn ? <Navigate to="/" /> : <Signup getCurrentUser={ getCurrentUser } /> } />
             <Route path="/browse-all" element={ <BrowseAll projects={projects} loading={loading} category={category} setCategory={setCategory} /> } />
             <Route path="/entry/:id" element={ <SingleEntry /> } />
-            <Route path="/start-project" element={ <StartProject /> } />
-            <Route path="/profile" element={ <Profile projects={projects} loading={loading} /> } />
             <Route path="/results/search=:searchTerm" element={ <SearchResults projects={projects} loading={loading} /> } />
+            {/* Private Routes  */}
+            <Route path="/start-project" element={ !loggedIn ? <Navigate to="/" /> : <StartProject /> } />
+            <Route path="/profile" element={ !loggedIn ? <Navigate to="/" /> : <Profile projects={projects} loading={loading} getCurrentUser={ getCurrentUser } /> } />
           </Routes>
         </React.Suspense>
 

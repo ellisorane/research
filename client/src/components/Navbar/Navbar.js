@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { logout } from '../../features/auth/authSlice';
 
@@ -11,7 +11,13 @@ const NavSearch = React.lazy(() => import('./NavSearch/NavSearch'));
 const Navbar = () => {
     const path = useLocation().pathname; 
     const [showNav, setShowNav] = useState(false);
+    const user = useSelector(state => state.auth.user)
     const dispatch = useDispatch()
+
+    const logoutHandler = () => {
+        dispatch( logout() )
+        setShowNav(false)
+    }
 
     return (
         // Use white font on homepage and black font for all other pages
@@ -28,11 +34,11 @@ const Navbar = () => {
 
                 <div className={classes.lgScreenMenu}>
                     <Link to="/" className={classes.navLink}>Discover</Link>
-                    <Link to="/start-project" className={classes.navLink}>Start a Project</Link>
-                    <Link to="/profile" className={classes.navLink}>Profile</Link>
-                    <Link to="/signup" className={classes.navLink}>Signup</Link>
-                    <Link to="/login" className={classes.navLink}>Login</Link>
-                    <div className={ classes.navLink } onClick={ () => dispatch( logout() ) }>Logout</div>
+                    { user ? <Link to="/start-project" className={classes.navLink}>Start a Project</Link> : undefined }
+                    { user ? <Link to="/profile" className={classes.navLink}>Profile</Link> : undefined }
+                    { !user ? <Link to="/signup" className={classes.navLink}>Signup</Link> : undefined }
+                    { !user ? <Link to="/login" className={classes.navLink}>Login</Link> : undefined }
+                    { user ? <div className={ classes.navLink } onClick={ () => dispatch( logout() ) }>Logout</div> : undefined }
                 </div>
 
                 {/* For smaller screens. Hidden on bigger screens  */}
@@ -43,8 +49,11 @@ const Navbar = () => {
                         <hr style={{ width: '100%' }} />
                         <div className={classes.navLinks}>
                             <Link to="/" className={classes.navLink} onClick={ () => setShowNav(false) }>Discover</Link>
-                            <Link to="/start-project" className={classes.navLink} onClick={ () => setShowNav(false) }>Start a Project</Link>
-                            <Link to="/profile" className={classes.navLink} onClick={ () => setShowNav(false) }>Profile</Link>
+                            { user ? <Link to="/start-project" className={classes.navLink} onClick={ () => setShowNav(false) }>Start a Project</Link> : undefined }
+                            { user ? <Link to="/profile" className={classes.navLink} onClick={ () => setShowNav(false) }>Profile</Link> : undefined }
+                            { !user ? <Link to="/signup" className={classes.navLink} onClick={ () => setShowNav(false) }>Signup</Link> : undefined }
+                            { !user ? <Link to="/login" className={classes.navLink} onClick={ () => setShowNav(false) }>Login</Link> : undefined }
+                            { user ? <div className={ classes.navLink } onClick={ logoutHandler }>Logout</div> : undefined }
                         </div>
                     </div>
                     <div className={classes.closeMenu} onClick={ () => setShowNav(false) }>&#66338;</div>

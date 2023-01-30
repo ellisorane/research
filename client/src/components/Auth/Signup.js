@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import  { loadUser, login, logout } from '../../features/auth/authSlice'
+import  { loadUser, loginRefresh, logout } from '../../features/auth/authSlice'
 
 // import logo from '../../../assets/images/logo.png'
 
@@ -77,7 +77,7 @@ function Signup({ getCurrentUser }) {
           // Logout any existing user
           dispatch( logout() )
           // Save user and token data in the redux authSlice
-          dispatch( login(res.data) )
+          dispatch( loginRefresh(res.data) )
           // Load user
           getCurrentUser()
           // Redirect user to Journal page

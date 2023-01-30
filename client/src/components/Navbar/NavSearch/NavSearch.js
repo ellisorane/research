@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FaSearch } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
 
 // import Result from "./Result";
 // import DiscoverEntry from "../../Discover/DiscoverEntry/DiscoverEntry";
@@ -66,7 +67,7 @@ const NavSearch = ({ setShowNav }) => {
             <div className={classes.navSearch}>
                 <form action="" onSubmit={(e) => submitHandler(e)}>
                     <input type='input' value={ searchInput } placeholder="Search projects" onChange={(e) => searchLogic(e)} />
-                    <input type='submit' value="🔍" /> 
+                    <button type='submit'>< FaSearch /></button> 
                 </form>
             </div>
 

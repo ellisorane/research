@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Routes, Route, NavLink } from 'react-router-dom';
+import { Routes, Route, NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { convertDate } from '../../utils/utils';
-import { loadUser } from '../../features/auth/authSlice';
+import  { loadUser, loginRefresh, logout } from '../../features/auth/authSlice'
+
 
 import classes from './Profile.module.scss';
-import defaultAvatar from '../../imgs/default.jpg';
+import defaultUserImg from '../../imgs/default.jpg';
 
 // import ProjectsStarted from './ExpiredProjects/ExpiredProjects';
 // import FundedProjects from './FundedProjects/FundedProfile';
@@ -14,25 +15,23 @@ const ProjectsStarted = React.lazy(() => import('./ExpiredProjects/ExpiredProjec
 const FundedProjects = React.lazy(() => import('./FundedProjects/FundedProfile'));
 const Spinner = React.lazy(() => import('../Spinner/Spinner') )
 
-const Profile = ({ projects, loading }) => {
+const Profile = ({ projects, loading, getCurrentUser }) => {
     const user = useSelector( state => state.auth.user )
     const [activeTab, setActiveTab] = useState(true);
     const [showMore, setShowMore] = useState(false);
     const  uploadImgInput = React.useRef()
-    const [avatar, setAvatar] = useState();
+    const [userImg, setUserImg] = useState();
+    const dispatch = useDispatch()
 
 
-    // const changeAvFile = (e) => {
-    //     setAvatar(e.target.files[0]);
-    // }
+    const changeUserImgFile = (e) => {
+        setUserImg(e.target.files[0]);
+        console.log('file changed')
+    }
 
-    const submitAvatar = async(e) => {
+    const submitUserImg = async(e) => {
 
-        // Set avatar state
-        setAvatar(e.target.files[0]);
-        console.log('Avatar submitted')
-
-
+        // setImageLoaded(false)
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -40,18 +39,37 @@ const Profile = ({ projects, loading }) => {
         }
 
         const data = new FormData();
-        data.append("avatar", avatar);
+        data.append("userImg", userImg);
 
         try {
-            const res = await axios.put(`/user/avatar/${ user._id }`, data, config);
-            console.log( res )
-            // Load updated user avatar
-            loadUser();
+            const res = await axios.put(`/user/userImg/${ user._id }`, data, config);
+            console.log( 'From user img update: ', res.data )
+            // Refresh and update user state 
+            dispatch(loginRefresh( res.data ))
+            getCurrentUser()
+
         } catch(err) {
             console.log(err);
         }
 
     }
+
+    // Show default user avatar if the uploaded one cannot be found
+    const avatarError = ({currentTarget}) => {
+        currentTarget.onerror = null; // prevents looping
+        if(currentTarget.onerror) {
+            currentTarget.src= defaultUserImg;
+        } else {
+            currentTarget.src= user.userImgUrl;
+        }
+    } 
+
+
+    // Submit request to change userImg when a file is uploaded
+    useEffect(() => {
+        userImg && submitUserImg()
+    }, [ userImg ])
+
 
     return (
         <div className={classes.profileContainer}>
@@ -62,13 +80,15 @@ const Profile = ({ projects, loading }) => {
                 <div className={classes.userContainer}>
                     {/* Change user avatar */}
                     <div className={ classes.userImgContainer }>
+                        
                         <img className={ classes.userImg }
-                            src={ user.avatarUrl || defaultAvatar } 
+                            onError={(e) => avatarError(e)}
+                            src={ user.userImgUrl } 
                             alt="User profile pic" 
                         />
                         <button className={ classes.uploadImgBtn } onClick={ () => uploadImgInput.current.click() }>Change</button>
                         <form>
-                            <input type='file' className={ classes.uploadImgInput } ref={ uploadImgInput } name='avatar' onChange={ (e) => submitAvatar(e) } accept="images/*" />
+                            <input type='file' className={ classes.uploadImgInput } ref={ uploadImgInput } name='userImg' onChange={ (e) => changeUserImgFile(e) } accept="images/*" />
                         </form>
                     </div>
                     <h2>{ user.name }</h2>

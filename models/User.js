@@ -26,10 +26,10 @@ const UserSchema = new mongoose.Schema({
   institution: {
       type: String
   },
-  avatar: {
+  userImg: {
       type: String
   },
-  avatarUrl: {
+  userImgUrl: {
     type: String
   },
   createdAt: {

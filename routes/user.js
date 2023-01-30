@@ -39,7 +39,6 @@ const upload = multer({ storage: storage });
 ///////////////////////////////////////////////////////////////////////////////////////
 
 
-
 // @route   GET /user/test
 // @desc    Testing the user/ route
 // @access  Public
@@ -193,40 +192,49 @@ router.put('/password/:id', authenticate, async ( req, res ) => {
     }
 })
 
-// @route   PUT /user/avatar/:id
+// @route   PUT /user/userImg/:id
 // @desc    Update User avatar
 // @access  Private
-router.put('/avatar/:id', [ upload.single( 'avatar' ), authenticate ], async ( req, res ) => {
+router.put('/userImg/:id', [ upload.single( 'userImg' ), authenticate ], async ( req, res ) => {
     
+    // console.log(req.file)
+
     try {
-        console.log(req.file)
-        const avatar = uuidv4() + "-" + req.file.originalname;
-        console.log(avatar)
-        // console.log( req.params.id )
+        const userImg = uuidv4() + "-" + req.file.originalname;
+        console.log(userImg)
+        console.log( req.params.id )
     
-        // const s3Params = {
-        //     Bucket: bucketName,
-        //     Key: avatar,
-        //     Body: req.file.buffer,
-        //     ContentType: req.file.mimetype
-        // }
+        const s3Params = {
+            Bucket: bucketName,
+            Key: userImg,
+            Body: req.file.buffer,
+            ContentType: req.file.mimetype
+        }
         
-    //     const command = await new PutObjectCommand(s3Params);
-    //     // Set avatarUrl
-    //     const getObjectParams = {
-    //         Bucket: bucketName,
-    //         Key: avatar,
-    //     }
+        const command = await new PutObjectCommand(s3Params);
+        // Set userImgUrl
+        const getObjectParams = {
+            Bucket: bucketName,
+            Key: userImg,
+        }
         
-    //     const command2 = await new GetObjectCommand(getObjectParams);
-    //     const avatarUrl = await getSignedUrl(s3, command2)
+        const command2 = await new GetObjectCommand(getObjectParams);
+        const expiration = 60 * 60 * 24 * 2; // 2 days
+        const userImgUrl = await getSignedUrl(s3, command2, { expiresIn: expiration })
         
-    //     const user = await User.findByIdAndUpdate( req.params.id, { avatar, avatarUrl }, { new: true } )
+        const user = await User.findByIdAndUpdate( req.params.id, { userImg, userImgUrl }, { new: true } )
 
-    //     s3.send(command);
-    //     user.save();
+        s3.send(command);
+        user.save();
 
-    //     res.json(user);
+        // Create new JWT token
+        const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '1d' })
+
+        // Password match send token and user to client and set to current user
+        res.json({
+            token: token,
+            user: user
+        })
         
     } catch(err) {
         console.error("Error: ", err.message);

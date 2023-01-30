@@ -16,7 +16,7 @@ export const authSlice = createSlice({
         state.loading = false
         state.user = action.payload
     },
-    login(state, action) {
+    loginRefresh(state, action) {
         localStorage.setItem('token', action.payload.token)
         state.token = localStorage.getItem('token')
         state.loading = true
@@ -33,6 +33,6 @@ export const authSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { loadUser, login, logout } = authSlice.actions
+export const { loadUser, loginRefresh, logout } = authSlice.actions
 
 export default authSlice.reducer
