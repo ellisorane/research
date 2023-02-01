@@ -39,17 +39,21 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
         }
 
         const data = new FormData();
-        data.append("userImg", userImg);
+        data.append( "userImg", userImg );
 
         try {
-            const res = await axios.put(`/user/userImg/${ user._id }`, data, config);
+            const res = await axios.put(`/user/userImg/${ user._id }`, data, config)
             console.log( 'From user img update: ', res.data )
-            // Refresh and update user state 
-            dispatch(loginRefresh( res.data ))
-            getCurrentUser()
+
+            // Prevents error occurs when trying to use a newly created AWS signed url too soon
+            setTimeout( () => {
+                // Refresh and update user state 
+                dispatch(loginRefresh( res.data ))
+                getCurrentUser()
+            }, 1000 )
 
         } catch(err) {
-            console.log(err);
+            console.log( err )
         }
 
     }
@@ -57,11 +61,7 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
     // Show default user avatar if the uploaded one cannot be found
     const avatarError = ({currentTarget}) => {
         currentTarget.onerror = null; // prevents looping
-        if(currentTarget.onerror) {
-            currentTarget.src= defaultUserImg;
-        } else {
-            currentTarget.src= user.userImgUrl;
-        }
+        currentTarget.src = defaultUserImg;
     } 
 
 

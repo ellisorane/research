@@ -120,13 +120,30 @@ router.post('/login', async ( req, res ) => {
 
         // Compare password of user in database and the user trying to login
         if( await bcrypt.compare( password, user.password ) ) {
+            // Refresh and update userImg - aws urls need to be updated because they expire after a certain amount of time
+            let refreshedUser
+            if( user.userImg ) {
+                const getObjectParams = {
+                    Bucket: bucketName,
+                    Key: user.userImg,
+                }
+                
+                const command = await new GetObjectCommand(getObjectParams);
+                const expiration = 60 * 60 * 24 * 2; // 2 days
+                const userImgUrl = await getSignedUrl(s3, command, { expiresIn: expiration })
+                
+                refreshedUser = await User.findByIdAndUpdate( user._id, { userImgUrl }, { new: true } )
+                refreshedUser.save();
+            }
+
+
             // Create JWT token
-            const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '1d' })
+            const token = jwt.sign({ user: refreshedUser }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
             // Password match send token and user to client and set to current user
             res.json({
                 token: token,
-                user: user
+                user: refreshedUser
             })
 
         } else {
@@ -212,7 +229,8 @@ router.put('/userImg/:id', [ upload.single( 'userImg' ), authenticate ], async (
         }
         
         const command = await new PutObjectCommand(s3Params);
-        // Set userImgUrl
+
+        // Set userImgUrl by getting a signedUrl from aws - must be refreshed at some point
         const getObjectParams = {
             Bucket: bucketName,
             Key: userImg,

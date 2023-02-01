@@ -147,13 +147,15 @@ $siteGreen: #36AB9B;
     position: absolute;
     background-color: $siteGreen;
     color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
     padding: 10px;
     width: 40px;
     height: 40px;
-    font-size: 40px;
+    font-size: 35px;
+    // Center the X //////////////////////////////
+    line-height: 40px;
+    text-align: center;
+    // //////////////////////////////////////////
     border-radius: 100px;
     bottom: 30px;
     right: 30px;
