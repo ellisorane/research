@@ -3,6 +3,8 @@ const express = require('express');
 const Project = require('../models/Projects');
 const router = express.Router();
 
+const { authenticate } = require('../middleware');
+
 ///////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 // S3 setup /////////////////////////////////////////////////////////////////////////
@@ -62,7 +64,7 @@ router.get('/', async(req, res) => {
 // @route   POST /projects/addProject
 // @desc    Create project
 // @access  Public
-router.post('/addProject', upload.single('image'), async(req, res) => {
+router.post('/addProject', [ authenticate, upload.single('image') ], async(req, res) => {
 
     const { title, description, researchers, institution, fundingGoal, daysToFund, category } = JSON.parse(req.body.formText);
     const image = uuidv4() + "-" + req.file.originalname;
@@ -75,6 +77,7 @@ router.post('/addProject', upload.single('image'), async(req, res) => {
 
     try {
         const project = await new Project({ 
+            user: req.user.user._id,
             title: title, 
             description: description, 
             researchers: researchers, 
@@ -116,7 +119,7 @@ router.get('/:id', async(req, res) => {
 // @route   DELETE /projects/:id
 // @desc    Delete project by ID
 // @access  Public
-router.delete('/:id', async(req, res) => {
+router.delete('/:id', authenticate, async(req, res) => {
     try {
         const project = await Project.findById(req.params.id);
 
