@@ -47,6 +47,10 @@ const ProjectSchema = new mongoose.Schema({
     imageURL: {
         type: String
     },
+    imageURLCreationDate: {
+        type: Date,
+        default: () => Date.now()
+    },
     fundedByUser: {
         type: Boolean
     },

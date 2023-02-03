@@ -43,16 +43,27 @@ router.get('/', async(req, res) => {
     try {
         const projects = await Project.find();
         
+        // PROD: If imageURLCreationDate is 2 days ago or greater then refresh the image url
+        // DEV: If imageURLCreationDate is 1min ago or greater then refresh the image url
         for(const project of projects) {
-            const getObjectParams = {
-                Bucket: bucketName,
-                Key: project.image,
+            
+            let oldimageURLCreationDate = project.imageURLCreationDate
+            let newimageURLCreationDate = Date.now()
+            let timeDiff =  (newimageURLCreationDate - oldimageURLCreationDate) / (1000 * 60 * 60 * 24 * 2)
+            console.log(timeDiff, " minutes")
+            if (timeDiff >= 2) {
+                console.log('time to refresh image')
+                const getObjectParams = {
+                    Bucket: bucketName,
+                    Key: project.image,
+                }
+    
+                const command = await new GetObjectCommand(getObjectParams);
+                const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+    
+                proj = await Project.updateOne({ _id: project._id}, { $set: { imageURL: url, imageURLCreationDate: Date.now() } } );
             }
-
-            const command = await new GetObjectCommand(getObjectParams);
-            const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-
-            const proj = await Project.updateOne({ _id: project._id}, { $set: { imageURL: url } } );
+            
         }
 
         res.send(projects);
