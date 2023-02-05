@@ -76,10 +76,10 @@ const App = () => {
       try {
         const res = await axios.get('/projects');
         if (res.data) {
-          console.log( 'Here are the latest projects')
-          await dispatch(setProjects(res.data));
+          // console.log( 'Here are the latest projects')
+          dispatch(setProjects(res.data));
+          // console.log(projects)
         }
-        console.log(projects)
         return projects;
       } catch(err) {
         console.error(err);
@@ -87,7 +87,7 @@ const App = () => {
     }
 
     const loadData = () => {
-      !projects && getLatestProjects();
+      getLatestProjects();
       !loadingProjects && projects.forEach(proj => getDaysLeft(proj.date, proj.daysToFund, proj._id));
       // Only load user if token is detected
       tokenState && getCurrentUser()
@@ -96,7 +96,6 @@ const App = () => {
 
     useEffect(() => {
       loadData();
-    // }, [loadingProjects]);
     }, []);
   
   return (

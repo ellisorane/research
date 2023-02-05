@@ -26,7 +26,6 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
 
     const changeUserImgFile = (e) => {
         setUserImg(e.target.files[0]);
-        console.log('file changed')
     }
 
     const submitUserImg = async(e) => {
@@ -43,7 +42,7 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
 
         try {
             const res = await axios.put(`/user/userImg/${ user._id }`, data, config)
-            console.log( 'From user img update: ', res.data )
+            // console.log( 'From user img update: ', res.data )
 
             // Prevents error occurs when trying to use a newly created AWS signed url too soon
             setTimeout( () => {

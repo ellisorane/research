@@ -209,6 +209,16 @@ router.put('/password/:id', authenticate, async ( req, res ) => {
     }
 })
 
+
+
+// @route   DELETE /user/userImg/:id
+// @desc    Update User avatar
+// @access  Private
+router.delete('/:id', [], async(req, res) => {
+
+})
+
+
 // @route   PUT /user/userImg/:id
 // @desc    Update User avatar
 // @access  Private
@@ -221,28 +231,41 @@ router.put('/userImg/:id', [ upload.single( 'userImg' ), authenticate ], async (
         console.log(userImg)
         console.log( req.params.id )
     
-        const s3Params = {
+        const uploadObjectParams = {
             Bucket: bucketName,
             Key: userImg,
             Body: req.file.buffer,
             ContentType: req.file.mimetype
         }
-        
-        const command = await new PutObjectCommand(s3Params);
 
-        // Set userImgUrl by getting a signedUrl from aws - must be refreshed at some point
+        const deleteObjectParams = {
+            Bucket: bucketName,
+            key: userImg
+        }
+
         const getObjectParams = {
             Bucket: bucketName,
             Key: userImg,
         }
         
-        const command2 = await new GetObjectCommand(getObjectParams);
-        const expiration = 60 * 60 * 24 * 2; // 2 days
-        const userImgUrl = await getSignedUrl(s3, command2, { expiresIn: expiration })
-        
-        const user = await User.findByIdAndUpdate( req.params.id, { userImg, userImgUrl }, { new: true } )
+        const deleteCmd = await new DeleteObjectCommand(deleteObjectParams);
+        const uploadCmd = await new PutObjectCommand(uploadObjectParams);
+        const getCmd = await new GetObjectCommand(getObjectParams);
 
-        s3.send(command);
+
+        // Check for old user image and remove from bucket
+        let user = await User.findById(req.params.id)
+        console.log(user)
+        s3.send(deleteCmd)
+
+
+        // Set userImgUrl by getting a signedUrl from aws - must be refreshed at some point
+        const expiration = 60 * 60 * 24 * 2; // 2 days
+        const userImgUrl = await getSignedUrl(s3, getCmd, { expiresIn: expiration })
+        
+        user = await User.findByIdAndUpdate( req.params.id, { userImg, userImgUrl }, { new: true } )
+
+        s3.send(uploadCmd);
         user.save();
 
         // Create new JWT token

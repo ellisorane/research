@@ -43,14 +43,14 @@ router.get('/', async(req, res) => {
     try {
         const projects = await Project.find();
         
-        // PROD: If imageURLCreationDate is 2 days ago or greater then refresh the image url
-        // DEV: If imageURLCreationDate is 1min ago or greater then refresh the image url
+        // If imageURLCreationDate is 2 days ago or greater then refresh the image url
         for(const project of projects) {
             
             let oldimageURLCreationDate = project.imageURLCreationDate
             let newimageURLCreationDate = Date.now()
             let timeDiff =  (newimageURLCreationDate - oldimageURLCreationDate) / (1000 * 60 * 60 * 24 * 2)
-            console.log(timeDiff, " minutes")
+            // console.log(timeDiff, " minutes")
+
             if (timeDiff >= 2) {
                 console.log('time to refresh image')
                 const getObjectParams = {
@@ -59,7 +59,8 @@ router.get('/', async(req, res) => {
                 }
     
                 const command = await new GetObjectCommand(getObjectParams);
-                const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                const expiration = 60 * 60 * 24 * 2; // 2 days in seconds
+                const url = await getSignedUrl(s3, command, { expiresIn: expiration });
     
                 proj = await Project.updateOne({ _id: project._id}, { $set: { imageURL: url, imageURLCreationDate: Date.now() } } );
             }
@@ -86,6 +87,17 @@ router.post('/addProject', [ authenticate, upload.single('image') ], async(req, 
         ContentType: req.file.mimetype
     }
 
+    const getObjectParams = {
+        Bucket: bucketName,
+        Key: image,
+    }
+
+    const commandUrl = await new GetObjectCommand(getObjectParams);
+    const expiration = 60 * 60 * 24 * 2; // 2 days in seconds
+    const url = await getSignedUrl(s3, commandUrl, { expiresIn: expiration });
+
+    // proj = await Project.updateOne({ _id: project._id}, { $set: { imageURL: url, imageURLCreationDate: Date.now() } } );
+
     try {
         const project = await new Project({ 
             user: req.user.user._id,
@@ -98,7 +110,8 @@ router.post('/addProject', [ authenticate, upload.single('image') ], async(req, 
             daysLeft: daysToFund,
             amountFunded: 0, 
             category: category,
-            image: image
+            image: image,
+            imageURL: url
         });
         
         const command = await new PutObjectCommand(s3Params);
