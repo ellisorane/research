@@ -41,10 +41,10 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
         data.append( "userImg", userImg );
 
         try {
-            const res = await axios.put(`/user/userImg/${ user._id }`, data, config)
-            // console.log( 'From user img update: ', res.data )
+            await axios.delete('/user/userImg')
+            const res = await axios.put(`/user/userImg`, data, config)
 
-            // Prevents error occurs when trying to use a newly created AWS signed url too soon
+            // Prevents error that occurs when trying to use a newly created AWS signed url too soon after its creation
             setTimeout( () => {
                 // Refresh and update user state 
                 dispatch(loginRefresh( res.data ))
@@ -82,7 +82,7 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
                         
                         <img className={ classes.userImg }
                             onError={(e) => avatarError(e)}
-                            src={ user.userImgUrl } 
+                            src={ user.userImgUrl || defaultUserImg } 
                             alt="User profile pic" 
                         />
                         <button className={ classes.uploadImgBtn } onClick={ () => uploadImgInput.current.click() }>Change</button>

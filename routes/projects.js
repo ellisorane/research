@@ -59,7 +59,7 @@ router.get('/', async(req, res) => {
                 }
     
                 const command = await new GetObjectCommand(getObjectParams);
-                const expiration = 60 * 60 * 24 * 2; // 2 days in seconds
+                const expiration = 60 * 60 * 24 * 2; // 2 days
                 const url = await getSignedUrl(s3, command, { expiresIn: expiration });
     
                 proj = await Project.updateOne({ _id: project._id}, { $set: { imageURL: url, imageURLCreationDate: Date.now() } } );
@@ -93,10 +93,8 @@ router.post('/addProject', [ authenticate, upload.single('image') ], async(req, 
     }
 
     const commandUrl = await new GetObjectCommand(getObjectParams);
-    const expiration = 60 * 60 * 24 * 2; // 2 days in seconds
+    const expiration = 60 * 60 * 24 * 2; // 2 days
     const url = await getSignedUrl(s3, commandUrl, { expiresIn: expiration });
-
-    // proj = await Project.updateOne({ _id: project._id}, { $set: { imageURL: url, imageURLCreationDate: Date.now() } } );
 
     try {
         const project = await new Project({ 

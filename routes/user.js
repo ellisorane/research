@@ -39,25 +39,13 @@ const upload = multer({ storage: storage });
 ///////////////////////////////////////////////////////////////////////////////////////
 
 
-// @route   GET /user/test
-// @desc    Testing the user/ route
-// @access  Public
-router.get('/test', async(req, res) => {
-    try {
-        res.json( 'User test route is working' )
-    } catch ( error ) {
-        console.error( error )
-        res.json( error )
-    }
-})
-
-
 // @route   GET /user/
 // @desc    Get User
 // @access  Private
 router.get('/', authenticate, async(req, res) => {
     try {
         res.json(req.user)
+        
     } catch (error) {
         console.error(error)
         res.json(error)
@@ -81,8 +69,8 @@ router.post('/signup', async(req, res) => {
             password 
         })
 
-        // // Create JWT token 
-        const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '1d' })
+        // // Create JWT token - Expires every 48 hours
+        const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '2d' })
 
         // Send token and user to client and set to current user
         res.json({
@@ -129,7 +117,7 @@ router.post('/login', async ( req, res ) => {
                 }
                 
                 const command = await new GetObjectCommand(getObjectParams);
-                const expiration = 60 * 60 * 24 * 2; // 2 days
+                const expiration = 60 * 60 * 24; // 2 days
                 const userImgUrl = await getSignedUrl(s3, command, { expiresIn: expiration })
                 
                 refreshedUser = await User.findByIdAndUpdate( user._id, { userImgUrl }, { new: true } )
@@ -137,8 +125,8 @@ router.post('/login', async ( req, res ) => {
             }
 
 
-            // Create JWT token
-            const token = jwt.sign({ user: refreshedUser }, process.env.JWT_SECRET, { expiresIn: '1d' })
+            // Create JWT token - Expires every 48 hours
+            const token = jwt.sign({ user: refreshedUser }, process.env.JWT_SECRET, { expiresIn: '2d' })
 
             // Password match send token and user to client and set to current user
             res.json({
@@ -183,13 +171,13 @@ router.put('/update-user/:id', authenticate, async ( req, res ) => {
     }
 })
 
-// @route   PUT /user/password/:id
+// @route   PUT /user/password
 // @desc    Update User password
 // @access  Private
-router.put('/password/:id', authenticate, async ( req, res ) => {
+router.put('/password', authenticate, async ( req, res ) => {
     const currentPassword = req.body.currentPassword
     const newPassword = req.body.newPassword
-    const id = req.params.id
+    const id = req.user.user._id
     try {
         // Find user in database with currentUser _id
         const user = await User.findById( id ).exec();
@@ -211,25 +199,47 @@ router.put('/password/:id', authenticate, async ( req, res ) => {
 
 
 
-// @route   DELETE /user/userImg/:id
-// @desc    Update User avatar
+// @route   DELETE /user/userImg
+// @desc    Update User image - used for deleting old user image before adding new user image
 // @access  Private
-router.delete('/:id', [], async(req, res) => {
+router.delete('/userImg', authenticate, async(req, res) => {
 
+    const userImg = req.user.user.userImg
+    console.log( userImg )
+
+    try {
+        const deleteObjectParams = {
+            Bucket: bucketName,
+            Key: userImg
+        }
+
+        const deleteCmd = new DeleteObjectCommand(deleteObjectParams);
+
+        if( userImg === null ) res.status(404).json({ msg: "Image not found"})
+
+        await s3.send(deleteCmd);
+        res.json('Old image deleted.')
+
+    } catch (err) {
+        console.error("Delete userImg Error: ", err.message);
+        res.status(500).send('Server Error');
+    }
 })
 
 
-// @route   PUT /user/userImg/:id
+// @route   PUT /user/userImg
 // @desc    Update User avatar
 // @access  Private
-router.put('/userImg/:id', [ upload.single( 'userImg' ), authenticate ], async ( req, res ) => {
+router.put('/userImg', [ upload.single( 'userImg' ), authenticate ], async ( req, res ) => {
     
-    // console.log(req.file)
+    // console.log(req.user)
+    const id = req.user.user._id
+    // console.log(id)
 
     try {
         const userImg = uuidv4() + "-" + req.file.originalname;
-        console.log(userImg)
-        console.log( req.params.id )
+        // console.log(userImg)
+        // console.log( id )
     
         const uploadObjectParams = {
             Bucket: bucketName,
@@ -238,32 +248,22 @@ router.put('/userImg/:id', [ upload.single( 'userImg' ), authenticate ], async (
             ContentType: req.file.mimetype
         }
 
-        const deleteObjectParams = {
-            Bucket: bucketName,
-            key: userImg
-        }
-
         const getObjectParams = {
             Bucket: bucketName,
             Key: userImg,
         }
         
-        const deleteCmd = await new DeleteObjectCommand(deleteObjectParams);
         const uploadCmd = await new PutObjectCommand(uploadObjectParams);
         const getCmd = await new GetObjectCommand(getObjectParams);
 
 
-        // Check for old user image and remove from bucket
-        let user = await User.findById(req.params.id)
-        console.log(user)
-        s3.send(deleteCmd)
-
+        // let user = await User.findById( id )
 
         // Set userImgUrl by getting a signedUrl from aws - must be refreshed at some point
         const expiration = 60 * 60 * 24 * 2; // 2 days
         const userImgUrl = await getSignedUrl(s3, getCmd, { expiresIn: expiration })
         
-        user = await User.findByIdAndUpdate( req.params.id, { userImg, userImgUrl }, { new: true } )
+        const user = await User.findByIdAndUpdate( id, { userImg, userImgUrl }, { new: true } )
 
         s3.send(uploadCmd);
         user.save();
@@ -284,11 +284,11 @@ router.put('/userImg/:id', [ upload.single( 'userImg' ), authenticate ], async (
 })
 
 
-// @route   DELETE /user/delete/:id
+// @route   DELETE /user/delete
 // @desc    Delete User
 // @access  Private
-router.delete('/delete/:id', authenticate, async(req, res) => {
-    const id = req.params.id
+router.delete('/delete', authenticate, async(req, res) => {
+    const id = req.user.user._id
     try {
         // Delete User in mongodb
         const user = await User.findByIdAndDelete( id )
