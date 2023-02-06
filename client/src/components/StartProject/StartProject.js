@@ -5,6 +5,7 @@ import classes from './StartProject.module.scss';
 
 const Form = React.lazy(() => import('./Form'));
 const Success = React.lazy(() => import('./Success'));
+const Spinner = React.lazy(() => import('../Spinner/Spinner'))
 
 const StartProject = () => {
     const [formData, setFormData] = useState({
@@ -20,6 +21,8 @@ const StartProject = () => {
     const { title, description, researchers, institution, fundingGoal, daysToFund, category } = formData;
 
     const [image, setImage] = useState();
+
+    const [submissionInProgress, setSubmissionInProgress] = useState(false)
 
     const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -38,8 +41,11 @@ const StartProject = () => {
         data.append('image', image);
 
         try {
-            const res = await axios.post('/projects/addProject', data, config);
-
+            setSubmissionInProgress( true )
+            window.scrollTo(0, 0);
+            
+            await axios.post('/projects/addProject', data, config);
+            
             setFormData({
                 title: '',
                 description: '',
@@ -49,8 +55,8 @@ const StartProject = () => {
                 daysToFund: 30,
                 category: ''
             });
+            setSubmissionInProgress( false )
             setFormSubmitted(true);
-            window.scrollTo(0, 0);
 
             data = null
             
@@ -63,7 +69,9 @@ const StartProject = () => {
     return (
        <div className={classes.container}>
         <div className={classes.border}></div>
-            {!formSubmitted ? <Form formData={formData} setFormData={setFormData} setImage={setImage} createProject={createProject}  /> : <Success setFormSubmitted={setFormSubmitted} />}
+            { ( !formSubmitted && !submissionInProgress ) && <Form formData={formData} setFormData={setFormData} setImage={setImage} createProject={createProject}  /> }
+            { ( formSubmitted && !submissionInProgress ) && <Success setFormSubmitted={setFormSubmitted} /> }
+            { ( !formSubmitted && submissionInProgress ) && <Spinner /> }
        </div>
     );
 }

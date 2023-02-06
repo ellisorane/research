@@ -6,6 +6,7 @@ import classes from './DiscoverEntry.module.scss';
 
 import img from '../../../imgs/fruit research.jpg';
 import defUser from '../../../imgs/default.jpg';
+import produce from 'immer';
 
 
 const DiscoverEntry = ({ project }) => {
@@ -13,7 +14,7 @@ const DiscoverEntry = ({ project }) => {
     return (
         <Link to={`/entry/${project._id}`} className={classes.DiscEntryContainer}>
             {/* image  */}
-            <div style={{ backgroundImage: `url("${project.imageURL}")` }}  className={classes.entryImg}></div>
+            <div style={{ backgroundImage: `url("${project.imageURL === undefined ? "Fail" : project.imageURL }")` }}  className={classes.entryImg}></div>
 
             <div className={classes.innerContainer}>
 

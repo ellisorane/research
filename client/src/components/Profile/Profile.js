@@ -13,6 +13,8 @@ import defaultUserImg from '../../imgs/default.jpg';
 // import FundedProjects from './FundedProjects/FundedProfile';
 const ProjectsStarted = React.lazy(() => import('./ExpiredProjects/ExpiredProjects'));
 const FundedProjects = React.lazy(() => import('./FundedProjects/FundedProfile'));
+const EditForm = React.lazy(() => import('./EditForm/EditForm'));
+const Backdrop = React.lazy(() => import('./Backdrop/Backdrop'));
 const Spinner = React.lazy(() => import('../Spinner/Spinner') )
 
 const Profile = ({ projects, loading, getCurrentUser }) => {
@@ -22,11 +24,11 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
     const  uploadImgInput = React.useRef()
     const [userImg, setUserImg] = useState();
     const dispatch = useDispatch()
+    const [ showForm, setShowForm ] = useState( false )
 
 
     const changeUserImgFile = (e) => {
         setUserImg(e.target.files[0]);
-        console.log('file changed')
     }
 
     const submitUserImg = async(e) => {
@@ -39,17 +41,21 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
         }
 
         const data = new FormData();
-        data.append("userImg", userImg);
+        data.append( "userImg", userImg );
 
         try {
-            const res = await axios.put(`/user/userImg/${ user._id }`, data, config);
-            console.log( 'From user img update: ', res.data )
-            // Refresh and update user state 
-            dispatch(loginRefresh( res.data ))
-            getCurrentUser()
+            await axios.delete('/user/userImg')
+            const res = await axios.put(`/user/userImg`, data, config)
+
+            // Prevents error that occurs when trying to use a newly created AWS signed url too soon after its creation
+            setTimeout( () => {
+                // Refresh and update user state 
+                dispatch(loginRefresh( res.data ))
+                getCurrentUser()
+            }, 1000 )
 
         } catch(err) {
-            console.log(err);
+            console.log( err )
         }
 
     }
@@ -57,11 +63,7 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
     // Show default user avatar if the uploaded one cannot be found
     const avatarError = ({currentTarget}) => {
         currentTarget.onerror = null; // prevents looping
-        if(currentTarget.onerror) {
-            currentTarget.src= defaultUserImg;
-        } else {
-            currentTarget.src= user.userImgUrl;
-        }
+        currentTarget.src = defaultUserImg;
     } 
 
 
@@ -83,7 +85,7 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
                         
                         <img className={ classes.userImg }
                             onError={(e) => avatarError(e)}
-                            src={ user.userImgUrl } 
+                            src={ user.userImgUrl || defaultUserImg } 
                             alt="User profile pic" 
                         />
                         <button className={ classes.uploadImgBtn } onClick={ () => uploadImgInput.current.click() }>Change</button>
@@ -95,7 +97,7 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
                     <p>{ user.institution }</p>
                     <div className={classes.profileActionsDiv}>
                         <div className={classes.pActionsBtns}>
-                            <div className={classes.pActionsBtn}>Edit Profile</div>
+                            <div className={classes.pActionsBtn} onClick={ () => setShowForm( true ) }>Edit Profile</div>
                             <div className={classes.pActionsBtn}>Follow</div>
                         </div>
 
@@ -122,8 +124,10 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
                 }
 
             </div>
+            { showForm && <Backdrop click={ () => setShowForm( false ) } /> }
+            { showForm && <EditForm showForm={ showForm } /> }
         </div>
-    );
+    )
 }
 
 export default Profile;

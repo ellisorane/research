@@ -20,7 +20,7 @@ const DiscoverEntry = React.lazy(() => import('./DiscoverEntry/DiscoverEntry'));
 const Spinner = React.lazy(() => import('../Spinner/Spinner'));
 
 
-const Discover = ({ getDaysLeft, projects, loading, category, setCategory, getLatestProjects }) => {
+const Discover = ({ projects, loading, setCategory }) => {
     
     useEffect(() => {
         // getLatestProjects();
