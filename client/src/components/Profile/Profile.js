@@ -13,6 +13,8 @@ import defaultUserImg from '../../imgs/default.jpg';
 // import FundedProjects from './FundedProjects/FundedProfile';
 const ProjectsStarted = React.lazy(() => import('./ExpiredProjects/ExpiredProjects'));
 const FundedProjects = React.lazy(() => import('./FundedProjects/FundedProfile'));
+const EditForm = React.lazy(() => import('./EditForm/EditForm'));
+const Backdrop = React.lazy(() => import('./Backdrop/Backdrop'));
 const Spinner = React.lazy(() => import('../Spinner/Spinner') )
 
 const Profile = ({ projects, loading, getCurrentUser }) => {
@@ -22,6 +24,7 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
     const  uploadImgInput = React.useRef()
     const [userImg, setUserImg] = useState();
     const dispatch = useDispatch()
+    const [ showForm, setShowForm ] = useState( false )
 
 
     const changeUserImgFile = (e) => {
@@ -94,7 +97,7 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
                     <p>{ user.institution }</p>
                     <div className={classes.profileActionsDiv}>
                         <div className={classes.pActionsBtns}>
-                            <div className={classes.pActionsBtn}>Edit Profile</div>
+                            <div className={classes.pActionsBtn} onClick={ () => setShowForm( true ) }>Edit Profile</div>
                             <div className={classes.pActionsBtn}>Follow</div>
                         </div>
 
@@ -121,8 +124,10 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
                 }
 
             </div>
+            { showForm && <Backdrop click={ () => setShowForm( false ) } /> }
+            { showForm && <EditForm showForm={ showForm } /> }
         </div>
-    );
+    )
 }
 
 export default Profile;

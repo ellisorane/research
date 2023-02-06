@@ -1,0 +1,104 @@
+$siteGreen: #36AB9B;
+
+.formTemplate {
+    padding: 25px;
+    font-size: .8rem;
+    width: 75%;
+    // max-height: 70%;
+    background-color: rgb(255, 255, 255);
+    z-index: 1000;
+    position: fixed;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    // Center an absolute div
+    top: 50%;
+    left: 50%;
+
+    // For animation 
+    transform: translate(-50%, -1500%);
+    transition: all 0.2s;
+    opacity: 0;
+    
+    input, textarea, select  {
+        font-size: 1.1rem;
+        padding: 5px;
+        outline: none;
+        width: 100%;
+        margin: auto;
+    }
+
+    textarea {
+        border-radius: 3px;
+        border: 2px solid $siteGreen;
+    }
+    
+    input, select {
+        border: none;
+        border-bottom: 2px solid $siteGreen;
+    }
+
+    input[type="submit"], button {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        background-color: $siteGreen;
+    }
+
+    input:focus, textarea:focus {
+        background-color: #deecff;
+    }
+
+}
+
+.showForm {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+.option {
+    border: 1px solid rgb(165, 165, 165);
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.formGroup {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    align-items:center;
+
+}
+
+.formBtn {
+    border-radius: 0 5px 5px 0 !important;
+    text-transform: uppercase;
+}
+
+.deleteP {
+    color: red;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 10px;
+    text-align: right;
+}
+
+.verifyDelete {
+    text-align: center;
+
+    div button:first-child {
+        background-color: red;
+        margin-right: 10px;
+    }
+}
+
+
+@media( min-width: 768px ) {
+    .formTemplate {
+        width: 50%;
+    }
+}
