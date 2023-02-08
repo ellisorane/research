@@ -45,7 +45,7 @@ function Login({ getCurrentUser }) {
           
         } else {
 
-          // console.log( res )
+          console.log( res )
           // console.log( res.data )
 
           // Reset form
