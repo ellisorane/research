@@ -117,7 +117,7 @@ router.post('/login', async ( req, res ) => {
                 }
                 
                 const command = await new GetObjectCommand(getObjectParams);
-                const expiration = 60 * 60 * 24; // 2 days
+                const expiration = 60 * 60 * 24 * 4; // 4 days
                 const userImgUrl = await getSignedUrl(s3, command, { expiresIn: expiration })
                 
                 refreshedUser = await User.findByIdAndUpdate( user._id, { userImgUrl }, { new: true } )
@@ -150,13 +150,16 @@ router.post('/login', async ( req, res ) => {
 // @route   PUT /user/update-user
 // @desc    Update User
 // @access  Private
-router.put('/update-user/:id', authenticate, async ( req, res ) => {
+router.put('/update-user', authenticate, async ( req, res ) => {
     const newData = req.body
-    const id = req.params.id
+    const id = req.user.user._id
+    const { name, institution, email, password, newPassword, confirmPassword } = req.body
+
+    console.log(newData)
 
     try {
         // Find and update user by _id
-        const user = await User.findByIdAndUpdate( id, newData, { new: true } );
+        const user = await User.findByIdAndUpdate( id, { name, institution, email }, { new: true } );
 
         // User not found
         if(user === null) {
@@ -260,7 +263,7 @@ router.put('/userImg', [ upload.single( 'userImg' ), authenticate ], async ( req
         // let user = await User.findById( id )
 
         // Set userImgUrl by getting a signedUrl from aws - must be refreshed at some point
-        const expiration = 60 * 60 * 24 * 2; // 2 days
+        const expiration = 60 * 60 * 24 * 4; // 4 days
         const userImgUrl = await getSignedUrl(s3, getCmd, { expiresIn: expiration })
         
         const user = await User.findByIdAndUpdate( id, { userImg, userImgUrl }, { new: true } )
