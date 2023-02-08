@@ -59,8 +59,6 @@ router.post('/signup', async(req, res) => {
 
     try {    
         const { email, name, institution, password } = req.body
-        // const { name, institution, email, password } = req.body;
-        // console.log( email, name, institution, password )
         // Create new user in the database
         const user = await User.create({
             email,
@@ -109,7 +107,7 @@ router.post('/login', async ( req, res ) => {
         // Compare password of user in database and the user trying to login
         if( await bcrypt.compare( password, user.password ) ) {
             // Refresh and update userImg - aws urls need to be updated because they expire after a certain amount of time
-            let refreshedUser
+            let refreshedUser = null
             if( user.userImg ) {
                 const getObjectParams = {
                     Bucket: bucketName,
@@ -126,12 +124,12 @@ router.post('/login', async ( req, res ) => {
 
 
             // Create JWT token - Expires every 48 hours
-            const token = jwt.sign({ user: refreshedUser }, process.env.JWT_SECRET, { expiresIn: '2d' })
+            const token = jwt.sign({ user: refreshedUser || user }, process.env.JWT_SECRET, { expiresIn: '2d' })
 
             // Password match send token and user to client and set to current user
             res.json({
                 token: token,
-                user: refreshedUser
+                user: refreshedUser || user
             })
 
         } else {
