@@ -17,7 +17,7 @@ $siteGreen: #36AB9B;
 
     // For animation 
     transform: translate(-50%, -1500%);
-    transition: all 0.2s;
+    transition: all 0.5s;
     opacity: 0;
     
     input, textarea, select  {
@@ -47,7 +47,7 @@ $siteGreen: #36AB9B;
     }
 
     input:focus, textarea:focus {
-        background-color: #deecff;
+        background-color: #d1f9f4;
     }
 
 }

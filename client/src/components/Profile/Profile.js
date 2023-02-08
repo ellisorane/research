@@ -125,7 +125,7 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
 
             </div>
             { showForm && <Backdrop click={ () => setShowForm( false ) } /> }
-            { showForm && <EditForm showForm={ showForm } /> }
+            <EditForm showForm={ showForm } />
         </div>
     )
 }
