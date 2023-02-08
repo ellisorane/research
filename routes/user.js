@@ -59,8 +59,6 @@ router.post('/signup', async(req, res) => {
 
     try {    
         const { email, name, institution, password } = req.body
-        // const { name, institution, email, password } = req.body;
-        // console.log( email, name, institution, password )
         // Create new user in the database
         const user = await User.create({
             email,
