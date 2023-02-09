@@ -1,5 +1,6 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { loginRefresh } from '../../../features/auth/authSlice'
 import axios from 'axios'
 
 import classes from './EditForm.module.scss'
@@ -17,6 +18,7 @@ function FormTemplate( props ) {
         confirmPassword: ''
     } )
     const [ errorMsg, setErrorMsg ] = React.useState( null )
+    const dispatch = useDispatch()
 
 
     const { name, institution, email, password, newPassword, confirmPassword } = formData
@@ -45,8 +47,9 @@ function FormTemplate( props ) {
         const body = JSON.stringify( { name, institution, email, password, newPassword, confirmPassword } );
 
         try {
+            
+            // Update user
             const res = await axios.put( '/user/update-user', body, config );
-            // const res = await axios.get( '/user/test' );
             console.log( res )
             
             // Check for form error messages from mongoose validation, if no errors then register and log user in
@@ -56,25 +59,10 @@ function FormTemplate( props ) {
             
             } else {
 
-            // console.log( res )
-            // console.log( res.data )
-
-            // Reset form
-            // setFormData({
-            //     email: '',
-            //     password: ''
-            // });
-
-            // // Logout any existing user
-            // dispatch( logout() )
-            // // Save user and token data in the redux authSlice
-            // dispatch( loginRefresh( res.data ) )
-            // // Load user
-            // getCurrentUser()
-            // Redirect user to Journal page
-            // navigate( '/' )
-
-
+                // Refresh and update user state 
+                dispatch(loginRefresh( res.data ))
+                props.getCurrentUser()
+                props.setShowForm( false )
             }
 
             // Scroll back to top of page
@@ -128,10 +116,10 @@ function FormTemplate( props ) {
                 <div className={ classes.formGroup }>
                     <input type="password" name="newPassword" value={ formData.newPassword }  onChange={ ( e ) => onChangeFormData( e ) } /><br />
                 </div>    
-                <label htmlFor="password">Confirm New Password:</label><br />
+                {/* <label htmlFor="password">Confirm New Password:</label><br />
                 <div className={ classes.formGroup }>
                     <input type="password" name="confirmPassword" value={ formData.confirmPassword }  onChange={ ( e ) => onChangeFormData( e ) } /><br />
-                </div>    
+                </div>     */}
 
             </>
             :

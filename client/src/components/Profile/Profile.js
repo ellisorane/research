@@ -44,7 +44,9 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
         data.append( "userImg", userImg );
 
         try {
-            await axios.delete('/user/userImg')
+            // Only try to delete old userImg if it exists
+            if( user.userImg ) await axios.delete('/user/userImg')
+            // Update userImg
             const res = await axios.put(`/user/userImg`, data, config)
 
             // Prevents error that occurs when trying to use a newly created AWS signed url too soon after its creation
@@ -98,7 +100,7 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
                     <div className={classes.profileActionsDiv}>
                         <div className={classes.pActionsBtns}>
                             <div className={classes.pActionsBtn} onClick={ () => setShowForm( true ) }>Edit Profile</div>
-                            <div className={classes.pActionsBtn}>Follow</div>
+                            {/* <div className={classes.pActionsBtn}>Follow</div> */}
                         </div>
 
                         <p className={classes.more} onClick={() => setShowMore(!showMore)}>{!showMore ? 'More ▽' : 'Less △'}</p>
@@ -125,7 +127,7 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
 
             </div>
             { showForm && <Backdrop click={ () => setShowForm( false ) } /> }
-            <EditForm showForm={ showForm } />
+            <EditForm showForm={ showForm } setShowForm={ setShowForm } getCurrentUser={ getCurrentUser } />
         </div>
     )
 }
