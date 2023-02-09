@@ -107,7 +107,7 @@ router.post('/login', async ( req, res ) => {
         // Compare password of user in database and the user trying to login
         if( await bcrypt.compare( password, user.password ) ) {
             // Refresh and update userImg - aws urls need to be updated because they expire after a certain amount of time
-            let refreshedUser = null
+            // let refreshedUser = null
             if( user.userImg ) {
                 const getObjectParams = {
                     Bucket: bucketName,
@@ -118,18 +118,21 @@ router.post('/login', async ( req, res ) => {
                 const expiration = 60 * 60 * 24 * 4; // 4 days
                 const userImgUrl = await getSignedUrl(s3, command, { expiresIn: expiration })
                 
-                refreshedUser = await User.findByIdAndUpdate( user._id, { userImgUrl }, { new: true } )
-                refreshedUser.save();
+                user = await User.findByIdAndUpdate( user._id, { userImgUrl }, { new: true } )
+                // const refreshedUser = await User.findByIdAndUpdate( user._id, { userImgUrl }, { new: true } )
+                // refreshedUser.save();
             }
 
 
             // Create JWT token - Expires every 48 hours
-            const token = jwt.sign({ user: refreshedUser || user }, process.env.JWT_SECRET, { expiresIn: '2d' })
+            // const token = jwt.sign({ user: refreshedUser || user }, process.env.JWT_SECRET, { expiresIn: '2d' })
+            const token = jwt.sign({ user: user }, process.env.JWT_SECRET, { expiresIn: '2d' })
 
             // Password match send token and user to client and set to current user
             res.json({
                 token: token,
-                user: refreshedUser || user
+                // user: refreshedUser || user
+                user: user
             })
 
         } else {
@@ -155,46 +158,46 @@ router.put('/update-user', authenticate, async ( req, res ) => {
 
     console.log(newData)
 
+    let user = null
+
     try {
+
         // Find and update user by _id
-        const user = await User.findByIdAndUpdate( id, { name, institution, email }, { new: true } );
+        if ( password === '' ) {
+
+            user = await User.findByIdAndUpdate( id, { name, institution, email }, { new: true } );
+            console.log( 'no password' )
+        } else {
+            // console.log( password )
+            // If currentPassword matches password in database then update currentPassword with newPassword
+            if( await bcrypt.compare( password, req.user.user.password ) ) {
+                console.log( 'password' )
+
+                const hashedNewPassword = await bcrypt.hash( newPassword, 10 )
+                user = await User.findByIdAndUpdate( id, { name, institution, email, password: hashedNewPassword }, { new: true } );
+            } else {
+                console.log( 'Incorrect credentials' )
+            }
+
+        }
 
         // User not found
-        if(user === null) {
+        if( user === null ) {
             return res.status( 404 ).send( 'User not found' );
         }
 
-        res.json( user )
-        
-    } catch (error) {
+        // Create new JWT token
+        const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '1d' })
+
+        // Password match send token and user to client and set to current user
+        res.json({
+            token: token,
+            user: user
+        })
+
+    } catch ( error ) {
         console.error( 'Error from /update-user: ',error )
         res.json( error )
-    }
-})
-
-// @route   PUT /user/password
-// @desc    Update User password
-// @access  Private
-router.put('/password', authenticate, async ( req, res ) => {
-    const currentPassword = req.body.currentPassword
-    const newPassword = req.body.newPassword
-    const id = req.user.user._id
-    try {
-        // Find user in database with currentUser _id
-        const user = await User.findById( id ).exec();
-        
-        // If currentPassword matches password in database then update currentPassword with newPassword
-        if( await bcrypt.compare( currentPassword, user.password ) ) {
-            const hashedNewPassword = await bcrypt.hash( newPassword, 10 )
-            const updatedUser = await User.findByIdAndUpdate( id, { password: hashedNewPassword }, { new: true } )
-            console.log( "Password updated" )
-            res.json( updatedUser )
-        } else {
-            res.status( 404 ).send( 'Incorrect credentials' )
-        }
-        
-    } catch ( error ) {
-        res.send( error )
     }
 })
 
