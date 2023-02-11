@@ -5,6 +5,8 @@
 - Search for research projects with the predictive text search bar.
 - Create and delete research projects.
 - Fund research projects.
+- User authentication and management
+
 
 ## `npm run dev`
 - Runs both the sever-side and client-side code in development mode.

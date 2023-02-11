@@ -110,7 +110,8 @@ const App = () => {
             <Route path="/signup" element={ loggedIn ? <Navigate to="/" /> : <Signup getCurrentUser={ getCurrentUser } /> } />
             <Route path="/browse-all" element={ <BrowseAll projects={projects} loading={loadingProjects} category={category} setCategory={setCategory} /> } />
             <Route path="/entry/:id" element={ <SingleEntry /> } />
-            <Route path="/results/search=:searchTerm" element={ <SearchResults projects={projects} loading={loadingProjects} /> } />
+            {/* <Route path="/results/search=:searchTerm" element={ <SearchResults projects={projects} loading={loadingProjects} /> } /> */}
+            <Route path="/results/:searchTerm" element={ <SearchResults projects={projects} loading={loadingProjects} /> } />
             {/* Private Routes  */}
             <Route path="/start-project" element={ !loggedIn ? <Navigate to="/" /> : <StartProject /> } />
             <Route path="/profile" element={ !loggedIn ? <Navigate to="/" /> : <Profile projects={projects} loading={loadingProjects} getCurrentUser={ getCurrentUser } /> } />
