@@ -35,7 +35,7 @@ const Navbar = () => {
                 <div className={classes.lgScreenMenu}>
                     <Link to="/" className={classes.navLink}>Discover</Link>
                     { user ? <Link to="/start-project" className={classes.navLink}>Start a Project</Link> : undefined }
-                    { user ? <Link to="/profile" className={classes.navLink}>Profile</Link> : undefined }
+                    { user ? <Link to={`/profile/${user._id}`} className={classes.navLink}>Profile</Link> : undefined }
                     { !user ? <Link to="/signup" className={classes.navLink}>Signup</Link> : undefined }
                     { !user ? <Link to="/login" className={classes.navLink}>Login</Link> : undefined }
                     { user ? <div className={ classes.navLink } onClick={ () => dispatch( logout() ) }>Logout</div> : undefined }

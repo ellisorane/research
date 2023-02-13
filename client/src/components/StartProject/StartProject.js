@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 import classes from './StartProject.module.scss';
@@ -8,11 +9,13 @@ const Success = React.lazy(() => import('./Success'));
 const Spinner = React.lazy(() => import('../Spinner/Spinner'))
 
 const StartProject = () => {
+    const user = useSelector(state => state.auth.user)
+    console.log( user )
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        researchers: '',
-        institution: '',
+        researchers: user.name,
+        institution: user.institution,
         fundingGoal: '',
         daysToFund: 30,
         category: ''

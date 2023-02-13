@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import  { useSelector, useDispatch } from 'react-redux';
 import NumberFormat from 'react-number-format';
 import { useParams } from 'react-router-dom';
@@ -20,7 +20,7 @@ import entryImage from '../../../../imgs/fruit research.jpg';
 const Payment = React.lazy(() => import("./Payment/Payment"));
 const Spinner = React.lazy(() => import("../../../Spinner/Spinner"));
 
-const SingleEntry = () => {
+const SingleEntry = ({ setCategory }) => {
     const showPayment = useSelector(state => state.payment.value);
     const project = useSelector(state => state.projects.currentProject);
     const searchBarSuggested = useSelector(state => state.searchBar.suggested);
@@ -65,7 +65,7 @@ const SingleEntry = () => {
                 <h1 className={classes.entryTitle}>{project.title}</h1>
                 <div className={classes.researchers}>
                     <p><strong>Researcher(s):</strong></p>
-                    <p><u>{project.researchers}</u></p>
+                    <p><Link to={ `/profile/${ project.user }` } className={ classes.researchsLink } href="">{project.researchers}</Link></p>
                 </div>
                 <div className={classes.institution}>
                     <p><strong>Institution:</strong></p>
@@ -77,13 +77,14 @@ const SingleEntry = () => {
                     <div className={classes.imgTagContainer}>
                         <div style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url("${project.imageURL}")` }} className={classes.heroImage}></div>
                         <div className={classes.tags}>
-                            <div className={classes.tag}>{project.category}</div>
+                            <Link to="/browse-all" onClick={ () => setCategory( project.category ) }><div className={classes.tag}>{project.category}</div></Link>
                             <div className={`${classes.tag} ${classes.delete}`} onClick={() => deleteProject()}>Delete</div>
                         </div>
                     </div>
                     
 
 
+                    {/* Payment column */}
                     <div className={classes.fundingBox}>
                         <Payment project={project} showPayment={showPayment} />
 
@@ -95,6 +96,7 @@ const SingleEntry = () => {
                         <div className={classes.progressBar}>
                         <div className={classes.progress} style={{ width: `${project.amountFunded/project.fundingGoal * 100}%`, maxWidth: '100%' }}></div>
                         </div>
+
 
                         <div className={classes.entryFunding}>
                             <div>

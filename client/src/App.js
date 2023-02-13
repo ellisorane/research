@@ -7,7 +7,7 @@ import { setAuthToken } from './utils/utils';
 
 import './App.scss';
 
-import { setProjects } from './features/projects/projectsSlice';
+import { setProjects, setUserAvatars } from './features/projects/projectsSlice';
 import  { loadUser, loginRefresh, logout } from './features/auth/authSlice'
 
 const Navbar = React.lazy(() => import('./components/Navbar/Navbar'));
@@ -109,11 +109,11 @@ const App = () => {
             <Route path="/login" element={ loggedIn ? <Navigate to="/" /> : <Login getCurrentUser={ getCurrentUser } /> } />
             <Route path="/signup" element={ loggedIn ? <Navigate to="/" /> : <Signup getCurrentUser={ getCurrentUser } /> } />
             <Route path="/browse-all" element={ <BrowseAll projects={projects} loading={loadingProjects} category={category} setCategory={setCategory} /> } />
-            <Route path="/entry/:id" element={ <SingleEntry /> } />
+            <Route path="/entry/:id" element={ <SingleEntry setCategory={setCategory} /> } />
             <Route path="/results/:searchTerm" element={ <SearchResults projects={projects} loading={loadingProjects} /> } />
             {/* Private Routes  */}
             <Route path="/start-project" element={ !loggedIn ? <Navigate to="/" /> : <StartProject /> } />
-            <Route path="/profile" element={ !loggedIn ? <Navigate to="/" /> : <Profile projects={projects} loading={loadingProjects} getCurrentUser={ getCurrentUser } /> } />
+            <Route path="/profile/:id" element={ !loggedIn ? <Navigate to="/" /> : <Profile projects={projects} loading={loadingProjects} getCurrentUser={ getCurrentUser } /> } />
           </Routes>
         </React.Suspense>
 

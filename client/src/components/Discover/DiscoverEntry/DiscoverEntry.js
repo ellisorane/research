@@ -1,15 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import NumberFormat from 'react-number-format';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import classes from './DiscoverEntry.module.scss';
 
-import img from '../../../imgs/fruit research.jpg';
 import defUser from '../../../imgs/default.jpg';
-import produce from 'immer';
 
 
 const DiscoverEntry = ({ project }) => {
+    const [ userImgUrl, setUserImgUrl ] = useState()
+
+    // userImgUrl for each project
+    const getUserImgUrl = async() => {
+        try {
+            const res = await axios.get( `/user/userImgUrl/${project.user}` );
+            if (res.data) {
+                console.log( res )
+                setUserImgUrl( res.data.userImgUrl )
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    } 
+
+    useEffect( () => {
+        getUserImgUrl()
+    }, [] )
     
     return (
         <Link to={`/entry/${project._id}`} className={classes.DiscEntryContainer}>
@@ -26,7 +43,8 @@ const DiscoverEntry = ({ project }) => {
                 <div className={classes.bottomInfo}>
                     {/* researcher's image | name and institution */}
                     <div className={classes.researcherInfo}>
-                        <img src={defUser} alt='img' />
+                        <img src={ userImgUrl || defUser} alt='img' />
+                        {/* <img src={ defUser } alt='img' /> */}
                         <div>
                             <h5><strong>{project.researchers}</strong></h5> 
                             <p>{project.institution}</p>
