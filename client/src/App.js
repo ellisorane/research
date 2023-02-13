@@ -113,7 +113,7 @@ const App = () => {
             <Route path="/results/:searchTerm" element={ <SearchResults projects={projects} loading={loadingProjects} /> } />
             {/* Private Routes  */}
             <Route path="/start-project" element={ !loggedIn ? <Navigate to="/" /> : <StartProject /> } />
-            <Route path="/profile/:id" element={ !loggedIn ? <Navigate to="/" /> : <Profile projects={projects} loading={loadingProjects} getCurrentUser={ getCurrentUser } /> } />
+            <Route path="/profile" element={ !loggedIn ? <Navigate to="/" /> : <Profile projects={projects} loading={loadingProjects} getCurrentUser={ getCurrentUser } /> } />
           </Routes>
         </React.Suspense>
 
