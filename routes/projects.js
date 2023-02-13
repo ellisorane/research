@@ -161,7 +161,7 @@ router.delete('/:id', authenticate, async(req, res) => {
         res.json({msg: "Project removed"});
 
     } catch(err) {
-        console.error(err.message);
+        console.error("Delete project Error: ", err.message);
     }
 });
 

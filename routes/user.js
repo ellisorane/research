@@ -39,6 +39,21 @@ const upload = multer({ storage: storage });
 ///////////////////////////////////////////////////////////////////////////////////////
 
 
+
+// @route   GET /user/userImgUrl/:id
+// @desc    Get user image for project display
+// @access  Public
+router.get('/userImgUrl/:id', async(req, res) => {
+    try {
+        let user = await User.findOne({ _id: req.params.id }).select( 'userImgUrl' )
+        // console.log( user )
+        res.json( user )
+    } catch ( error ) {
+        console.error( error )
+        res.json( error )
+    }
+})
+
 // @route   GET /user/
 // @desc    Get User
 // @access  Private
@@ -50,7 +65,7 @@ router.get('/', authenticate, async(req, res) => {
         console.error(error)
         res.json(error)
     }
-});
+})
 
 // @route   POST /user/signup
 // @desc    Create User
