@@ -219,7 +219,7 @@ router.put('/update-user', authenticate, async ( req, res ) => {
 
 
 // @route   DELETE /user/userImg
-// @desc    Update User image - used for deleting old user image before adding new user image
+// @desc    Delete User image - used for deleting old user image before adding new user image
 // @access  Private
 router.delete('/userImg', authenticate, async(req, res) => {
 
@@ -232,7 +232,7 @@ router.delete('/userImg', authenticate, async(req, res) => {
             Key: userImg
         }
 
-        const deleteCmd = new DeleteObjectCommand(deleteObjectParams);
+        const deleteCmd = await new DeleteObjectCommand(deleteObjectParams);
 
         if( userImg === null ) res.status(404).json({ msg: "Image not found"})
 
@@ -240,8 +240,8 @@ router.delete('/userImg', authenticate, async(req, res) => {
         res.json('Old image deleted.')
 
     } catch (err) {
-        console.error("Delete userImg Error: ", err.message);
-        res.status(500).send('Server Error');
+        console.error("Delete userImg Error: ", err);
+        res.status(500).send(err);
     }
 })
 
