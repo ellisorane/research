@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AiFillStar } from 'react-icons/ai';
 import { FaDna } from 'react-icons/fa';
@@ -21,6 +22,9 @@ const Spinner = React.lazy(() => import('../Spinner/Spinner'));
 
 
 const Discover = ({ projects, loading, setCategory }) => {
+
+  const user = useSelector( state => state.auth.user )
+
     
     useEffect(() => {
         // getLatestProjects();
@@ -36,7 +40,7 @@ const Discover = ({ projects, loading, setCategory }) => {
                         <div className={classes.heroHeading}><h1>Help fund the next wave of scientific research</h1></div>
 
                         <div className={classes.heroActions}>
-                            <div className={classes.startExperimentBtn}><Link to="/start-project">Start an Experiment</Link></div>
+                            <div className={classes.startExperimentBtn}><Link to={ user ? "/start-project" : "/login" }>Start an Experiment</Link></div>
                             <div className={classes.divider}></div>
                             <div className={classes.browseProjectBtn}><Link to="/browse-all">Browse Projects</Link></div>
                         </div>
