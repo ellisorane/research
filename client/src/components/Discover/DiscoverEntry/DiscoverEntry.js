@@ -16,7 +16,7 @@ const DiscoverEntry = ({ project }) => {
         try {
             const res = await axios.get( `/user/userImgUrl/${project.user}` );
             if (res.data) {
-                console.log( res )
+                // console.log( res )
                 setUserImgUrl( res.data.userImgUrl )
             }
         } catch(err) {

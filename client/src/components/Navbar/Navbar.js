@@ -35,7 +35,7 @@ const Navbar = () => {
                 <div className={classes.lgScreenMenu}>
                     <Link to="/" className={classes.navLink}>Discover</Link>
                     { user ? <Link to="/start-project" className={classes.navLink}>Start a Project</Link> : undefined }
-                    { user ? <Link to={`/profile/${user._id}`} className={classes.navLink}>Profile</Link> : undefined }
+                    { user ? <Link to={`/profile`} className={classes.navLink}>Profile</Link> : undefined }
                     { !user ? <Link to="/signup" className={classes.navLink}>Signup</Link> : undefined }
                     { !user ? <Link to="/login" className={classes.navLink}>Login</Link> : undefined }
                     { user ? <div className={ classes.navLink } onClick={ () => dispatch( logout() ) }>Logout</div> : undefined }
@@ -50,7 +50,7 @@ const Navbar = () => {
                         <div className={classes.navLinks}>
                             <Link to="/" className={classes.navLink} onClick={ () => setShowNav(false) }>Discover</Link>
                             { user ? <Link to="/start-project" className={classes.navLink} onClick={ () => setShowNav(false) }>Start a Project</Link> : undefined }
-                            { user ? <Link to="/profile" className={classes.navLink} onClick={ () => setShowNav(false) }>Profile</Link> : undefined }
+                            { user ? <Link to={`/profile`} onClick={ () => setShowNav(false) }>Profile</Link> : undefined }
                             { !user ? <Link to="/signup" className={classes.navLink} onClick={ () => setShowNav(false) }>Signup</Link> : undefined }
                             { !user ? <Link to="/login" className={classes.navLink} onClick={ () => setShowNav(false) }>Login</Link> : undefined }
                             { user ? <div className={ classes.navLink } onClick={ logoutHandler }>Logout</div> : undefined }
