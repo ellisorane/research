@@ -10,7 +10,6 @@ const Spinner = React.lazy(() => import('../Spinner/Spinner'))
 
 const StartProject = () => {
     const user = useSelector(state => state.auth.user)
-    console.log( user )
     const [formData, setFormData] = useState({
         title: '',
         description: '',
