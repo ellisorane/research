@@ -43,15 +43,15 @@ router.get('/', async(req, res) => {
     try {
         const projects = await Project.find();
         
-        // If imageURLCreationDate is 2 days ago or greater then refresh the image url
+        // If imageURLCreationDate is 1 days ago or older then refresh the image url
         for(const project of projects) {
             
             let oldimageURLCreationDate = project.imageURLCreationDate
             let newimageURLCreationDate = Date.now()
-            let timeDiff =  (newimageURLCreationDate - oldimageURLCreationDate) / (1000 * 60 * 60 * 24 * 2)
+            let timeDiff =  (newimageURLCreationDate - oldimageURLCreationDate) / (1000 * 60 * 60 * 24)
             // console.log(timeDiff, " minutes")
 
-            if (timeDiff >= 2) {
+            if (timeDiff >= 1) {
                 console.log('time to refresh image')
                 const getObjectParams = {
                     Bucket: bucketName,
@@ -145,23 +145,24 @@ router.delete('/:id', authenticate, async(req, res) => {
     try {
         const project = await Project.findById(req.params.id);
 
-        const s3Params = {
-            Bucket: bucketName,
-            Key: project.image
-        }
-        const command = new DeleteObjectCommand(s3Params);
-
         if(!project) res.status(404).json({ msg: "Project not found"});
 
-        // Delete project image in s3
-        await s3.send(command);
+        // const s3Params = {
+        //     Bucket: bucketName,
+        //     Key: project.image
+        // }
+        // const command = await new DeleteObjectCommand(s3Params);
+
+
+        // // Delete project image in s3
+        // await s3.send(command);
         // Delete project in mongoDB
         await project.remove();
 
         res.json({msg: "Project removed"});
 
     } catch(err) {
-        console.error("Delete project Error: ", err.message);
+        console.error("Delete project Error: ", err);
     }
 });
 

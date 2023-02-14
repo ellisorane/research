@@ -45,7 +45,7 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
 
         try {
             // Only try to delete old userImg if it exists
-            if( user.userImg ) await axios.delete('/user/userImg')
+            // if( user.userImg ) await axios.delete('/user/userImg')
             // Update userImg
             const res = await axios.put(`/user/userImg`, data, config)
 
