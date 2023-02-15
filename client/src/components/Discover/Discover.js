@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AiFillStar } from 'react-icons/ai';
 import { FaDna } from 'react-icons/fa';
@@ -23,8 +23,7 @@ const Spinner = React.lazy(() => import('../Spinner/Spinner'));
 
 const Discover = ({ projects, loading, setCategory }) => {
 
-  const user = useSelector( state => state.auth.user )
-
+    const user = useSelector( state => state.auth.user )
     
     useEffect(() => {
         // getLatestProjects();
