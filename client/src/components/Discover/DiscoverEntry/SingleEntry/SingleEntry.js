@@ -140,7 +140,7 @@ const SingleEntry = ({ setCategory }) => {
             <div className={classes.projectInfo}>
                 <div>
                     <h2>About this project</h2>
-                    <p>{project.description}</p>
+                    <p className={ classes.projectDescription }>{project.description}</p>
                 </div>
             </div>
                 
