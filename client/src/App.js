@@ -33,8 +33,8 @@ const App = () => {
   const loggedIn = useSelector( state => state.auth.loggedIn )
   const dispatch = useDispatch();
   const [category, setCategory] = useState('all');
-  const status = useSelector(state => state.status.message)
-
+  const status = useSelector( state => state.status.message )
+  const showStatus = useSelector( state => state.status.showStatus )
 
   const getDaysLeft = async(createdOn, daysToFund, id) => {
       
@@ -104,7 +104,7 @@ const App = () => {
       <Load loadData={loadData}>
         <React.Suspense fallback={<Spinner />}>
           <Navbar />
-          <Status>{ status }</Status>
+          { showStatus && <Status>{ status }</Status> }
           <Routes>
             {/* Public Routes  */}
             <Route path="/" element={ <Discover projects={projects} loading={loadingProjects} category={category} setCategory={setCategory} />  } />

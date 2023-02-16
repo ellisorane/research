@@ -1,12 +1,16 @@
 .status {
     background-color: #26ae76;
     color: white;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: bold;
     width: fit-content;
     padding: 10px 25px;
     position: fixed;
-    border-radius: 15px;
+    border-radius: 8px;
     bottom: 3%;
-    left: 1%;
+    right: 1%;
+    // top: 10%;
+    box-shadow: 2px 8px 5px -2px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 2px 8px 5px -2px rgba(0,0,0,0.2);
+    -moz-box-shadow: 2px 8px 5px -2px rgba(0,0,0,0.2);
 }

@@ -10,6 +10,7 @@ import axios from "axios";
 
 import { openPayment } from "../../../../features/payment/paymentSlice";
 import { setCurrentProject } from "../../../../features/projects/projectsSlice";
+import { setStatus, removeStatus } from "../../../../features/status/statusSlice";
 
 import classes from "./SingleEntry.module.scss";
 import parent from "../DiscoverEntry.module.scss";
@@ -46,6 +47,9 @@ const SingleEntry = ({ setCategory }) => {
         try {
             await axios.delete(`/projects/${id}`);
             navigate(-1);
+             // Status popup
+            dispatch( setStatus( 'Project deleted' ) )
+            setTimeout( () => dispatch( removeStatus() ), 5000 )
         } catch(err) {
             console.error(err);
         }
