@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import  { loadUser, loginRefresh, logout } from '../../features/auth/authSlice'
+import { removeStatus, setStatus } from '../../features/status/statusSlice';
 
 import classes from './Auth.module.scss';
 
 function Login({ getCurrentUser }) {
 //   const user = useSelector( state => state.auth.user )
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const [ formData, setFormData ] = React.useState({ 
     email: '',
@@ -45,7 +46,7 @@ function Login({ getCurrentUser }) {
           
         } else {
 
-          console.log( res )
+          // console.log( res )
           // console.log( res.data )
 
           // Reset form
@@ -63,7 +64,9 @@ function Login({ getCurrentUser }) {
           // Redirect user to Journal page
           // navigate( '/' )
 
-
+          // Status popup
+          dispatch( setStatus( 'Logged In' ) )
+          setTimeout( () => dispatch( removeStatus() ), 5000 )
         }
 
         // Scroll back to top of page

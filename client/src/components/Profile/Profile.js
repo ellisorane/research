@@ -11,15 +11,16 @@ import defaultUserImg from '../../imgs/default.jpg';
 
 // import ProjectsStarted from './ExpiredProjects/ExpiredProjects';
 // import FundedProjects from './FundedProjects/FundedProfile';
-const ProjectsStarted = React.lazy(() => import('./ExpiredProjects/ExpiredProjects'));
+const ExpiredProjects = React.lazy(() => import('./ExpiredProjects/ExpiredProjects'));
 const FundedProjects = React.lazy(() => import('./FundedProjects/FundedProfile'));
+const MyProjects = React.lazy(() => import('./MyProjects/MyProjects'));
 const EditForm = React.lazy(() => import('./EditForm/EditForm'));
 const Backdrop = React.lazy(() => import('./Backdrop/Backdrop'));
 const Spinner = React.lazy(() => import('../Spinner/Spinner') )
 
 const Profile = ({ projects, loading, getCurrentUser }) => {
     const user = useSelector( state => state.auth.user )
-    const [activeTab, setActiveTab] = useState(true);
+    const [activeTab, setActiveTab] = useState('mp');
     const [showMore, setShowMore] = useState(false);
     const  uploadImgInput = React.useRef()
     const [userImg, setUserImg] = useState();
@@ -117,13 +118,23 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
 
             <div className={classes.profileInfoContainer}>
                 <div className={classes.profileNav}>
-                    <div className={`${classes.profileLink} ${activeTab && classes.active}`} onClick={ () => setActiveTab(true) }>Backed Projects <span className={classes.count}>{ projects && projects.filter((el) => (el.fundedByUser)).length }</span></div>
-                    <div className={`${classes.profileLink} ${!activeTab && classes.active}`} onClick={ () => setActiveTab(false) }>Expired Projects <span className={classes.count}>{ projects && projects.filter((el) => (el.daysLeft < 0)).length }</span></div>
+            
+                    <div className={`${ classes.profileLink } ${ activeTab === 'mp' && classes.active }`} onClick={ () => setActiveTab('mp') }>My Projects <span className={classes.count}>{ projects && projects.filter( ( el ) => ( el.user === user._id ) ).length }</span></div>
+
+                    <div className={`${ classes.profileLink } ${ activeTab === 'bp' && classes.active }`} onClick={ () => setActiveTab('bp') }>Backed Projects <span className={classes.count}>{ projects && projects.filter( ( el ) => ( el.fundedByUser ) ).length }</span></div>
+
+                    <div className={`${ classes.profileLink } ${ activeTab === 'ep' && classes.active }`} onClick={ () => setActiveTab('ep') }>Expired Projects <span className={classes.count}>{ projects && projects.filter( ( el ) => ( el.daysLeft < 0 ) ).length }</span></div>
+
                 </div>
 
-                {
-                    !activeTab ? <ProjectsStarted projects={projects} loading={loading} /> : <FundedProjects projects={projects} loading={loading} />
-                }
+                
+                { activeTab === 'mp' && <MyProjects projects={projects} loading={loading} /> }
+
+                { activeTab === 'bp' && <FundedProjects projects={projects} loading={loading} /> }
+
+                { activeTab === 'ep' && <ExpiredProjects projects={projects} loading={loading} /> }
+
+                
 
             </div>
             { showForm && <Backdrop click={ () => setShowForm( false ) } /> }

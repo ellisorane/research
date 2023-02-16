@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { logout } from '../../features/auth/authSlice';
+import { setStatus, removeStatus } from '../../features/status/statusSlice';
 
 import classes from './Navbar.module.scss';
 
@@ -17,6 +18,10 @@ const Navbar = () => {
     const logoutHandler = () => {
         dispatch( logout() )
         setShowNav(false)
+
+        // Status popup
+        dispatch( setStatus( 'Logged Out' ) )
+        setTimeout( () => dispatch( removeStatus() ), 5000 )
     }
 
     return (
@@ -38,7 +43,7 @@ const Navbar = () => {
                     { user ? <Link to={`/profile`} className={classes.navLink}>Profile</Link> : undefined }
                     { !user ? <Link to="/signup" className={classes.navLink}>Signup</Link> : undefined }
                     { !user ? <Link to="/login" className={classes.navLink}>Login</Link> : undefined }
-                    { user ? <div className={ classes.navLink } onClick={ () => dispatch( logout() ) }>Logout</div> : undefined }
+                    { user ? <div className={ classes.navLink } onClick={ logoutHandler }>Logout</div> : undefined }
                 </div>
 
                 {/* For smaller screens. Hidden on bigger screens  */}

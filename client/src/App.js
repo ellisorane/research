@@ -22,6 +22,7 @@ const SearchResults = React.lazy(() => import('./components/SearchResults/Search
 const Footer = React.lazy(() => import('./components/Footer/Footer'));
 const Load = React.lazy(() => import('./components/Load/Load'));
 const Spinner = React.lazy(() => import('./components/Spinner/Spinner'));
+const Status = React.lazy(() => import('./components/Status/Status'));
 
 
 const App = () => {
@@ -32,7 +33,8 @@ const App = () => {
   const loggedIn = useSelector( state => state.auth.loggedIn )
   const dispatch = useDispatch();
   const [category, setCategory] = useState('all');
-
+  const status = useSelector( state => state.status.message )
+  const showStatus = useSelector( state => state.status.showStatus )
 
   const getDaysLeft = async(createdOn, daysToFund, id) => {
       
@@ -40,7 +42,6 @@ const App = () => {
       const today = new Date().getTime();
       const daysSinceCreation = (today - projectCreatedOn)/(1000 * 60 * 60 *24);
       const daysLeft = daysToFund - daysSinceCreation.toFixed(0);
-
       const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -103,6 +104,7 @@ const App = () => {
       <Load loadData={loadData}>
         <React.Suspense fallback={<Spinner />}>
           <Navbar />
+          { showStatus && <Status>{ status }</Status> }
           <Routes>
             {/* Public Routes  */}
             <Route path="/" element={ <Discover projects={projects} loading={loadingProjects} category={category} setCategory={setCategory} />  } />

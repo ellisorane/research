@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import  { loadUser, loginRefresh, logout } from '../../features/auth/authSlice'
+import { setStatus, removeStatus } from '../../features/status/statusSlice'
 
 // import logo from '../../../assets/images/logo.png'
 
@@ -64,15 +65,15 @@ function Signup({ getCurrentUser }) {
 
         } else {
 
-          console.log( res.data )
+          // console.log( res.data )
 
           // Reset form
-        //   setFormData({
-        //     email: '',
-        //     name: '',
-        //     institution: '',
-        //     password: ''
-        //   });
+          setFormData({
+            email: '',
+            name: '',
+            institution: '',
+            password: ''
+          });
 
           // Logout any existing user
           dispatch( logout() )
@@ -82,6 +83,10 @@ function Signup({ getCurrentUser }) {
           getCurrentUser()
           // Redirect user to Journal page
         //   navigate( '/' )
+
+         // Status popup
+         dispatch( setStatus( 'Logged In' ) )
+         setTimeout( () => dispatch( removeStatus() ), 5000 )
 
         }
 
