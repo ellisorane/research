@@ -69,7 +69,8 @@ const SingleEntry = ({ setCategory }) => {
                 <h1 className={classes.entryTitle}>{project.title}</h1>
                 <div className={classes.researchers}>
                     <p><strong>Researcher(s):</strong></p>
-                    <p><Link to="/profile" className={ classes.researchsLink } href="">{project.researchers}</Link></p>
+                    {/* <p><Link to="/profile" className={ classes.researchsLink } href="">{project.researchers}</Link></p> */}
+                    <p><u>{project.researchers}</u></p>
                 </div>
                 <div className={classes.institution}>
                     <p><strong>Institution:</strong></p>
