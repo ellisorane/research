@@ -18,7 +18,7 @@ const EditForm = React.lazy(() => import('./EditForm/EditForm'));
 const Backdrop = React.lazy(() => import('./Backdrop/Backdrop'));
 const Spinner = React.lazy(() => import('../Spinner/Spinner') )
 
-const Profile = ({ projects, loading, getCurrentUser }) => {
+const Profile = ({ projects, loading, getCurrentUser, loadData }) => {
     const user = useSelector( state => state.auth.user )
     const [activeTab, setActiveTab] = useState('mp');
     const [showMore, setShowMore] = useState(false);
@@ -74,6 +74,11 @@ const Profile = ({ projects, loading, getCurrentUser }) => {
     useEffect(() => {
         userImg && submitUserImg()
     }, [ userImg ])
+
+    // Load any changes to the user or projects on render
+    useEffect(() => {
+        loadData()
+    }, [])
 
 
     return (
