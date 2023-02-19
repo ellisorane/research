@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { loginRefresh } from '../../../features/auth/authSlice'
+import { loginRefresh, logout } from '../../../features/auth/authSlice'
 import { setStatus, removeStatus } from '../../../features/status/statusSlice'
 import axios from 'axios'
 
@@ -103,6 +103,22 @@ function FormTemplate( props ) {
         }
     }
 
+    const deleteUser = async() => {
+        try {
+
+            await axios.delete( '/user/delete' );
+
+            dispatch( logout() )
+
+            // Status popup
+            dispatch( setStatus( 'User Deleted' ) )
+            setTimeout( () => dispatch( removeStatus() ), 3000 )
+
+        } catch (error) {
+            
+        }
+    }
+
     // Return form to it's default state when the form is closed
     React.useEffect(() => {
         !props.showForm && setChangePassword( false )
@@ -169,7 +185,7 @@ function FormTemplate( props ) {
             <div className={ classes.verifyDelete }>
                 <h5>Are you sure?</h5>
                 <div>
-                    <button>Yes, delete my account.</button>
+                    <button onClick={ deleteUser }>Yes, delete my account.</button>
                     <button onClick={ ( e ) => openCloseDeleteVerfication(e)  }>No, I change my mind.</button>
                 </div>
             </div>
