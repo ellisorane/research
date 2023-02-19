@@ -96,6 +96,12 @@ $siteGreen: #36AB9B;
     }
 }
 
+.nameError, .institutionError, .emailError, .passwordError, .newPasswordError {
+    input, select {
+        border-bottom: 2px solid red;
+    }
+}
+
 
 @media( min-width: 768px ) {
     .formTemplate {

@@ -101,6 +101,7 @@ const Profile = ({ projects, loading, getCurrentUser, loadData }) => {
                             <input type='file' className={ classes.uploadImgInput } ref={ uploadImgInput } name='userImg' onChange={ (e) => changeUserImgFile(e) } accept="images/*" />
                         </form>
                     </div>
+                    {/* User info and edit profile btn */}
                     <h2>{ user.name }</h2>
                     <p>{ user.institution }</p>
                     <div className={classes.profileActionsDiv}>
@@ -121,6 +122,7 @@ const Profile = ({ projects, loading, getCurrentUser, loadData }) => {
                 </div> : <Spinner />
             }
 
+            {/* User projects info */}
             <div className={classes.profileInfoContainer}>
                 <div className={classes.profileNav}>
             
@@ -142,6 +144,8 @@ const Profile = ({ projects, loading, getCurrentUser, loadData }) => {
                 
 
             </div>
+
+            {/* Edit user form */}
             { showForm && <Backdrop click={ () => setShowForm( false ) } /> }
             <EditForm showForm={ showForm } setShowForm={ setShowForm } getCurrentUser={ getCurrentUser } />
         </div>

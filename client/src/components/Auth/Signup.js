@@ -86,7 +86,7 @@ function Signup({ getCurrentUser }) {
 
          // Status popup
          dispatch( setStatus( 'Logged In' ) )
-         setTimeout( () => dispatch( removeStatus() ), 5000 )
+         setTimeout( () => dispatch( removeStatus() ), 3000 )
 
         }
 

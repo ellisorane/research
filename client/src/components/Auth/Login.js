@@ -66,7 +66,7 @@ function Login({ getCurrentUser }) {
 
           // Status popup
           dispatch( setStatus( 'Logged In' ) )
-          setTimeout( () => dispatch( removeStatus() ), 5000 )
+          setTimeout( () => dispatch( removeStatus() ), 3000 )
         }
 
         // Scroll back to top of page
