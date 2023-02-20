@@ -84,7 +84,8 @@ $siteGreen: #36AB9B;
     text-decoration: underline;
     cursor: pointer;
     margin-top: 10px;
-    text-align: right;
+    width: fit-content;
+
 }
 
 .verifyDelete {
@@ -93,6 +94,12 @@ $siteGreen: #36AB9B;
     div button:first-child {
         background-color: red;
         margin-right: 10px;
+    }
+}
+
+.nameError, .institutionError, .emailError, .passwordError, .newPasswordError {
+    input, select {
+        border-bottom: 2px solid red;
     }
 }
 

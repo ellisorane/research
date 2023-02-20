@@ -21,7 +21,7 @@ const Navbar = () => {
 
         // Status popup
         dispatch( setStatus( 'Logged Out' ) )
-        setTimeout( () => dispatch( removeStatus() ), 5000 )
+        setTimeout( () => dispatch( removeStatus() ), 3000 )
     }
 
     return (

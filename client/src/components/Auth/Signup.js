@@ -85,8 +85,8 @@ function Signup({ getCurrentUser }) {
         //   navigate( '/' )
 
          // Status popup
-         dispatch( setStatus( 'Logged In' ) )
-         setTimeout( () => dispatch( removeStatus() ), 5000 )
+         dispatch( setStatus( 'Account Created' ) )
+         setTimeout( () => dispatch( removeStatus() ), 3000 )
 
         }
 

@@ -17,7 +17,7 @@ const StartProject = () => {
         institution: user.institution,
         fundingGoal: '',
         daysToFund: 30,
-        category: ''
+        category: 'biology'
     })
 
     const { title, description, researchers, institution, fundingGoal, daysToFund, category } = formData;
@@ -55,7 +55,7 @@ const StartProject = () => {
                 institution: '',
                 fundingGoal: '',
                 daysToFund: 30,
-                category: ''
+                category: 'biology'
             });
             setSubmissionInProgress( false )
             setFormSubmitted(true);

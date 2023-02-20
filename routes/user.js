@@ -3,8 +3,9 @@ const bcrypt = require('bcrypt')
 const express = require('express');
 const jwt = require('jsonwebtoken')
 // const mongoose = require('mongoose')
-const User = require('../models/User');
+const User = require('../models/User')
 const { authenticate } = require('../middleware')
+const { Validator } = require('node-input-validator')
 
 const router = express.Router();
 
@@ -167,15 +168,44 @@ router.post('/login', async ( req, res ) => {
 // @desc    Update User
 // @access  Private
 router.put('/update-user', authenticate, async ( req, res ) => {
+
     const newData = req.body
     const id = req.user.user._id
-    const { name, institution, email, password, newPassword, confirmPassword } = req.body
+    const { name, institution, email, password, newPassword } = req.body
 
     console.log(newData)
 
     let user = null
 
+    
+    
     try {
+
+        const validationOptions = { 
+            name: "required", 
+            institution: "required", 
+            email: "email|required", 
+            password: "required|minLength:8", 
+            newPassword: "required|minLength:8" 
+        }
+
+        const validationOptionsNoPassword = { 
+            name: "required", 
+            institution: "required", 
+            email: "email|required"
+        }
+
+        // Input validation
+        const v = new Validator( req.body, ( password.length || newPassword.length ) ? validationOptions : validationOptionsNoPassword )
+        
+        // Initiate validation
+        const matched = await v.check()
+
+        // Handle validation errors
+        if (!matched) {
+            // res.status(404);
+            throw { errors: v.errors }
+        }
 
         // Find and update user by _id
         if ( password === '' ) {
@@ -308,6 +338,8 @@ router.put('/userImg', [ upload.single( 'userImg' ), authenticate ], async ( req
 // @access  Private
 router.delete('/delete', authenticate, async(req, res) => {
     const id = req.user.user._id
+    const userImg = req.user.user.userImg
+
     try {
         // Delete User in mongodb
         const user = await User.findByIdAndDelete( id )
@@ -315,13 +347,13 @@ router.delete('/delete', authenticate, async(req, res) => {
         // Delete user avatar in s3
         const s3Params = {
             Bucket: bucketName,
-            Key: user.avatar
+            Key: userImg
         }
         const command = new DeleteObjectCommand(s3Params);
 
         if(!project) res.status(404).json({ msg: "Project not found"});
 
-        await s3.send(command);
+        // await s3.send(command);
 
         res.send( 'User deleted successfully.' ) 
     } catch (error) {
