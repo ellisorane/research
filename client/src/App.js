@@ -97,7 +97,7 @@ const App = () => {
 
     useEffect(() => {
       loadData();
-    }, [loadingProjects]);
+    }, []);
   
   return (
     <div className="App">
