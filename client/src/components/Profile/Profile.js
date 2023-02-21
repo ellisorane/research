@@ -126,11 +126,11 @@ const Profile = ({ projects, loading, getCurrentUser, loadData }) => {
             <div className={classes.profileInfoContainer}>
                 <div className={classes.profileNav}>
             
-                    <div className={`${ classes.profileLink } ${ activeTab === 'mp' && classes.active }`} onClick={ () => setActiveTab('mp') }>My Projects <span className={classes.count}>{ projects && projects.filter( ( el ) => ( el.user === user._id ) ).length }</span></div>
+                    <div className={`${ classes.profileLink } ${ activeTab === 'mp' && classes.active }`} onClick={ () => setActiveTab('mp') }>My Projects <span className={classes.count}>{ projects && projects.filter( ( project ) => ( project.user === user._id ) ).length }</span></div>
 
-                    <div className={`${ classes.profileLink } ${ activeTab === 'bp' && classes.active }`} onClick={ () => setActiveTab('bp') }>Backed Projects <span className={classes.count}>{ projects && projects.filter( ( el ) => ( el.fundedByUser ) ).length }</span></div>
+                    <div className={`${ classes.profileLink } ${ activeTab === 'bp' && classes.active }`} onClick={ () => setActiveTab('bp') }>Backed Projects <span className={classes.count}>{ projects && projects.filter( ( project ) => ( project.fundedBy.includes( user._id ) ) ).length }</span></div>
 
-                    <div className={`${ classes.profileLink } ${ activeTab === 'ep' && classes.active }`} onClick={ () => setActiveTab('ep') }>Expired Projects <span className={classes.count}>{ projects && projects.filter( ( el ) => ( el.daysLeft < 0 ) ).length }</span></div>
+                    <div className={`${ classes.profileLink } ${ activeTab === 'ep' && classes.active }`} onClick={ () => setActiveTab('ep') }>Expired Projects <span className={classes.count}>{ projects && projects.filter( ( project ) => ( project.daysLeft < 0 ) ).length }</span></div>
 
                 </div>
 

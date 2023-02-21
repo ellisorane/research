@@ -16,10 +16,15 @@
 
 .fields {
     margin-top: 30px;
+    width: 70%;
+    
+    input {
+        width: 100%;
+    }
 }
 
 .about {
-    width: 90%;
+    width: 100%;
 }
 
 .labels, .formHeader {
@@ -52,5 +57,14 @@
     .container form {
         width: 968px;
         margin: auto;
+    }
+
+    .fields {
+        margin-top: 30px;
+        width: 70%;
+        
+        input {
+            width: 50%;
+        }
     }
 }

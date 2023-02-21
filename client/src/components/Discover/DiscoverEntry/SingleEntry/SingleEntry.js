@@ -22,6 +22,7 @@ const Payment = React.lazy(() => import("./Payment/Payment"));
 const Spinner = React.lazy(() => import("../../../Spinner/Spinner"));
 
 const SingleEntry = ({ setCategory }) => {
+    const user = useSelector( state => state.auth.user );
     const showPayment = useSelector(state => state.payment.value);
     const project = useSelector(state => state.projects.currentProject);
     const searchBarSuggested = useSelector(state => state.searchBar.suggested);
@@ -83,7 +84,8 @@ const SingleEntry = ({ setCategory }) => {
                         <div style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url("${project.imageURL}")` }} className={classes.heroImage}></div>
                         <div className={classes.tags}>
                             <Link to="/browse-all" onClick={ () => setCategory( project.category ) }><div className={classes.tag}>{project.category}</div></Link>
-                            <div className={`${classes.tag} ${classes.delete}`} onClick={() => deleteProject()}>Delete</div>
+                            {/* Only show the delete btn if current user created the project */}
+                            { ( user && project.user === user._id )  && <div className={`${classes.tag} ${classes.delete}`} onClick={() => deleteProject()}>Delete</div> }
                         </div>
                     </div>
                     
@@ -144,7 +146,7 @@ const SingleEntry = ({ setCategory }) => {
 
             <div className={classes.projectInfo}>
                 <div>
-                    <h2>About this project</h2>
+                    <h2>Project Description</h2>
                     <p className={ classes.projectDescription }>{project.description}</p>
                 </div>
             </div>
