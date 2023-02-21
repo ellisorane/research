@@ -51,8 +51,8 @@ const ProjectSchema = new mongoose.Schema({
         type: Date,
         default: () => Date.now()
     },
-    fundedByUser: {
-        type: Boolean
+    fundedBy: {
+        type: [String]
     },
     date: {
         type: Date,

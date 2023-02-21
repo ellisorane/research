@@ -17,7 +17,7 @@ const PForm = ({ project }) => {
     });
 
     const { amount } = payment;
-    const { amountFunded, fundedByUser } = project;
+    const { amountFunded } = project;
     
     const submitPayment = async(e) => {
         e.preventDefault();
@@ -27,10 +27,10 @@ const PForm = ({ project }) => {
             }
         }
 
-        const body = JSON.stringify({ amount, amountFunded, fundedByUser });
+        const body = JSON.stringify({ amount, amountFunded });
 
         try {
-            const res = await axios.post(`/projects/payment/${project._id}`, body, config);
+            const res = await axios.put(`/projects/payment/${project._id}`, body, config);
             // console.log(res);
             setPayment({
                 name: 'Project Funder',
