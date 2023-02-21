@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import classes from '../Profile.module.scss';
 import user from '../../../imgs/default.jpg';
+import { useSelector } from 'react-redux';
 
 // import DiscoverEntry from '../../Discover/DiscoverEntry/DiscoverEntry';
 // import Spinner from '../../Spinner/Spinner';
@@ -11,10 +12,12 @@ const Spinner = React.lazy(() => import('../../Spinner/Spinner'));
 
 
 const FundedProjects = ({ projects, loading }) => {
+
+    const user = useSelector( state => state.auth.user );
     return (
         <div className={classes.profileInfo}>
-            { !loading ? projects.map((item, index) => 
-                item.fundedByUser && <DiscoverEntry key={item._id} project={item}
+            { !loading ? projects.map((project, index) => 
+                project.fundedBy.includes( user._id ) && <DiscoverEntry key={project._id} project={project}
                 />
             ) : 
             <Spinner /> }
