@@ -135,8 +135,11 @@ const SingleEntry = ({ setCategory }) => {
                             </div>
                         </div>
 
-                        { !notificationTimer ? <div className={classes.fundBtn} onClick={ () => dispatch(openPayment()) }>Back this Project</div>
-                        : <div className={classes.fundedNotification}>Funds Recieved</div> }
+                        {/* If not logged in, payment button redirects to the login page */}
+                        { ( !user ) && <Link to="/login"><div className={classes.fundBtn}>Login to fund Project</div></Link> }
+                        
+                        { ( !notificationTimer && user ) && <div className={classes.fundBtn} onClick={ () => dispatch(openPayment()) }>Back this Project</div> }
+                        { notificationTimer && <div className={classes.fundedNotification}>Funds Recieved</div> }
 
                     </div>
 
