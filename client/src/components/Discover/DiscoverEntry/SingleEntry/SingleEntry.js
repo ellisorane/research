@@ -70,7 +70,6 @@ const SingleEntry = ({ setCategory }) => {
                 <h1 className={classes.entryTitle}>{project.title}</h1>
                 <div className={classes.researchers}>
                     <p><strong>Researcher(s):</strong></p>
-                    {/* <p><Link to="/profile" className={ classes.researchsLink } href="">{project.researchers}</Link></p> */}
                     <p><u>{project.researchers}</u></p>
                 </div>
                 <div className={classes.institution}>
@@ -137,7 +136,7 @@ const SingleEntry = ({ setCategory }) => {
 
                         {/* If not logged in, payment button redirects to the login page */}
                         { ( !user ) && <Link to="/login"><div className={classes.fundBtn}>Login to fund Project</div></Link> }
-                        
+
                         { ( !notificationTimer && user ) && <div className={classes.fundBtn} onClick={ () => dispatch(openPayment()) }>Back this Project</div> }
                         { notificationTimer && <div className={classes.fundedNotification}>Funds Recieved</div> }
 
