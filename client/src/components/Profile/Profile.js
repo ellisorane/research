@@ -130,7 +130,7 @@ const Profile = ({ projects, loading, getCurrentUser, loadData }) => {
 
                     <div className={`${ classes.profileLink } ${ activeTab === 'bp' && classes.active }`} onClick={ () => setActiveTab('bp') }>Backed Projects <span className={classes.count}>{ projects && projects.filter( ( project ) => ( project.fundedBy.includes( user._id ) ) ).length }</span></div>
 
-                    <div className={`${ classes.profileLink } ${ activeTab === 'ep' && classes.active }`} onClick={ () => setActiveTab('ep') }>Expired Projects <span className={classes.count}>{ projects && projects.filter( ( project ) => ( project.daysLeft < 0 ) ).length }</span></div>
+                    {/* <div className={`${ classes.profileLink } ${ activeTab === 'ep' && classes.active }`} onClick={ () => setActiveTab('ep') }>Expired Projects <span className={classes.count}>{ projects && projects.filter( ( project ) => ( project.daysLeft < 0 ) ).length }</span></div> */}
 
                 </div>
 
@@ -139,7 +139,7 @@ const Profile = ({ projects, loading, getCurrentUser, loadData }) => {
 
                 { activeTab === 'bp' && <FundedProjects projects={projects} loading={loading} /> }
 
-                { activeTab === 'ep' && <ExpiredProjects projects={projects} loading={loading} /> }
+                {/* { activeTab === 'ep' && <ExpiredProjects projects={projects} loading={loading} /> } */}
 
                 
 
