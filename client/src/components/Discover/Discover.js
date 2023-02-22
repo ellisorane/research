@@ -60,8 +60,9 @@ const Discover = ({ projects, loading, setCategory }) => {
                 </div>
 
                 <div className={classes.entryContanier}>
-
-                    { !loading ? projects.map((item) => item.daysLeft >= 0 && <DiscoverEntry key={item._id} project={item} />) : <Spinner /> }
+                    {/* Show the first 3 projects*/}
+                    { !loading ? projects.slice(0, 3).map( project => <DiscoverEntry key={project._id} project={project} />) : <Spinner /> }
+                    {/* { !loading ? projects.slice(0, 3).map((item) => ( item.daysLeft >= 0 )  && <DiscoverEntry key={item._id} project={item} />) : <Spinner /> } */}
 
                 </div>
             </div>
