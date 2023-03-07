@@ -1,11 +1,11 @@
-require('dotenv').config()
-const bcrypt = require('bcrypt')
+require('dotenv').config();
+const bcrypt = require('bcrypt');
 const express = require('express');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 // const mongoose = require('mongoose')
-const User = require('../models/User')
-const { authenticate } = require('../middleware')
-const { Validator } = require('node-input-validator')
+const User = require('../models/User');
+const { authenticate } = require('../middleware');
+const { Validator } = require('node-input-validator');
 
 const router = express.Router();
 
@@ -40,7 +40,6 @@ const upload = multer({ storage: storage });
 ///////////////////////////////////////////////////////////////////////////////////////
 
 
-
 // @route   GET /user/userImgUrl/:id
 // @desc    Get user image for project display
 // @access  Public
@@ -67,6 +66,7 @@ router.get('/', authenticate, async(req, res) => {
         res.json(error)
     }
 })
+
 
 // @route   POST /user/signup
 // @desc    Create User
