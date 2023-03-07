@@ -77,6 +77,44 @@ function Login({ getCurrentUser }) {
     }
   }
 
+  // const googleLogin = async() => {
+  //   console.log('googleLogin clicked');
+  //   try {
+  //     const res = await axios.get('/auth/google');
+      
+  //     // Check for form error messages from mongoose validation, if no errors then register and log user in
+  //     if( res.data.error ) {
+
+  //       console.log( res.data.error )
+        
+  //     } else {
+  //       console.log( res.data )
+  //       // // Logout any existing user
+  //       // dispatch( logout() )
+  //       // // Save user and token data in the redux authSlice
+  //       // dispatch( loginRefresh( res.data ) )
+  //       // // Load user
+  //       // getCurrentUser()
+  //       // // Redirect user to Journal page
+  //       // // navigate( '/' )
+
+  //       // // Status popup
+  //       // dispatch( setStatus( 'Logged In' ) )
+  //       // setTimeout( () => dispatch( removeStatus() ), 3000 )
+  //     }
+
+  //     // Scroll back to top of page
+  //     window.scrollTo( 0, 0 )
+      
+  //   } catch( err ) {
+  //       console.error( err )
+  //   }
+  // }
+
+  const googleLogin = () => {
+    window.open( `${process.env.REACT_APP_API_URL}/auth/google`, "_self" );
+  }
+
   return (
     <div className={ classes.auth }>
         <form className={ classes.authForm } onSubmit={ (e) => onSubmitHandler(e)}>
@@ -95,6 +133,9 @@ function Login({ getCurrentUser }) {
 
             <Link to="/signup" style={{ textDecoration: 'underline', color: '#36AB9B' }}>Don't have an account? Signup here.</Link>
         </form>
+
+        {/* Set up google login here */}
+        <button className={ classes.googleLogin } onClick={ googleLogin }>Google Login</button>
     </div>
   )
 }

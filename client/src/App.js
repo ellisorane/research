@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Routes, Route, Navigate } from "react-router-dom";
 import { setAuthToken } from './utils/utils';
 
-
 import './App.scss';
 
 import { setProjects, setUserAvatars } from './features/projects/projectsSlice';
