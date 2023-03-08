@@ -20,12 +20,12 @@ passport.use(new Strategy(AUTH_OPTIONS, verifyCallback));
 
 // Save the session to the cookie
 passport.serializeUser((user, done) => {
-    done(null, user)
+    done(null, user);
 });
 
 // Remove the session from the cookie
 passport.deserializeUser((user, done) => {
-    done(null, user)
+    done(null, user);
 });
 
 
@@ -38,17 +38,37 @@ router.get('/google/', passport.authenticate('google', {
     scope: ['email', 'profile']
 }));
 
-// @route   GET /auth/google/callback
+
+// @route   GET /auth/google
 // @desc    Create User
 // @access  Public
+router.get('/google/', passport.authenticate('google', {
+    scope: ['email', 'profile']
+}));
+
+// @route   GET /auth/google/callback
+// @desc    
+// @access  Public
 router.get('/google/callback', passport.authenticate('google', {
-        failureRedirect: '/failed', // redirect here if login failed
-        successRedirect: '/', // redirect here if login is successful,
+        failureRedirect: '/auth/failed', // redirect here if login failed
+        successRedirect: '/auth/success', // redirect here if login is successful,
         session: false
     }), (req, res) => {
-        console.log('Worked');
+        console.log('Worked', res);
     }
 );
+
+// @route   GET /auth/success
+// @desc    Authorization Successful
+// @access  Public
+router.get('/success', (req, res) =>{
+    if (process.env.NODE_ENV === 'production') {
+        res.redirect('https://research-com.herokuapp.com/')
+    } else {
+        res.redirect('http://localhost:3000/');
+    }
+});
+
 
 // @route   GET /auth/failed
 // @desc    Authorization Failed
@@ -56,7 +76,6 @@ router.get('/google/callback', passport.authenticate('google', {
 router.get('/failed', (req, res) =>{
     res.status(401).json({error:true,  message: "Login failed"})
 });
-
 
 
 // @route   GET /user/logout
