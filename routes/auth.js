@@ -11,8 +11,10 @@ const AUTH_OPTIONS = {
     clientSecret: process.env.CLIENT_SECRET
 }
 
+let googleProfile;
+
 const verifyCallback = (accessToken, refreshToken, profile, done) => {
-    console.log('Google profile', profile);
+    googleProfile = profile;
     done(null, profile);
 }
 
@@ -30,6 +32,13 @@ passport.deserializeUser((user, done) => {
 
 
 // Routes //////////////////////////////////////////////////////////////////////////
+
+// @route   GET /auth/googleProfile
+// @desc    Get the Google Profile for use on the frontend
+// @access  Public
+router.get('/googleProfile/', (req, res) => {
+    res.json(googleProfile);
+});
 
 // @route   GET /auth/google
 // @desc    Create User
@@ -67,6 +76,8 @@ router.get('/success', (req, res) =>{
     } else {
         res.redirect('http://localhost:3000/');
     }
+
+    console.log("This is the user for google: ", googleProfile)
 });
 
 
@@ -76,6 +87,8 @@ router.get('/success', (req, res) =>{
 router.get('/failed', (req, res) =>{
     res.status(401).json({error:true,  message: "Login failed"})
 });
+
+
 
 
 // @route   GET /user/logout
