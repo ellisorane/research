@@ -1,3 +1,4 @@
+require('dotenv').config()
 const path = require('path');
 const express = require("express");
 const connectDB = require('./config/db'); 
@@ -8,23 +9,11 @@ const cookieSession = require('cookie-session');
 
 const app = express();
 
-// Connect DB
 connectDB();
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-app.use(
-    cookieSession({
-        name: "session",
-        keys: ["session"],
-        maxAge: 20*60*60*100,
-    })
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(
     cors({
@@ -60,6 +49,7 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
+;
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`));

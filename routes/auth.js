@@ -2,6 +2,32 @@ require('dotenv').config();
 const express = require('express');
 const passport = require('passport')
 const { Strategy } = require('passport-google-oauth20');
+const { authenticate } = require('../middleware');
+const app = express();
+const cookieSession = require('cookie-session');
+
+// Save the session to the cookie 
+passport.serializeUser((user, done) => {
+    done(null, user);
+});
+
+// Read the session from the cookie
+passport.deserializeUser((object, done) => {
+    done(null, object);
+});
+
+app.use(
+    cookieSession({
+        name: "session",
+        keys: [process.env.COOKIE_KEY_1, process.env.COOKIE_KEY_2],
+        // In milliseconds
+        maxAge: 24*60*60*1000,
+    })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 const router = express.Router();
 
@@ -61,7 +87,7 @@ router.get('/google/', passport.authenticate('google', {
 router.get('/google/callback', passport.authenticate('google', {
         failureRedirect: '/auth/failed', // redirect here if login failed
         successRedirect: '/auth/success', // redirect here if login is successful,
-        session: false
+        session: true
     }), (req, res) => {
         console.log('Worked', res);
     }
@@ -91,11 +117,14 @@ router.get('/failed', (req, res) =>{
 
 
 
-// @route   GET /user/logout
-// @desc    Create User
+// @route   GET /auth/logout
+// @desc    Logout of google profile
 // @access  Public
-router.get('/logout', async(req, res) => {
-    req.logout();
-});
+router.get('/logout', function(req, res, next) {
+    req.logout(function(err) {
+      if (err) { return next(err); }
+      res.redirect('/');
+    });
+  });
 
 module.exports = router;

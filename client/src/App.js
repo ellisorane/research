@@ -34,6 +34,7 @@ const App = () => {
   const [category, setCategory] = useState('all');
   const status = useSelector( state => state.status.message )
   const showStatus = useSelector( state => state.status.showStatus )
+  const [googleAuthData, setGoogleAuthData] = useState({});
 
   const getDaysLeft = async(createdOn, daysToFund, id) => {
       
@@ -56,8 +57,6 @@ const App = () => {
 
     }
 
-    
-
     const getGoogleUser = async() => {
       // Set token in the header
       // if (localStorage.token) {
@@ -67,11 +66,17 @@ const App = () => {
       try {
         const res = await axios.get('/auth/googleProfile/')
         console.log(res.data)
+        setGoogleAuthData(res.data)
         // dispatch( loadUser( res.data.user ) )
       } catch ( err ) {
         console.log( err )
         // dispatch( logout() )
       }
+    }
+
+    const handleGoogleAuth = () => {
+      getGoogleUser();
+
     }
 
     const getCurrentUser = async() => {
