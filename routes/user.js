@@ -1,11 +1,11 @@
-require('dotenv').config()
-const bcrypt = require('bcrypt')
+require('dotenv').config();
+const bcrypt = require('bcrypt');
 const express = require('express');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 // const mongoose = require('mongoose')
-const User = require('../models/User')
-const { authenticate } = require('../middleware')
-const { Validator } = require('node-input-validator')
+const User = require('../models/User');
+const { authenticate } = require('../middleware');
+const { Validator } = require('node-input-validator');
 
 const router = express.Router();
 
@@ -40,12 +40,39 @@ const upload = multer({ storage: storage });
 ///////////////////////////////////////////////////////////////////////////////////////
 
 
-
 // @route   GET /user/userImgUrl/:id
-// @desc    Get user image for project display
+// @desc    Get user image for project display and refresh user image if necessary
 // @access  Public
 router.get('/userImgUrl/:id', async(req, res) => {
     try {
+        // Refresh  user images after a certain time period
+        const users = await User.find();
+        // console.log(users);
+
+        // If userImgUrlCreationDate is 1 days ago or older then refresh the user image url
+        for(const user of users) {
+                
+            let oldimageURLCreationDate = user.userImgUrlCreationDate
+            let newimageURLCreationDate = Date.now()
+            let timeDiff =  (newimageURLCreationDate - oldimageURLCreationDate) / (1000 * 60 * 60 * 24)
+            // console.log(timeDiff, " minutes")
+    
+            if (timeDiff >= 1 && user.userImg) {
+                // console.log("user image url refresh working")
+                const getObjectParams = {
+                    Bucket: bucketName,
+                    Key: user.userImg,
+                }
+    
+                const command = await new GetObjectCommand(getObjectParams);
+                const expiration = 60 * 60 * 24 * 2; // 2 days
+                const url = await getSignedUrl(s3, command, { expiresIn: expiration });
+    
+                await User.updateOne({ _id: user._id}, { $set: { userImgUrl: url, userImgUrlCreationDate: Date.now() } } );
+            }
+            
+        }
+
         let user = await User.findOne({ _id: req.params.id }).select( 'userImgUrl' )
         // console.log( user )
         res.json( user )
@@ -67,6 +94,7 @@ router.get('/', authenticate, async(req, res) => {
         res.json(error)
     }
 })
+
 
 // @route   POST /user/signup
 // @desc    Create User

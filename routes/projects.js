@@ -52,7 +52,8 @@ router.get('/', async(req, res) => {
             // console.log(timeDiff, " minutes")
 
             if (timeDiff >= 1) {
-                console.log('time to refresh image')
+            // if (timeDiff) {
+                // console.log('time to refresh image')
                 const getObjectParams = {
                     Bucket: bucketName,
                     Key: project.image,

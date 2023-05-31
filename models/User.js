@@ -32,10 +32,17 @@ const UserSchema = new mongoose.Schema({
   userImgUrl: {
     type: String
   },
+  userImgUrlCreationDate: {
+    type: Date,
+    default: () => Date.now()
+},
   createdAt: {
       type: Date,
       default: () => Date.now(),
       immutable: true
+  },
+  googleID : {
+    type: String
   }
 })
 

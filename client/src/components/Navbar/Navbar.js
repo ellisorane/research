@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { logout } from '../../features/auth/authSlice';
 import { setStatus, removeStatus } from '../../features/status/statusSlice';
+import axios from 'axios';
 
 import classes from './Navbar.module.scss';
 
@@ -15,9 +16,14 @@ const Navbar = () => {
     const user = useSelector(state => state.auth.user)
     const dispatch = useDispatch()
 
-    const logoutHandler = () => {
+    const logoutHandler = async() => {
         dispatch( logout() )
         setShowNav(false)
+        try {
+            await axios.get('/auth/logout');
+        } catch (error) {
+            console.error(error)
+        }
 
         // Status popup
         dispatch( setStatus( 'Logged Out' ) )
