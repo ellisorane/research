@@ -3,31 +3,10 @@ const express = require('express');
 const passport = require('passport')
 const { Strategy } = require('passport-google-oauth20');
 const { authenticate } = require('../middleware');
-const app = express();
-const cookieSession = require('cookie-session');
+const jwt = require('jsonwebtoken');
 
-// Save the session to the cookie 
-passport.serializeUser((user, done) => {
-    done(null, user);
-});
 
-// Read the session from the cookie
-passport.deserializeUser((object, done) => {
-    done(null, object);
-});
-
-app.use(
-    cookieSession({
-        name: "session",
-        keys: [process.env.COOKIE_KEY_1, process.env.COOKIE_KEY_2],
-        // In milliseconds
-        maxAge: 24*60*60*1000,
-    })
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
-
+const User = require('../models/User');
 
 const router = express.Router();
 
@@ -46,14 +25,46 @@ const verifyCallback = (accessToken, refreshToken, profile, done) => {
 
 passport.use(new Strategy(AUTH_OPTIONS, verifyCallback));
 
-// Save the session to the cookie
+// Save the session to the cookie 
 passport.serializeUser((user, done) => {
-    done(null, user);
+    done(null, user.id);
+    // done(null, user);
 });
 
-// Remove the session from the cookie
-passport.deserializeUser((user, done) => {
-    done(null, user);
+// Read the session from the cookie
+passport.deserializeUser((id, done) => {
+    // try {
+    //     let user = await User.findOne({ googleID: obj.id })
+
+    //     if(!user) {
+    //        // Create new user in the database
+    //         user = await User.create({
+    //             email: obj.emails[0].value,
+    //             name: obj.displayName,
+    //             password: obj.id,
+    //             googleID: obj.id,
+    //             userImgUrl: obj.photos[0].value
+    //         });
+
+    //     }
+
+    //     // Create JWT token - Expires every 48 hours
+    //     const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '2d' })
+
+    //     user = {
+    //         token: token,
+    //         user: user
+    //     }
+
+    //     console.log(user)
+
+    //     done(null, user)
+
+    // } catch (error) {
+    //     console.error(error);
+    // }
+        done(null, id);
+
 });
 
 
@@ -103,7 +114,7 @@ router.get('/success', (req, res) =>{
         res.redirect('http://localhost:3000/');
     }
 
-    console.log("This is the user for google: ", googleProfile)
+    // console.log("google profile: ", googleProfile)
 });
 
 

@@ -111,9 +111,9 @@ function Login({ getCurrentUser }) {
   //   }
   // }
 
-  const googleLogin = () => {
-    window.open( `${process.env.REACT_APP_API_URL}/auth/google`, "_self" );
-  }
+  // const googleLogin = () => {
+  //   window.open( `${process.env.REACT_APP_API_URL}/auth/google`, "_self" );
+  // }
 
   return (
     <div className={ classes.auth }>
@@ -134,8 +134,6 @@ function Login({ getCurrentUser }) {
             <Link to="/signup" style={{ textDecoration: 'underline', color: '#36AB9B' }}>Don't have an account? Signup here.</Link>
         </form>
 
-        {/* Set up google login here */}
-        <button className={ classes.googleLogin } onClick={ googleLogin }>Google Login</button>
     </div>
   )
 }

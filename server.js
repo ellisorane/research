@@ -16,6 +16,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(
+    cookieSession({
+        name: "session",
+        keys: [process.env.COOKIE_KEY_1, process.env.COOKIE_KEY_2],
+        // In milliseconds
+        maxAge: 24*60*60*1000,
+    })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(
     cors({
         origin: "http://localhost:3000",
         methods: "GET, POST, PUT, DELETE",
