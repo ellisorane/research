@@ -68,7 +68,7 @@ router.get('/', async(req, res) => {
             
         }
 
-        res.send(projects);
+        res.json(projects);
     } catch(err) {
         console.error(err.message);
     }
@@ -205,4 +205,4 @@ router.put('/payment/:id', authenticate, async(req, res) => {
 
 
 
-module.exports = router;
+module.exports = router; 

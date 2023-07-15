@@ -34,7 +34,6 @@ const App = () => {
   const [category, setCategory] = useState('all');
   const status = useSelector( state => state.status.message )
   const showStatus = useSelector( state => state.status.showStatus )
-  const [googleAuthData, setGoogleAuthData] = useState({});
 
   const getDaysLeft = async(createdOn, daysToFund, id) => {
       
@@ -54,28 +53,6 @@ const App = () => {
       } catch(err) {
         console.log(err);
       }
-
-    }
-
-    const getGoogleUser = async() => {
-      // Set token in the header
-      // if (localStorage.token) {
-      //   setAuthToken(localStorage.token);
-      // }
-  
-      try {
-        const res = await axios.get('/auth/googleProfile/')
-        console.log(res.data)
-        setGoogleAuthData(res.data)
-        // dispatch( loadUser( res.data.user ) )
-      } catch ( err ) {
-        console.log( err )
-        // dispatch( logout() )
-      }
-    }
-
-    const handleGoogleAuth = () => {
-      getGoogleUser();
 
     }
 
@@ -111,7 +88,6 @@ const App = () => {
 
     const loadData = () => {
       getLatestProjects();
-      getGoogleUser();
       !loadingProjects && projects.forEach(proj => getDaysLeft(proj.date, proj.daysToFund, proj._id));
       // Only load user if token is detected
       tokenState && getCurrentUser()
