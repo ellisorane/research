@@ -21,6 +21,9 @@ import defUser from '../../../imgs/default.jpg';
 
 
 const BrowseAll = ({ projects, loading, category, setCategory }) => {
+    console.log(projects);
+
+    const liveProjects = projects.filter(project => project.daysLeft > 0);
     
     const catsegorySelect = (project) => {
         if(project.daysLeft >= 0) {
@@ -68,8 +71,10 @@ const BrowseAll = ({ projects, loading, category, setCategory }) => {
                 { !loading ? projects.map((item) => catsegorySelect(item)) : <Spinner /> }
             </div>
 
+            { liveProjects && liveProjects.length === 0 && <h2 style={{ textAlign: 'center', width: '100%', marginTop: '100px' }}>No Current Projects</h2>} 
+
         </div>
     );
 }
 
-export default BrowseAll;
+export default BrowseAll; 
